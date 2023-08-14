@@ -4,6 +4,7 @@ import '../css/App.css';
 import { db } from '../firebase';
 import MusicianPage, { Musician } from './MusicianPage';
 import 'font-awesome/css/font-awesome.min.css';
+import MusicianCard from './MusicianCard';
 
 function App() {
   const [musicians, setMusicians] = useState<Musician[]>([]);
@@ -14,6 +15,7 @@ function App() {
     const fetchedMusicians: Musician[] = querySnapshot.docs.map(
       (doc) => doc.data() as Musician
     );
+    console.log(fetchedMusicians)
     setMusicians(fetchedMusicians);
   };
 
@@ -24,8 +26,8 @@ function App() {
   return (
     <>
       {musicians.length ? (
-        musicians.map((musician, index) => (
-          <MusicianPage key={index} musician={musician} />
+        musicians.map((musician) => (
+          <MusicianCard key={musician.name} musician={musician} />
         ))
       ) : (
         <p>Loading...</p>
