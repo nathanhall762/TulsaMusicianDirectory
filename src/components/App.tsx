@@ -28,7 +28,7 @@ function App() {
 
   const musician = musicians.find((x) => cardSelected === x.name);
 
-  if (cardSelected && musician) {
+  if (musician) {
     return (
       <MusicianPage
         musician={musician}
