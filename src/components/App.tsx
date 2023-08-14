@@ -5,15 +5,15 @@ import { db } from '../firebase';
 import MusicianPage, { Musician } from './MusicianPage';
 import 'font-awesome/css/font-awesome.min.css';
 
-
-
 function App() {
   const [musicians, setMusicians] = useState<Musician[]>([]);
 
   const getData = async () => {
     const querySnapshot = await getDocs(collection(db, 'musicians'));
     // console.log(querySnapshot.docs);
-    const fetchedMusicians: Musician[] = querySnapshot.docs.map((doc) => doc.data() as Musician);
+    const fetchedMusicians: Musician[] = querySnapshot.docs.map(
+      (doc) => doc.data() as Musician
+    );
     setMusicians(fetchedMusicians);
   };
 
@@ -35,5 +35,3 @@ function App() {
 }
 
 export default App;
-
-
