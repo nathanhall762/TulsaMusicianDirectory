@@ -1,0 +1,45 @@
+.musicianCard {
+    border: 1px solid var(--font-color);
+    padding: 20px;
+    border-radius: 5px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.1s ease; /* smooth transition for the shadow */
+    box-shadow: none;
+}
+
+.musicianCard:hover {
+    text-decoration: none;
+    background-color: var(--secondary-color);
+    box-shadow: 0px 0px 10px var(--tertiary-color); /* horizontal offset, vertical offset, blur radius, color */
+}
+
+.socialLinks {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    font-size: 24px;
+}
+
+.socialLinks a {
+    margin-right: 10px;
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+.socialLinks a:hover {
+    text-decoration: underline;
+    color: var(--primary-color);
+    opacity: 50%;
+}
+
+.profileImage {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+
