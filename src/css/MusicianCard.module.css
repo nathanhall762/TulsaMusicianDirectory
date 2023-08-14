@@ -7,6 +7,7 @@
   flex-direction: column;
   transition: box-shadow 0.1s ease; /* smooth transition for the shadow */
   box-shadow: none;
+  margin: 1rem;
 }
 
 .musicianCard:hover {

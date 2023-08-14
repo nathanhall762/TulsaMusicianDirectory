@@ -38,17 +38,19 @@ function App() {
   } else {
     return (
       <>
-        {musicians.length ? (
-          musicians.map((musician) => (
-            <MusicianCard
-              key={musician.name}
-              musician={musician}
-              setCardSelected={setCardSelected}
-            />
-          ))
-        ) : (
-          <p>Loading...</p>
-        )}
+        <div className='cardContainer'>
+          {musicians.length ? (
+            musicians.map((musician) => (
+              <MusicianCard
+                key={musician.name}
+                musician={musician}
+                setCardSelected={setCardSelected}
+              />
+            ))
+          ) : (
+            <p>Loading...</p>
+          )}
+        </div>
       </>
     );
   }
