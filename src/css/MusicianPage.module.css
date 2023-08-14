@@ -1,0 +1,68 @@
+.musicianPage {
+    border: 1px solid var(--font-color);
+    padding: 20px;
+    border-radius: 5px;
+    width: 80vw;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: box-shadow 0.1s ease; /* smooth transition for the shadow */
+    box-shadow: none;
+}
+
+.nameAndPhoto {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    height: 50vh;
+    width: 30%;
+}
+
+.pageHeader {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.keyInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 50%;
+}
+
+.musicianPage .socialLinks {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    font-size: 24px;
+    width: 100%;
+}
+
+.musicianPage .socialLinks a {
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+.musicianPage .socialLinks a:hover {
+    text-decoration: underline;
+    color: var(--primary-color);
+    opacity: 50%;
+    border-radius: 50%;
+}
+
+.musicianPage .profileImage {
+    height: 100%;
+    border-radius: 50%;
+}
+
+.smallSpotifyPlayer {
+    border-radius: 20px;
+}
+
+
