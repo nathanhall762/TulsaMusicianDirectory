@@ -1,5 +1,5 @@
 // MusicianPage.tsx
-import React from 'react';
+import React, { SetStateAction } from 'react';
 import styles from '../css/MusicianPage.module.css';
 
 export type Musician = {
@@ -15,9 +15,13 @@ export type Musician = {
 
 interface MusicianPageProps {
   musician: Musician;
+  setCardSelected: React.Dispatch<SetStateAction<string>>;
 }
 
-const MusicianPage: React.FC<MusicianPageProps> = ({ musician }) => {
+const MusicianPage: React.FC<MusicianPageProps> = ({
+  musician,
+  setCardSelected,
+}) => {
   const {
     bandcamp,
     facebook,
@@ -33,9 +37,14 @@ const MusicianPage: React.FC<MusicianPageProps> = ({ musician }) => {
 
   const spotifyEmbed = `https://open.spotify.com/embed/artist/${spotifyID}?utm_source=generator`;
 
+  const clickCard = () => {
+    setCardSelected('');
+  };
+
   return (
     <>
       <div className={styles.musicianPage}>
+        <button onClick={clickCard}>Go Back</button>
         <div className={styles.pageHeader}>
           <div className={styles.nameAndPhoto}>
             <img
@@ -53,7 +62,7 @@ const MusicianPage: React.FC<MusicianPageProps> = ({ musician }) => {
               height='152'
               frameBorder='0'
               allowFullScreen={false}
-            //   allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture'
+              //   allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture'
               loading='lazy'
             ></iframe>
             <p>Genre: {genre.length !== 0 ? genre.join(', ') : 'NA'}</p>

@@ -8,6 +8,9 @@ import MusicianCard from './MusicianCard';
 
 function App() {
   const [musicians, setMusicians] = useState<Musician[]>([]);
+  const [cardSelected, setCardSelected] = useState('');
+
+  console.log(cardSelected);
 
   const getData = async () => {
     const querySnapshot = await getDocs(collection(db, 'musicians'));
@@ -15,7 +18,7 @@ function App() {
     const fetchedMusicians: Musician[] = querySnapshot.docs.map(
       (doc) => doc.data() as Musician
     );
-    console.log(fetchedMusicians)
+    console.log(fetchedMusicians);
     setMusicians(fetchedMusicians);
   };
 
@@ -23,17 +26,32 @@ function App() {
     getData();
   }, []);
 
-  return (
-    <>
-      {musicians.length ? (
-        musicians.map((musician) => (
-          <MusicianCard key={musician.name} musician={musician} />
-        ))
-      ) : (
-        <p>Loading...</p>
-      )}
-    </>
-  );
+  const musician = musicians.find((x) => cardSelected === x.name);
+
+  if (cardSelected && musician) {
+    return (
+      <MusicianPage
+        musician={musician}
+        setCardSelected={setCardSelected}
+      ></MusicianPage>
+    );
+  } else {
+    return (
+      <>
+        {musicians.length ? (
+          musicians.map((musician) => (
+            <MusicianCard
+              key={musician.name}
+              musician={musician}
+              setCardSelected={setCardSelected}
+            />
+          ))
+        ) : (
+          <p>Loading...</p>
+        )}
+      </>
+    );
+  }
 }
 
 export default App;
