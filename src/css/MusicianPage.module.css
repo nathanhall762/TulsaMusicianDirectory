@@ -30,7 +30,7 @@
 .keyInfo {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     height: 100%;
     width: 50%;
@@ -70,7 +70,10 @@
 @media screen and (max-width: 576px) {
     .pageHeader {
         flex-direction: column;
-        margin-top: 10vh;
+        justify-content: center;
+    }
+
+    .musicianPage {
         justify-content: center;
     }
 
@@ -84,4 +87,5 @@
         justify-content: start;
         width: 100%;
     }
+
 }
