@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, onSnapshot } from 'firebase/firestore';
 import '../css/App.css';
 import { db } from '../firebase';
 import MusicianPage, { Musician } from './MusicianPage';
@@ -13,13 +13,12 @@ function App() {
   console.log(cardSelected);
 
   const getData = async () => {
-    const querySnapshot = await getDocs(collection(db, 'musicians'));
-    // console.log(querySnapshot.docs);
-    const fetchedMusicians: Musician[] = querySnapshot.docs.map(
-      (doc) => doc.data() as Musician
-    );
-    console.log(fetchedMusicians);
-    setMusicians(fetchedMusicians);
+    onSnapshot(collection(db, 'musicians'), (doc) => {
+      const fetchedMusicians: Musician[] = doc.docs.map(
+        (doc) => doc.data() as Musician
+      );
+      setMusicians(fetchedMusicians);
+    });
   };
 
   useEffect(() => {
