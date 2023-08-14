@@ -53,7 +53,7 @@ const MusicianPage: React.FC<MusicianPageProps> = ({ musician }) => {
               height='152'
               frameBorder='0'
               allowFullScreen={false}
-              allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture'
+            //   allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture'
               loading='lazy'
             ></iframe>
             <p>Genre: {genre.length !== 0 ? genre.join(', ') : 'NA'}</p>
