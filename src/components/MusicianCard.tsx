@@ -1,5 +1,5 @@
 // MusicianCard.tsx
-import React from 'react';
+import React, { SetStateAction } from 'react';
 import styles from '../css/MusicianCard.module.css';
 
 export type Musician = {
@@ -14,16 +14,24 @@ export type Musician = {
 
 interface MusicianCardProps {
   musician: Musician;
+  setCardSelected: React.Dispatch<SetStateAction<string>>;
 }
 
-const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
+const MusicianCard: React.FC<MusicianCardProps> = ({
+  musician,
+  setCardSelected,
+}) => {
   const { bandcamp, facebook, genre, instagram, name, profileImage, spotify } =
     musician;
 
   console.log(profileImage);
 
+  const clickCard = () => {
+    setCardSelected(name);
+  };
+
   return (
-    <div className={styles.musicianCard}>
+    <div className={styles.musicianCard} onClick={clickCard}>
       <h2>{name}</h2>
       <img className={styles.profileImage} src={profileImage} alt={name} />
       <p>Genre: {genre.length !== 0 ? genre.join(', ') : 'NA'}</p>
