@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { storage } from '../firebase';
-import { v4 } from 'uuid';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { doc, setDoc, collection } from 'firebase/firestore';
 import { db } from '../firebase';
+import { v4 } from 'uuid';
 
 type MusicianFormData = {
   name: string;
@@ -15,6 +15,7 @@ type MusicianFormData = {
 };
 
 const MusicianForm: React.FC = () => {
+  const [ImageUpload, setImageUpload] = useState<File>();
   const [formData, setFormData] = useState<MusicianFormData>({
     name: '',
     bandcamp: '',
@@ -42,24 +43,20 @@ const MusicianForm: React.FC = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const [ImageUpload, setImageUpload] = useState<File>();
-
   const uploadImage = async () => {
     if (!ImageUpload) {
       alert('please add a file');
       return;
     }
     try {
-      console.log(ImageUpload);
-      const storageRef = ref(storage, `images/${ImageUpload?.name + v4()}`);
-      console.log(storageRef);
+      const storageRef = ref(storage, `images/${ImageUpload.name + v4()}`);
       await uploadBytes(storageRef, ImageUpload);
       const url = await getDownloadURL(storageRef);
       console.log(url);
       return url;
     } catch (e) {
       console.log(e);
-      alert('error uploading image');
+      alert('error uploading musician profile');
     }
   };
 
