@@ -35,6 +35,10 @@ function App() {
         setCardSelected={setCardSelected}
       ></MusicianPage>
     );
+  } if (addMusicianSelected) { 
+    return (
+      <MusicianForm setAddMusicianSelected={setAddMusicianSelected}/>
+    )
   } else {
     return (
       <>
@@ -51,10 +55,9 @@ function App() {
             <p>Loading...</p>
           )}
         </div>
-        <button onClick={() => setAddMusicianSelected(!addMusicianSelected)}>
+        <button className='addButton' onClick={() => setAddMusicianSelected(true)}>
           Add Musician
         </button>
-        {addMusicianSelected ? <MusicianForm /> : null}
       </>
     );
   }

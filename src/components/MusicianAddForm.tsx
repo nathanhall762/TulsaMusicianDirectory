@@ -15,7 +15,13 @@ type MusicianFormData = {
   genre: string[];
 };
 
-const MusicianForm: React.FC = () => {
+interface musicianFormProps {
+  setAddMusicianSelected: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const MusicianForm: React.FC<musicianFormProps> = ({
+  setAddMusicianSelected,
+}) => {
   const [ImageUpload, setImageUpload] = useState<File>();
   const [formData, setFormData] = useState<MusicianFormData>({
     name: '',
@@ -38,6 +44,8 @@ const MusicianForm: React.FC = () => {
         ...formData,
         profileImage: url,
       });
+      alert('musician profile uploaded');
+      setAddMusicianSelected(false);
     } catch (err) {
       console.log(err);
       alert('error uploading musician profile');
@@ -63,91 +71,92 @@ const MusicianForm: React.FC = () => {
 
   return (
     <div className={styles.musicianAddFormContainer}>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>
-              <h4>Musician/Artist/Band Name (required):</h4>
-              <input
-                type='text'
-                name='name'
-                value={formData.name}
-                onChange={handleInputChange}
-                required
-              />
-            </label>
-          </div>
-          <div className={styles.formSection}>
-            <h4>Music (must have at least one link)</h4>
-            <label>
-              Bandcamp:<br></br>
-              <input
-                type='url'
-                name='bandcamp'
-                value={formData.bandcamp}
-                onChange={handleInputChange}
-              />
-            </label>
-            <label>
-              Spotify:<br></br>
-              <input
-                type='url'
-                name='spotify'
-                value={formData.spotify}
-                onChange={handleInputChange}
-              />
-            </label>
-          </div>
-          <div className={styles.formSection}>
-            <h4>Social (must have at least one link)</h4>
-            <label>
-              Facebook:<br></br>
-              <input
-                type='url'
-                name='facebook'
-                value={formData.facebook}
-                onChange={handleInputChange}
-              />
-            </label>
-            <label>
-              Instagram:<br></br>
-              <input
-                type='url'
-                name='instagram'
-                value={formData.instagram}
-                onChange={handleInputChange}
-              />
-            </label>
-          </div>
-          <div className={styles.formSection}>
-            <label>
-              <h4>Genre (at least one genre required):</h4>
-              <input
-                type='text'
-                name='genre'
-                value={formData.genre[0]}
-                onChange={(e) =>
-                  setFormData((prevData) => ({
-                    ...prevData,
-                    genre: [e.target.value],
-                  }))
-                }
-                required
-              />
-            </label>
-          </div>
-          <div className={styles.formSection}>
-            <h4>Add a profile image</h4>
+      <button onClick={() => setAddMusicianSelected(false)}>Exit</button>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>
+            <h4>Musician/Artist/Band Name (required):</h4>
             <input
-              type='file'
-              onChange={(event) => {
-                if (event.target.files) {
-                  setImageUpload(event.target.files[0]);
-                }
-              }}
+              type='text'
+              name='name'
+              value={formData.name}
+              onChange={handleInputChange}
+              required
             />
-          </div>
-          <button type='submit'>Submit</button>
-        </form>
+          </label>
+        </div>
+        <div className={styles.formSection}>
+          <h4>Music (must have at least one link)</h4>
+          <label>
+            Bandcamp:<br></br>
+            <input
+              type='url'
+              name='bandcamp'
+              value={formData.bandcamp}
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            Spotify:<br></br>
+            <input
+              type='url'
+              name='spotify'
+              value={formData.spotify}
+              onChange={handleInputChange}
+            />
+          </label>
+        </div>
+        <div className={styles.formSection}>
+          <h4>Social (must have at least one link)</h4>
+          <label>
+            Facebook:<br></br>
+            <input
+              type='url'
+              name='facebook'
+              value={formData.facebook}
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            Instagram:<br></br>
+            <input
+              type='url'
+              name='instagram'
+              value={formData.instagram}
+              onChange={handleInputChange}
+            />
+          </label>
+        </div>
+        <div className={styles.formSection}>
+          <label>
+            <h4>Genre (at least one genre required):</h4>
+            <input
+              type='text'
+              name='genre'
+              value={formData.genre[0]}
+              onChange={(e) =>
+                setFormData((prevData) => ({
+                  ...prevData,
+                  genre: [e.target.value],
+                }))
+              }
+              required
+            />
+          </label>
+        </div>
+        <div className={styles.formSection}>
+          <h4>Add a profile image</h4>
+          <input
+            type='file'
+            onChange={(event) => {
+              if (event.target.files) {
+                setImageUpload(event.target.files[0]);
+              }
+            }}
+          />
+        </div>
+        <button type='submit'>Submit</button>
+      </form>
     </div>
   );
 };

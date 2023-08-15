@@ -41,4 +41,11 @@
 .cardContainer {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+}
+
+.addButton {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
 }
