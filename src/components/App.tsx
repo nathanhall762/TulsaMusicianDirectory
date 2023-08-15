@@ -1,18 +1,15 @@
 import { useState, useEffect } from 'react';
 import { collection, onSnapshot } from 'firebase/firestore';
-import '../css/App.css';
 import { db } from '../firebase';
 import MusicianPage, { Musician } from './MusicianPage';
-import 'font-awesome/css/font-awesome.min.css';
 import MusicianCard from './MusicianCard';
-// import ImageUpload from './ImageUpload';
 import MusicianForm from './MusicianAddForm';
+import 'font-awesome/css/font-awesome.min.css';
+import '../css/App.css';
 
 function App() {
   const [musicians, setMusicians] = useState<Musician[]>([]);
   const [cardSelected, setCardSelected] = useState('');
-
-  console.log(cardSelected);
 
   const getData = async () => {
     onSnapshot(collection(db, 'musicians'), (doc) => {
