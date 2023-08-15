@@ -27,16 +27,21 @@ const MusicianForm: React.FC = () => {
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    // add image to firebase storage
-    const url = await uploadImage();
-    console.log(formData);
-    // add musician to firestore
-    const musicianRef = doc(collection(db, 'musicians'));
-    await setDoc(musicianRef, {
-      ...formData,
-      profileImage: url,
-    });
+    try {
+      e.preventDefault();
+      // add image to firebase storage
+      const url = await uploadImage();
+      console.log(formData);
+      // add musician to firestore
+      const musicianRef = doc(collection(db, 'musicians'));
+      await setDoc(musicianRef, {
+        ...formData,
+        profileImage: url,
+      });
+    } catch (err) {
+      console.log(err);
+      alert('error uploading musician profile');
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,16 +54,11 @@ const MusicianForm: React.FC = () => {
       alert('please add a file');
       return;
     }
-    try {
-      const storageRef = ref(storage, `images/${ImageUpload.name + v4()}`);
-      await uploadBytes(storageRef, ImageUpload);
-      const url = await getDownloadURL(storageRef);
-      console.log(url);
-      return url;
-    } catch (e) {
-      console.log(e);
-      alert('error uploading musician profile');
-    }
+    const storageRef = ref(storage, `images/${ImageUpload.name + v4()}`);
+    await uploadBytes(storageRef, ImageUpload);
+    const url = await getDownloadURL(storageRef);
+    console.log(url);
+    return url;
   };
 
   return (
