@@ -5,6 +5,8 @@ import { db } from '../firebase';
 import MusicianPage, { Musician } from './MusicianPage';
 import 'font-awesome/css/font-awesome.min.css';
 import MusicianCard from './MusicianCard';
+// import ImageUpload from './ImageUpload';
+import MusicianForm from './MusicianAddForm';
 
 function App() {
   const [musicians, setMusicians] = useState<Musician[]>([]);
@@ -50,6 +52,7 @@ function App() {
             <p>Loading...</p>
           )}
         </div>
+        <MusicianForm />
       </>
     );
   }
