@@ -1,12 +1,18 @@
 .musicianAddFormContainer {
-    border: 1px solid var(--font-color);
-    padding: 20px;
-    border-radius: 5px;
-    width: 80vw;
-    height: 80vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    transition: box-shadow 0.1s ease; /* smooth transition for the shadow */
-    box-shadow: none;
-  }
+  border: 1px solid var(--font-color);
+  padding: 20px;
+  border-radius: 5px;
+  width: 80vw;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.formSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem;
+}
