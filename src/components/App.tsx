@@ -9,7 +9,9 @@ import '../css/App.css';
 
 function App() {
   const [musicians, setMusicians] = useState<Musician[]>([]);
-  const [cardSelected, setCardSelected] = useState('');
+  const [cardSelected, setCardSelected] = useState<string>('');
+  const [addMusicianSelected, setAddMusicianSelected] =
+    useState<boolean>(false);
 
   const getData = async () => {
     onSnapshot(collection(db, 'musicians'), (doc) => {
@@ -49,7 +51,10 @@ function App() {
             <p>Loading...</p>
           )}
         </div>
-        <MusicianForm />
+        <button onClick={() => setAddMusicianSelected(!addMusicianSelected)}>
+          Add Musician
+        </button>
+        {addMusicianSelected ? <MusicianForm /> : null}
       </>
     );
   }
