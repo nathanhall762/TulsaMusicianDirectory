@@ -10,6 +10,10 @@ export type Musician = {
   name: string;
   profileImage: string;
   spotify?: string;
+  youtube?: string;
+  soundcloud?: string;
+  tiktok?: string;
+  threads?: string;
 };
 
 interface MusicianCardProps {
@@ -21,8 +25,19 @@ const MusicianCard: React.FC<MusicianCardProps> = ({
   musician,
   setCardSelected,
 }) => {
-  const { bandcamp, facebook, genre, instagram, name, profileImage, spotify } =
-    musician;
+  const {
+    bandcamp,
+    facebook,
+    genre,
+    instagram,
+    name,
+    profileImage,
+    spotify,
+    youtube,
+    soundcloud,
+    tiktok,
+    threads,
+  } = musician;
 
   const clickCard = () => {
     setCardSelected(name);
@@ -39,6 +54,21 @@ const MusicianCard: React.FC<MusicianCardProps> = ({
             <i className='fa fa-bandcamp' aria-hidden='true'></i>
           </a>
         )}
+        {spotify && (
+          <a href={spotify} target='_blank' rel='noopener noreferrer'>
+            <i className='fa fa-spotify' aria-hidden='true'></i>
+          </a>
+        )}
+        {youtube && (
+          <a href={youtube} target='_blank' rel='noopener noreferrer'>
+            <i className='fa fa-youtube' aria-hidden='true'></i>
+          </a>
+        )}
+        {soundcloud && (
+          <a href={soundcloud} target='_blank' rel='noopener noreferrer'>
+            <i className='fa fa-soundcloud' aria-hidden='true'></i>
+          </a>
+        )}
         {facebook && (
           <a href={facebook} target='_blank' rel='noopener noreferrer'>
             <i className='fa fa-facebook' aria-hidden='true'></i>
@@ -49,9 +79,15 @@ const MusicianCard: React.FC<MusicianCardProps> = ({
             <i className='fa fa-instagram' aria-hidden='true'></i>
           </a>
         )}
-        {spotify && (
-          <a href={spotify} target='_blank' rel='noopener noreferrer'>
-            <i className='fa fa-spotify' aria-hidden='true'></i>
+        {tiktok && (
+          <a href={tiktok} target='_blank' rel='noopener noreferrer'>
+            <i className='fa fa-tiktok' aria-hidden='true'></i>
+          </a>
+        )}
+        {threads && (
+          <a href={threads} target='_blank' rel='noopener noreferrer'>
+            {/* Placeholder icon for Threads (since I'm not sure if there's a FontAwesome icon for it yet) */}
+            <i className='fa fa-comments' aria-hidden='true'></i>
           </a>
         )}
       </div>
