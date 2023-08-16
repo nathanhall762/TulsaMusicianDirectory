@@ -90,8 +90,15 @@ const MusicianForm: React.FC<musicianFormProps> = ({
         ...prevData,
         social: { ...prevData.social, [name]: value },
       }));
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-  }};
+    } else if (name === 'genre') {
+      setFormData((prevData) => ({
+        ...prevData,
+        genre: [value],
+      }));
+    } else {
+      setFormData((prevData) => ({ ...prevData, [name]: value }));
+    }
+  };
 
   const uploadImage = async () => {
     if (!ImageUpload) {
@@ -118,13 +125,16 @@ const MusicianForm: React.FC<musicianFormProps> = ({
       formData.social.threads ||
       formData.social.x
     ) {
-      document.querySelector('button[type="submit"]')!.removeAttribute('disabled');
+      document
+        .querySelector('button[type="submit"]')!
+        .removeAttribute('disabled');
     } else {
-      document.querySelector('button[type="submit"]')!.setAttribute('disabled', 'true');
+      document
+        .querySelector('button[type="submit"]')!
+        .setAttribute('disabled', 'true');
       // disable hover effect on button
     }
   });
-
 
   return (
     <div className={styles.musicianAddFormContainer}>
@@ -275,7 +285,9 @@ const MusicianForm: React.FC<musicianFormProps> = ({
             }}
           />
         </div>
-        <button className={styles.submitButton} type='submit' disabled>Submit</button>
+        <button className={styles.submitButton} type='submit' disabled>
+          Submit
+        </button>
       </form>
     </div>
   );
