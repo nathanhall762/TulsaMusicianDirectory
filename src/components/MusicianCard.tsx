@@ -24,8 +24,6 @@ const MusicianCard: React.FC<MusicianCardProps> = ({
   const { bandcamp, facebook, genre, instagram, name, profileImage, spotify } =
     musician;
 
-  console.log(profileImage);
-
   const clickCard = () => {
     setCardSelected(name);
   };

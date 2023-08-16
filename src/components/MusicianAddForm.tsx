@@ -10,14 +10,22 @@ type MusicianFormData = {
   name: string;
   bandcamp: string;
   spotify: string;
+  youtube: string;
+  soundcloud: string;
   facebook: string;
   instagram: string;
+  tiktok: string;
+  threads: string;
+  twitch: string;
+  x: string;
   genre: string[];
 };
 
 interface musicianFormProps {
   setAddMusicianSelected: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+
 
 const MusicianForm: React.FC<musicianFormProps> = ({
   setAddMusicianSelected,
@@ -27,8 +35,14 @@ const MusicianForm: React.FC<musicianFormProps> = ({
     name: '',
     bandcamp: '',
     spotify: '',
+    youtube: '',
+    soundcloud: '',
     facebook: '',
     instagram: '',
+    tiktok: '',
+    threads: '',
+    twitch: '',
+    x: '',
     genre: [''],
   });
 
@@ -37,9 +51,11 @@ const MusicianForm: React.FC<musicianFormProps> = ({
       e.preventDefault();
       // add image to firebase storage
       const url = await uploadImage();
-      console.log(formData);
       // add musician to firestore
       const musicianRef = doc(collection(db, 'musicians'));
+      console.log(formData.spotify);
+      const spotifyID = formData.spotify.split('/')[4];
+      console.log(spotifyID);
       await setDoc(musicianRef, {
         ...formData,
         profileImage: url,
@@ -65,7 +81,6 @@ const MusicianForm: React.FC<musicianFormProps> = ({
     const storageRef = ref(storage, `images/${ImageUpload.name + v4()}`);
     await uploadBytes(storageRef, ImageUpload);
     const url = await getDownloadURL(storageRef);
-    console.log(url);
     return url;
   };
 
@@ -105,6 +120,33 @@ const MusicianForm: React.FC<musicianFormProps> = ({
               onChange={handleInputChange}
             />
           </label>
+          <label>
+            YouTube:
+            <input
+              type='url'
+              name='youtube'
+              value={formData.youtube}
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            SoundCloud:
+            <input
+              type='url'
+              name='soundcloud'
+              value={formData.soundcloud}
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            Twitch:
+            <input
+              type='url'
+              name='twitch'
+              value={formData.twitch}
+              onChange={handleInputChange}
+            />
+          </label>
         </div>
         <div className={styles.formSection}>
           <h4>Social (must have at least one link)</h4>
@@ -123,6 +165,42 @@ const MusicianForm: React.FC<musicianFormProps> = ({
               type='url'
               name='instagram'
               value={formData.instagram}
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            Instagram:
+            <input
+              type='url'
+              name='instagram'
+              value={formData.instagram}
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            TikTok:
+            <input
+              type='url'
+              name='tiktok'
+              value={formData.tiktok}
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            Threads:
+            <input
+              type='url'
+              name='threads'
+              value={formData.threads}
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            X (Twitter):
+            <input
+              type='url'
+              name='x'
+              value={formData.x}
               onChange={handleInputChange}
             />
           </label>
