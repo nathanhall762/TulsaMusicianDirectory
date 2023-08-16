@@ -16,3 +16,11 @@
   align-items: center;
   margin: 1rem;
 }
+
+.submitButton {
+  border: 0px;
+}
+
+.submitButton:hover {
+  border: 0px;
+}
