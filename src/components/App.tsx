@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
+import { UserCredential } from 'firebase/auth';
 import MusicianPage, { Musician } from './MusicianPage';
 import MusicianCard from './MusicianCard';
 import MusicianForm from './MusicianAddForm';
+import Login from './login';
 import 'font-awesome/css/font-awesome.min.css';
 import '../css/App.css';
 
 function App() {
+  const [user, setUser] = useState<UserCredential | void>();
   const [musicians, setMusicians] = useState<Musician[]>([]);
   const [cardSelected, setCardSelected] = useState<string>('');
   const [addMusicianSelected, setAddMusicianSelected] =
@@ -35,13 +38,13 @@ function App() {
         setCardSelected={setCardSelected}
       ></MusicianPage>
     );
-  } if (addMusicianSelected) { 
-    return (
-      <MusicianForm setAddMusicianSelected={setAddMusicianSelected}/>
-    )
+  }
+  if (addMusicianSelected) {
+    return <MusicianForm setAddMusicianSelected={setAddMusicianSelected} />;
   } else {
     return (
       <>
+        <Login user={user} setUser={setUser} />
         <div className='cardContainer'>
           {musicians.length ? (
             musicians.map((musician) => (
@@ -55,7 +58,10 @@ function App() {
             <p>Loading...</p>
           )}
         </div>
-        <button className='addButton' onClick={() => setAddMusicianSelected(true)}>
+        <button
+          className='addButton'
+          onClick={() => setAddMusicianSelected(true)}
+        >
           Add Musician
         </button>
       </>
