@@ -4,6 +4,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { doc, setDoc, collection } from 'firebase/firestore';
 import { db } from '../firebase';
 import { v4 } from 'uuid';
+import { validateURLs } from '../utils';
 import styles from '../css/MusicianAddForm.module.css';
 
 type MusicianFormData = {
@@ -20,7 +21,6 @@ type MusicianFormData = {
     instagram: string;
     tiktok: string;
     threads: string;
-    x: string;
   };
   genre: string[];
 };
@@ -49,7 +49,6 @@ const MusicianForm: React.FC<musicianFormProps> = ({
       instagram: '',
       tiktok: '',
       threads: '',
-      x: '',
     },
     genre: [''],
   });
@@ -111,8 +110,8 @@ const MusicianForm: React.FC<musicianFormProps> = ({
       formData.name !== '' &&
       imageUpload instanceof File &&
       formData.genre[0] !== '' &&
-      Object.values(formData.music).some((music) => music !== '') &&
-      Object.values(formData.social).some((social) => social !== '')
+      validateURLs(formData.music) &&
+      validateURLs(formData.social)
     ) {
       setSubmitActive(true);
     } else {
@@ -219,15 +218,6 @@ const MusicianForm: React.FC<musicianFormProps> = ({
               type='url'
               name='social.threads'
               value={formData.social.threads}
-              onChange={handleInputChange}
-            />
-          </label>
-          <label>
-            X (Twitter):<br></br>
-            <input
-              type='url'
-              name='social.x'
-              value={formData.social.x}
               onChange={handleInputChange}
             />
           </label>
