@@ -33,7 +33,8 @@ interface musicianFormProps {
 const MusicianForm: React.FC<musicianFormProps> = ({
   setAddMusicianSelected,
 }) => {
-  const [ImageUpload, setImageUpload] = useState<File>();
+  const [imageUpload, setImageUpload] = useState<File>();
+  const [submitActive, setSubmitActive] = useState<boolean>(false);
   const [formData, setFormData] = useState<MusicianFormData>({
     name: '',
     music: {
@@ -50,10 +51,8 @@ const MusicianForm: React.FC<musicianFormProps> = ({
       threads: '',
       x: '',
     },
-    genre: [],
+    genre: [''],
   });
-
-  console.log(formData);
 
   const handleSubmit = async (e: React.FormEvent) => {
     try {
@@ -83,23 +82,25 @@ const MusicianForm: React.FC<musicianFormProps> = ({
     if (name.includes('music')) {
       setFormData((prevData) => ({
         ...prevData,
-        music: { ...prevData.music, [name]: value },
+        music: { ...prevData.music, [name.split('.')[1]]: value },
       }));
     } else if (name.includes('social')) {
       setFormData((prevData) => ({
         ...prevData,
-        social: { ...prevData.social, [name]: value },
+        social: { ...prevData.social, [name.split('.')[1]]: value },
       }));
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-  }};
+    } else {
+      setFormData((prevData) => ({ ...prevData, [name]: value }));
+    }
+  };
 
   const uploadImage = async () => {
-    if (!ImageUpload) {
+    if (!imageUpload) {
       alert('please add a file');
       throw new Error('no file added');
     }
-    const storageRef = ref(storage, `images/${ImageUpload.name + v4()}`);
-    await uploadBytes(storageRef, ImageUpload);
+    const storageRef = ref(storage, `images/${imageUpload.name + v4()}`);
+    await uploadBytes(storageRef, imageUpload);
     const url = await getDownloadURL(storageRef);
     return url;
   };
@@ -107,24 +108,17 @@ const MusicianForm: React.FC<musicianFormProps> = ({
   // if fields in formData.music and formData.social is not empty, set disabled to false
   useEffect(() => {
     if (
-      formData.music.bandcamp ||
-      formData.music.spotify ||
-      formData.music.youtube ||
-      formData.music.soundcloud ||
-      formData.music.twitch ||
-      formData.social.facebook ||
-      formData.social.instagram ||
-      formData.social.tiktok ||
-      formData.social.threads ||
-      formData.social.x
+      formData.name !== '' &&
+      imageUpload instanceof File &&
+      formData.genre[0] !== '' &&
+      Object.values(formData.music).some((music) => music !== '') &&
+      Object.values(formData.social).some((social) => social !== '')
     ) {
-      document.querySelector('button[type="submit"]')!.removeAttribute('disabled');
+      setSubmitActive(true);
     } else {
-      document.querySelector('button[type="submit"]')!.setAttribute('disabled', 'true');
-      // disable hover effect on button
+      setSubmitActive(false);
     }
-  });
-
+  }, [formData, imageUpload]);
 
   return (
     <div className={styles.musicianAddFormContainer}>
@@ -148,7 +142,7 @@ const MusicianForm: React.FC<musicianFormProps> = ({
             Bandcamp:<br></br>
             <input
               type='url'
-              name='bandcamp'
+              name='music.bandcamp'
               value={formData.music.bandcamp}
               onChange={handleInputChange}
             />
@@ -157,7 +151,7 @@ const MusicianForm: React.FC<musicianFormProps> = ({
             Spotify:<br></br>
             <input
               type='url'
-              name='spotify'
+              name='music.spotify'
               value={formData.music.spotify}
               onChange={handleInputChange}
             />
@@ -166,7 +160,7 @@ const MusicianForm: React.FC<musicianFormProps> = ({
             YouTube:<br></br>
             <input
               type='url'
-              name='youtube'
+              name='music.youtube'
               value={formData.music.youtube}
               onChange={handleInputChange}
             />
@@ -175,7 +169,7 @@ const MusicianForm: React.FC<musicianFormProps> = ({
             SoundCloud:<br></br>
             <input
               type='url'
-              name='soundcloud'
+              name='music.soundcloud'
               value={formData.music.soundcloud}
               onChange={handleInputChange}
             />
@@ -184,7 +178,7 @@ const MusicianForm: React.FC<musicianFormProps> = ({
             Twitch:<br></br>
             <input
               type='url'
-              name='twitch'
+              name='music.twitch'
               value={formData.music.twitch}
               onChange={handleInputChange}
             />
@@ -196,7 +190,7 @@ const MusicianForm: React.FC<musicianFormProps> = ({
             Facebook:<br></br>
             <input
               type='url'
-              name='facebook'
+              name='social.facebook'
               value={formData.social.facebook}
               onChange={handleInputChange}
             />
@@ -205,16 +199,7 @@ const MusicianForm: React.FC<musicianFormProps> = ({
             Instagram:<br></br>
             <input
               type='url'
-              name='instagram'
-              value={formData.social.instagram}
-              onChange={handleInputChange}
-            />
-          </label>
-          <label>
-            Instagram:<br></br>
-            <input
-              type='url'
-              name='instagram'
+              name='social.instagram'
               value={formData.social.instagram}
               onChange={handleInputChange}
             />
@@ -223,7 +208,7 @@ const MusicianForm: React.FC<musicianFormProps> = ({
             TikTok:<br></br>
             <input
               type='url'
-              name='tiktok'
+              name='social.tiktok'
               value={formData.social.tiktok}
               onChange={handleInputChange}
             />
@@ -232,7 +217,7 @@ const MusicianForm: React.FC<musicianFormProps> = ({
             Threads:<br></br>
             <input
               type='url'
-              name='threads'
+              name='social.threads'
               value={formData.social.threads}
               onChange={handleInputChange}
             />
@@ -241,7 +226,7 @@ const MusicianForm: React.FC<musicianFormProps> = ({
             X (Twitter):<br></br>
             <input
               type='url'
-              name='x'
+              name='social.x'
               value={formData.social.x}
               onChange={handleInputChange}
             />
@@ -275,7 +260,13 @@ const MusicianForm: React.FC<musicianFormProps> = ({
             }}
           />
         </div>
-        <button className={styles.submitButton} type='submit' disabled>Submit</button>
+        <button
+          className={submitActive ? '' : styles.submitButton}
+          type='submit'
+          disabled={submitActive ? false : true}
+        >
+          Submit
+        </button>
       </form>
     </div>
   );
