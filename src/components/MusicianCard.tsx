@@ -97,7 +97,7 @@ const MusicianCard: React.FC<MusicianCardProps> = ({
         {threads && (
           <a href={threads} target='_blank' rel='noopener noreferrer'>
             {/* Placeholder icon for Threads (since I'm not sure if there's a FontAwesome icon for it yet) */}
-            <i className='fa fa-comments' aria-hidden='true'></i>
+            <i className='fa fa-threads' aria-hidden='true'></i>
           </a>
         )}
         {twitch && (

@@ -3,18 +3,22 @@ import React, { SetStateAction } from 'react';
 import styles from '../css/MusicianPage.module.css';
 
 export type Musician = {
-  bandcamp?: string;
-  facebook?: string;
-  genre: string[];
-  instagram?: string;
   name: string;
+  music: {
+    bandcamp: string;
+    spotify: string;
+    youtube: string;
+    soundcloud: string;
+    twitch: string;
+  };
+  social: {
+    facebook: string;
+    instagram: string;
+    tiktok: string;
+    threads: string;
+  };
+  genre: string[];
   profileImage: string;
-  spotify?: string;
-  youtube?: string;
-  soundcloud?: string;
-  tiktok?: string;
-  threads?: string;
-  spotifyID?: string;
 };
 
 interface MusicianPageProps {
@@ -27,23 +31,27 @@ const MusicianPage: React.FC<MusicianPageProps> = ({
   setCardSelected,
 }) => {
   const {
-    bandcamp,
-    facebook,
-    genre,
-    instagram,
     name,
+    music: {
+      bandcamp,
+      spotify,
+      youtube,
+      soundcloud,
+      twitch,
+    },
+    social: {
+      facebook,
+      instagram,
+      tiktok,
+      threads,
+    },
+    genre,
     profileImage,
-    spotify,
-    spotifyID,
-    youtube,
-    soundcloud,
-    tiktok,
-    threads,
   } = musician;
 
   console.log(profileImage);
 
-  const spotifyEmbed = `https://open.spotify.com/embed/artist/${spotifyID}?utm_source=generator`;
+  const spotifyEmbed = `https://open.spotify.com/embed/artist/5V0MlUE1Bft0mbLlND7FJz?utm_source=generator`;
 
   const clickCard = () => {
     setCardSelected('');
@@ -96,6 +104,11 @@ const MusicianPage: React.FC<MusicianPageProps> = ({
                   <i className='fa fa-soundcloud' aria-hidden='true'></i>
                 </a>
               )}
+              {twitch && (
+                <a href={twitch} target='_blank' rel='noopener noreferrer'>
+                  <i className='fa fa-twitch' aria-hidden='true'></i>
+                </a>
+              )}
             </div>
 
             <div className={styles.socialLinks}>
@@ -118,7 +131,7 @@ const MusicianPage: React.FC<MusicianPageProps> = ({
               {threads && (
                 <a href={threads} target='_blank' rel='noopener noreferrer'>
                   {/* Not sure about the icon for Threads, using a placeholder */}
-                  <i className='fa fa-hashtag' aria-hidden='true'></i>
+                  <i className='fa fa-threads' aria-hidden='true'></i>
                 </a>
               )}
             </div>
