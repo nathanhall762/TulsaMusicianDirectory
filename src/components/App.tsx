@@ -58,12 +58,16 @@ function App() {
             <p>Loading...</p>
           )}
         </div>
-        <button
-          className='addButton'
-          onClick={() => setAddMusicianSelected(true)}
-        >
-          Add Musician
-        </button>
+        {user ? (
+          <button
+            className='addButton'
+            onClick={() => setAddMusicianSelected(true)}
+          >
+            Add Musician
+          </button>
+        ) : (
+          ''
+        )}
       </>
     );
   }
