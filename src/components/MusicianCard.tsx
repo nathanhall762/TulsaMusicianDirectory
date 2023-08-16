@@ -3,17 +3,22 @@ import React, { SetStateAction } from 'react';
 import styles from '../css/MusicianCard.module.css';
 
 export type Musician = {
-  bandcamp?: string;
-  facebook?: string;
-  genre: string[];
-  instagram?: string;
   name: string;
+  music: {
+    bandcamp: string;
+    spotify: string;
+    youtube: string;
+    soundcloud: string;
+    twitch: string;
+  };
+  social: {
+    facebook: string;
+    instagram: string;
+    tiktok: string;
+    threads: string;
+  };
+  genre: string[];
   profileImage: string;
-  spotify?: string;
-  youtube?: string;
-  soundcloud?: string;
-  tiktok?: string;
-  threads?: string;
 };
 
 interface MusicianCardProps {
@@ -26,17 +31,22 @@ const MusicianCard: React.FC<MusicianCardProps> = ({
   setCardSelected,
 }) => {
   const {
-    bandcamp,
-    facebook,
-    genre,
-    instagram,
     name,
+    music: {
+      bandcamp,
+      spotify,
+      youtube,
+      soundcloud,
+      twitch,
+    },
+    social: {
+      facebook,
+      instagram,
+      tiktok,
+      threads,
+    },
+    genre,
     profileImage,
-    spotify,
-    youtube,
-    soundcloud,
-    tiktok,
-    threads,
   } = musician;
 
   const clickCard = () => {
@@ -88,6 +98,11 @@ const MusicianCard: React.FC<MusicianCardProps> = ({
           <a href={threads} target='_blank' rel='noopener noreferrer'>
             {/* Placeholder icon for Threads (since I'm not sure if there's a FontAwesome icon for it yet) */}
             <i className='fa fa-comments' aria-hidden='true'></i>
+          </a>
+        )}
+        {twitch && (
+          <a href={twitch} target='_blank' rel='noopener noreferrer'>
+            <i className='fa fa-twitch' aria-hidden='true'></i>
           </a>
         )}
       </div>
