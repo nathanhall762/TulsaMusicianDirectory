@@ -1,6 +1,7 @@
 // MusicianPage.tsx
 import React, { SetStateAction } from 'react';
 import styles from '../css/MusicianPage.module.css';
+import EmbedSelector from './EmbedSelector';
 
 export type Musician = {
   name: string;
@@ -32,26 +33,30 @@ const MusicianPage: React.FC<MusicianPageProps> = ({
 }) => {
   const {
     name,
-    music: {
-      bandcamp,
-      spotify,
-      youtube,
-      soundcloud,
-      twitch,
-    },
-    social: {
-      facebook,
-      instagram,
-      tiktok,
-      threads,
-    },
+    music: { bandcamp, spotify, youtube, soundcloud, twitch },
+    social: { facebook, instagram, tiktok, threads },
     genre,
     profileImage,
   } = musician;
 
-  console.log(profileImage);
+  // const spotifyEmbed = `https://open.spotify.com/embed/artist/5V0MlUE1Bft0mbLlND7FJz?utm_source=generator`;
 
-  const spotifyEmbed = `https://open.spotify.com/embed/artist/5V0MlUE1Bft0mbLlND7FJz?utm_source=generator`;
+  function extractBandcampURL(iframeString: string): string | null {
+    const match = iframeString.match(
+      /href="(https:\/\/.*?\.bandcamp\.com)\/.*?"/
+    );
+    return match ? match[1] : null;
+  }
+  const bandcampURL = extractBandcampURL(bandcamp);
+
+  function extractSoundcloudProfileURL(embedCode: string): string | null {
+    const match = embedCode.match(
+      /<a href="(https:\/\/soundcloud\.com\/[^"]+)"/
+    );
+    return match ? match[1] : null;
+  }
+
+  const soundcloudProfileURL = extractSoundcloudProfileURL(soundcloud);
 
   const clickCard = () => {
     setCardSelected('');
@@ -71,21 +76,16 @@ const MusicianPage: React.FC<MusicianPageProps> = ({
             <h2>{name}</h2>
           </div>
           <div className={styles.keyInfo}>
-            <iframe
-              className={styles.smallSpotifyPlayer}
-              src={spotifyEmbed}
-              width='100%'
-              height='152'
-              frameBorder='0'
-              allowFullScreen={false}
-              //   allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture'
-              loading='lazy'
-            ></iframe>
+            <EmbedSelector Music={musician.music} />
             <p>Genre: {genre.length !== 0 ? genre.join(', ') : 'NA'}</p>
             <div className={styles.socialLinks}>
               <h4>Music:</h4>
               {bandcamp && (
-                <a href={bandcamp} target='_blank' rel='noopener noreferrer'>
+                <a
+                  href={typeof bandcampURL == 'string' ? bandcampURL : ''}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
                   <i className='fa fa-bandcamp' aria-hidden='true'></i>
                 </a>
               )}
@@ -100,7 +100,15 @@ const MusicianPage: React.FC<MusicianPageProps> = ({
                 </a>
               )}
               {soundcloud && (
-                <a href={soundcloud} target='_blank' rel='noopener noreferrer'>
+                <a
+                  href={
+                    typeof soundcloudProfileURL == 'string'
+                      ? soundcloudProfileURL
+                      : ''
+                  }
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
                   <i className='fa fa-soundcloud' aria-hidden='true'></i>
                 </a>
               )}

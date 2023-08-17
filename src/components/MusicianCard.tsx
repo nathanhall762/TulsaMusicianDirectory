@@ -32,19 +32,8 @@ const MusicianCard: React.FC<MusicianCardProps> = ({
 }) => {
   const {
     name,
-    music: {
-      bandcamp,
-      spotify,
-      youtube,
-      soundcloud,
-      twitch,
-    },
-    social: {
-      facebook,
-      instagram,
-      tiktok,
-      threads,
-    },
+    music: { bandcamp, spotify, youtube, soundcloud, twitch },
+    social: { facebook, instagram, tiktok, threads },
     genre,
     profileImage,
   } = musician;
@@ -53,6 +42,23 @@ const MusicianCard: React.FC<MusicianCardProps> = ({
     setCardSelected(name);
   };
 
+  function extractBandcampURL(iframeString: string): string | null {
+    const match = iframeString.match(
+      /href="(https:\/\/.*?\.bandcamp\.com)\/.*?"/
+    );
+    return match ? match[1] : null;
+  }
+  const bandcampURL = extractBandcampURL(bandcamp);
+
+  function extractSoundcloudProfileURL(embedCode: string): string | null {
+    const match = embedCode.match(
+      /<a href="(https:\/\/soundcloud\.com\/[^"]+)"/
+    );
+    return match ? match[1] : null;
+  }
+
+  const soundcloudProfileURL = extractSoundcloudProfileURL(soundcloud);
+
   return (
     <div className={styles.musicianCard} onClick={clickCard}>
       <h2>{name}</h2>
@@ -60,7 +66,11 @@ const MusicianCard: React.FC<MusicianCardProps> = ({
       <p>Genre: {genre.length !== 0 ? genre.join(', ') : 'NA'}</p>
       <div className={styles.socialLinks}>
         {bandcamp && (
-          <a href={bandcamp} target='_blank' rel='noopener noreferrer'>
+          <a
+            href={typeof bandcampURL == 'string' ? bandcampURL : ''}
+            target='_blank'
+            rel='noopener noreferrer'
+          >
             <i className='fa fa-bandcamp' aria-hidden='true'></i>
           </a>
         )}
@@ -75,7 +85,15 @@ const MusicianCard: React.FC<MusicianCardProps> = ({
           </a>
         )}
         {soundcloud && (
-          <a href={soundcloud} target='_blank' rel='noopener noreferrer'>
+          <a
+            href={
+              typeof soundcloudProfileURL == 'string'
+                ? soundcloudProfileURL
+                : ''
+            }
+            target='_blank'
+            rel='noopener noreferrer'
+          >
             <i className='fa fa-soundcloud' aria-hidden='true'></i>
           </a>
         )}

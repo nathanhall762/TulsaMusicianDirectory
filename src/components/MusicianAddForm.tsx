@@ -98,7 +98,7 @@ const MusicianForm: React.FC<musicianFormProps> = ({
       alert('please add a file');
       throw new Error('no file added');
     }
-    const storageRef = ref(storage, `images/${imageUpload.name + v4()}`);
+    const storageRef = ref(storage, `images/${formData.name + v4()}`);
     await uploadBytes(storageRef, imageUpload);
     const url = await getDownloadURL(storageRef);
     return url;
@@ -110,7 +110,7 @@ const MusicianForm: React.FC<musicianFormProps> = ({
       formData.name !== '' &&
       imageUpload instanceof File &&
       formData.genre[0] !== '' &&
-      validateURLs(formData.music) &&
+      // validateURLs(formData.music) &&
       validateURLs(formData.social)
     ) {
       setSubmitActive(true);
@@ -138,16 +138,16 @@ const MusicianForm: React.FC<musicianFormProps> = ({
         <div className={styles.formSection}>
           <h4>Music (must have at least one link)</h4>
           <label>
-            Bandcamp:<br></br>
+            Bandcamp Track or Album EMBED:<br></br>
             <input
-              type='url'
+              type='text'
               name='music.bandcamp'
               value={formData.music.bandcamp}
               onChange={handleInputChange}
             />
           </label>
           <label>
-            Spotify:<br></br>
+            Spotify Artist Page URL:<br></br>
             <input
               type='url'
               name='music.spotify'
@@ -156,7 +156,7 @@ const MusicianForm: React.FC<musicianFormProps> = ({
             />
           </label>
           <label>
-            YouTube:<br></br>
+            YouTube Channel URL:<br></br>
             <input
               type='url'
               name='music.youtube'
@@ -165,16 +165,16 @@ const MusicianForm: React.FC<musicianFormProps> = ({
             />
           </label>
           <label>
-            SoundCloud:<br></br>
+            SoundCloud Track or Album EMBED:<br></br>
             <input
-              type='url'
+              type='text'
               name='music.soundcloud'
               value={formData.music.soundcloud}
               onChange={handleInputChange}
             />
           </label>
           <label>
-            Twitch:<br></br>
+            Twitch Channel URL:<br></br>
             <input
               type='url'
               name='music.twitch'
@@ -186,7 +186,7 @@ const MusicianForm: React.FC<musicianFormProps> = ({
         <div className={styles.formSection}>
           <h4>Social (must have at least one link)</h4>
           <label>
-            Facebook:<br></br>
+            Facebook Artist/Page URL:<br></br>
             <input
               type='url'
               name='social.facebook'
@@ -195,7 +195,7 @@ const MusicianForm: React.FC<musicianFormProps> = ({
             />
           </label>
           <label>
-            Instagram:<br></br>
+            Instagram Profile URL:<br></br>
             <input
               type='url'
               name='social.instagram'
@@ -204,7 +204,7 @@ const MusicianForm: React.FC<musicianFormProps> = ({
             />
           </label>
           <label>
-            TikTok:<br></br>
+            TikTok Profile URL:<br></br>
             <input
               type='url'
               name='social.tiktok'
@@ -213,7 +213,7 @@ const MusicianForm: React.FC<musicianFormProps> = ({
             />
           </label>
           <label>
-            Threads:<br></br>
+            Threads Profile URL:<br></br>
             <input
               type='url'
               name='social.threads'
