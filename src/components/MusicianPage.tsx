@@ -2,25 +2,7 @@
 import React, { SetStateAction } from 'react';
 import styles from '../css/MusicianPage.module.css';
 import EmbedSelector from './EmbedSelector';
-
-export type Musician = {
-  name: string;
-  music: {
-    bandcamp: string;
-    spotify: string;
-    youtube: string;
-    soundcloud: string;
-    twitch: string;
-  };
-  social: {
-    facebook: string;
-    instagram: string;
-    tiktok: string;
-    threads: string;
-  };
-  genre: string[];
-  profileImage: string;
-};
+import { Musician } from '../types';
 
 interface MusicianPageProps {
   musician: Musician;
