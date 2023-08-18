@@ -19,7 +19,7 @@ const HomePage = () => {
         {/* show add muscian button only if logged in */}
         {user ? (
           <Link to={'/addmusician'}>
-            <button>Add Musician</button>
+            <button className='addButton'>Add Musician</button>
           </Link>
         ) : null}
       </div>
