@@ -5,7 +5,9 @@ import { doc, setDoc, collection } from 'firebase/firestore';
 import { db } from '../firebase';
 import { v4 } from 'uuid';
 import { validateURLs } from '../utils';
+import { Link, useOutletContext } from 'react-router-dom';
 import styles from '../css/MusicianAddForm.module.css';
+import { OutletContextProps } from '../types';
 
 type MusicianFormData = {
   name: string;
@@ -25,14 +27,9 @@ type MusicianFormData = {
   genre: string[];
 };
 
-interface musicianFormProps {
-  setAddMusicianSelected: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
 // Component
-const MusicianForm: React.FC<musicianFormProps> = ({
-  setAddMusicianSelected,
-}) => {
+const MusicianForm = () => {
+  const { user } = useOutletContext<OutletContextProps>();
   const [imageUpload, setImageUpload] = useState<File>();
   const [submitActive, setSubmitActive] = useState<boolean>(false);
   const [formData, setFormData] = useState<MusicianFormData>({
@@ -68,7 +65,6 @@ const MusicianForm: React.FC<musicianFormProps> = ({
         profileImage: url,
       });
       alert('musician profile uploaded');
-      setAddMusicianSelected(false);
     } catch (err) {
       console.log(err);
       alert('error uploading musician profile');
@@ -119,9 +115,22 @@ const MusicianForm: React.FC<musicianFormProps> = ({
     }
   }, [formData, imageUpload]);
 
+  if (!user) {
+    return (
+      <div>
+        <p>You Must Login to Add a Musician</p>
+        <Link to={'..'}>
+          <button>Go Back</button>
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.musicianAddFormContainer}>
-      <button onClick={() => setAddMusicianSelected(false)}>Exit</button>
+      <Link to={'..'}>
+        <button>Exit</button>
+      </Link>
       <form onSubmit={handleSubmit}>
         <div>
           <label>
