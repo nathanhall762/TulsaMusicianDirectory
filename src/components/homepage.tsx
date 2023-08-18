@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import MusicianCard from './MusicianCard';
 import Login from './login';
 import { OutletContextProps } from '../types';
-import { useOutletContext } from 'react-router-dom';
 
 const HomePage = () => {
+  // const musicians: Musician[], user = useOutletContext();
   const { musicians, user } = useOutletContext<OutletContextProps>();
 
   if (musicians.length) {

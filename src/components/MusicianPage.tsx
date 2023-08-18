@@ -1,9 +1,8 @@
 // MusicianPage.tsx
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useOutletContext } from 'react-router-dom';
 import styles from '../css/MusicianPage.module.css';
 import EmbedSelector from './EmbedSelector';
 import { OutletContextProps } from '../types';
-import { useOutletContext } from 'react-router-dom';
 
 const MusicianPage = () => {
   const { musicians } = useOutletContext<OutletContextProps>();
@@ -14,7 +13,7 @@ const MusicianPage = () => {
   }
 
   // match name in url to name in musicians array
-  const musicianName = musicianId?.replace('_', ' ');
+  const musicianName = musicianId?.replaceAll('_', ' ');
   const musician = musicians.find((x) => musicianName === x.name.toLowerCase());
 
   if (!musician) {

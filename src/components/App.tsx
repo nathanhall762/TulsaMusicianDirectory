@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
-import { Musician } from '../types';
+import { Musician, OutletContextProps } from '../types';
 import { UserCredential } from 'firebase/auth';
-import { OutletContextProps } from '../types';
 import 'font-awesome/css/font-awesome.min.css';
 import '../css/App.css';
 
