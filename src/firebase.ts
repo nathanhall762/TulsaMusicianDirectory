@@ -10,13 +10,17 @@ import { getAuth } from 'firebase/auth';
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: 'AIzaSyAiPcx5h3o3ITjQBrHThUf3gnl_CtDWPBs',
-  authDomain: 'tulsa-musician-directory.firebaseapp.com',
-  projectId: 'tulsa-musician-directory',
-  storageBucket: 'tulsa-musician-directory.appspot.com',
-  messagingSenderId: '1048137599300',
-  appId: '1:1048137599300:web:69456c091479eb5b972f11',
-  measurementId: 'G-5RL29DB9GF',
+  apiKey: 'AIzaSyDi5Aj2hQ0JbgVQye9lQnuT1guMe20oPeA',
+
+  authDomain: 'tulsamusiciandirectory.firebaseapp.com',
+
+  projectId: 'tulsamusiciandirectory',
+
+  storageBucket: 'tulsamusiciandirectory.appspot.com',
+
+  messagingSenderId: '425159254629',
+
+  appId: '1:425159254629:web:57799f514d26f94eb69c8c',
 };
 
 // Initialize Firebase
