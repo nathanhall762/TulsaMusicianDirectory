@@ -23,7 +23,7 @@ const EmbedSelector: React.FC<Props> = ({ Music }) => {
         width={width}
         height={height}
         frameBorder='0'
-        allowTransparency={true}
+        // allowTransparency={true}
         allow='encrypted-media'
         title='Spotify'
       ></iframe>
