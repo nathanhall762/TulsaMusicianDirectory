@@ -1,6 +1,7 @@
 // MusicianCard.tsx
-import React, { SetStateAction } from 'react';
+import React from 'react';
 import styles from '../css/MusicianCard.module.css';
+import { Link } from 'react-router-dom';
 
 export type Musician = {
   name: string;
@@ -23,13 +24,9 @@ export type Musician = {
 
 interface MusicianCardProps {
   musician: Musician;
-  setCardSelected: React.Dispatch<SetStateAction<string>>;
 }
 
-const MusicianCard: React.FC<MusicianCardProps> = ({
-  musician,
-  setCardSelected,
-}) => {
+const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
   const {
     name,
     music: { bandcamp, spotify, youtube, soundcloud, twitch },
@@ -38,9 +35,7 @@ const MusicianCard: React.FC<MusicianCardProps> = ({
     profileImage,
   } = musician;
 
-  const clickCard = () => {
-    setCardSelected(name);
-  };
+  const urlName = name.replace(' ', '_').toLowerCase();
 
   function extractBandcampURL(iframeString: string): string | null {
     const match = iframeString.match(
@@ -60,7 +55,7 @@ const MusicianCard: React.FC<MusicianCardProps> = ({
   const soundcloudProfileURL = extractSoundcloudProfileURL(soundcloud);
 
   return (
-    <div className={styles.musicianCard} onClick={clickCard}>
+    <Link className={styles.musicianCard} to={urlName}>
       <div className={styles.name}>
         <h2>{name}</h2>
       </div>
@@ -128,7 +123,7 @@ const MusicianCard: React.FC<MusicianCardProps> = ({
           )}
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

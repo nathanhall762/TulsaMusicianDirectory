@@ -1,18 +1,27 @@
 // MusicianPage.tsx
-import React, { SetStateAction } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import styles from '../css/MusicianPage.module.css';
 import EmbedSelector from './EmbedSelector';
-import { Musician } from '../types';
+import { OutletContextProps } from '../types';
+import { useOutletContext } from 'react-router-dom';
 
-interface MusicianPageProps {
-  musician: Musician;
-  setCardSelected: React.Dispatch<SetStateAction<string>>;
-}
+const MusicianPage = () => {
+  const { musicians } = useOutletContext<OutletContextProps>();
+  const { musicianId } = useParams();
 
-const MusicianPage: React.FC<MusicianPageProps> = ({
-  musician,
-  setCardSelected,
-}) => {
+  if (!musicians) {
+    return <p>...Loading</p>;
+  }
+
+  // match name in url to name in musicians array
+  const musicianName = musicianId?.replace('_', ' ');
+  const musician = musicians.find((x) => musicianName === x.name.toLowerCase());
+
+  if (!musician) {
+    return <p>...Loading</p>;
+  }
+
+  // destructure matched musician object
   const {
     name,
     music: { bandcamp, spotify, youtube, soundcloud, twitch },
@@ -20,8 +29,6 @@ const MusicianPage: React.FC<MusicianPageProps> = ({
     genre,
     profileImage,
   } = musician;
-
-  // const spotifyEmbed = `https://open.spotify.com/embed/artist/5V0MlUE1Bft0mbLlND7FJz?utm_source=generator`;
 
   function extractBandcampURL(iframeString: string): string | null {
     const match = iframeString.match(
@@ -40,14 +47,12 @@ const MusicianPage: React.FC<MusicianPageProps> = ({
 
   const soundcloudProfileURL = extractSoundcloudProfileURL(soundcloud);
 
-  const clickCard = () => {
-    setCardSelected('');
-  };
-
   return (
     <>
       <div className={styles.musicianPage}>
-        <button onClick={clickCard}>Go Back</button>
+        <Link to={'..'}>
+          <button>Go Back</button>
+        </Link>
         <div className={styles.pageHeader}>
           <div className={styles.nameAndPhoto}>
             <img

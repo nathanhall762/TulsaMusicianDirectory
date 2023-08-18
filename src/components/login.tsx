@@ -1,23 +1,20 @@
 import {
-  UserCredential,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
-import { SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import { auth } from '../firebase';
 import { FirebaseError } from 'firebase/app';
-
-interface LoginProps {
-  user: UserCredential | void;
-  setUser: React.Dispatch<SetStateAction<UserCredential | void>>;
-}
+import { useOutletContext } from 'react-router-dom';
+import { OutletContextProps } from '../types';
 
 interface LoginData {
   email: string;
   password: string;
 }
 
-const Login: React.FC<LoginProps> = ({ user, setUser }) => {
+const Login = () => {
+  const { user, setUser } = useOutletContext<OutletContextProps>();
   const [loginData, setLoginData] = useState<LoginData>({
     email: '',
     password: '',
@@ -34,6 +31,8 @@ const Login: React.FC<LoginProps> = ({ user, setUser }) => {
         throw new Error('this is broke in a special way');
       }
       if (err.code === 'auth/invalid-email') alert('Invalid Email');
+      if (err.code === 'auth/email-already-in-use')
+        alert('Email Already in Use');
       if (err.code === 'auth/missing-password') alert('Missing Password');
       if (err.code === 'auth/weak-password')
         alert('Password should be at least 6 characters');

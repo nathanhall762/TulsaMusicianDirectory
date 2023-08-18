@@ -1,3 +1,5 @@
+import { UserCredential } from 'firebase/auth';
+
 export type Musician = {
   name: string;
   music: {
@@ -15,4 +17,10 @@ export type Musician = {
   };
   genre: string[];
   profileImage: string;
+};
+
+export type OutletContextProps = {
+  musicians: Musician[];
+  user: UserCredential | void;
+  setUser: React.Dispatch<React.SetStateAction<void | UserCredential>>;
 };
