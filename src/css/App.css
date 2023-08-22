@@ -45,7 +45,10 @@
   align-items: center;
 }
 
-.addButton {
+.buttonBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   bottom: 1rem;
   right: 1rem;

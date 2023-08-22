@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { storage } from '../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { doc, setDoc, collection, getDocs, deleteDoc } from 'firebase/firestore';
+import {
+  doc,
+  setDoc,
+  collection,
+  getDocs,
+  deleteDoc,
+} from 'firebase/firestore';
 import { db } from '../firebase';
 import { v4 } from 'uuid';
 import { validateURLs } from '../utils';
@@ -26,6 +32,7 @@ type MusicianFormData = {
     threads: string;
   };
   genre: string[];
+  profileImage?: string;
 };
 
 // Component
@@ -53,47 +60,50 @@ const MusicianApproveForm = () => {
     genre: [''],
   });
   const [isFetched, setIsFetched] = useState(false);
+  const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
 
   console.log(musicianName); // output: good
 
   const handleSubmit = async (e: React.FormEvent) => {
     try {
       e.preventDefault();
-      // add image to firebase storage
+
+      // Ensure the logged-in user is an admin
+      if (
+        user?.user?.uid !== 'UeRplqnzeTTKZmFrZxSNKs6hlt62' &&
+        user?.user?.uid !== 'hbrLp0oqRCWkSmL9qAbfy4tGUdc2'
+      ) {
+        alert('Only admin can approve musicians.');
+        return;
+      }
+
+      // Add image to firebase storage
       const url = await uploadImage();
-      // add musician to firestore
-      // if logged in user is admin, set const targetCollection to 'musicians'
-      // else set const targetCollection to 'pendingMusicians'
-      const targetCollection =
-        user?.user?.uid ===
-        ('UeRplqnzeTTKZmFrZxSNKs6hlt62' || 'hbrLp0oqRCWkSmL9qAbfy4tGUdc2')
-          ? 'musicians'
-          : 'pendingMusicians';
-      const musicianRef = doc(collection(db, targetCollection));
+
+      // Add musician to 'musicians' collection in firestore
+      const musicianRef = doc(collection(db, 'musicians'));
       await setDoc(musicianRef, {
         ...formData,
         profileImage: url,
       });
-      if (targetCollection === 'pendingMusicians') {
-        alert('musician profile uploaded for approval');
-      } else {
-        alert('musician profile uploaded');
-      }
-      // If musician was added to the 'musicians' collection, delete from 'pendingMusicians'
-      if (targetCollection === 'musicians') {
-        const pendingMusiciansCol = collection(db, 'pendingMusicians');
-        const pendingMusicianSnapshot = await getDocs(pendingMusiciansCol);
-        const pendingMusicianDoc = pendingMusicianSnapshot.docs.find(doc => doc.data().name.toLowerCase() === musicianName?.toLowerCase());
+      alert('Musician profile approved and uploaded.');
 
-        if (pendingMusicianDoc) {
-            await deleteDoc(pendingMusicianDoc.ref);
-        }
-    }
-      // go back to homepage using React router
+      // After adding to the 'musicians' collection, always delete from 'pendingMusicians'
+      const pendingMusiciansCol = collection(db, 'pendingMusicians');
+      const pendingMusicianSnapshot = await getDocs(pendingMusiciansCol);
+      const pendingMusicianDoc = pendingMusicianSnapshot.docs.find(
+        (doc) => doc.data().name.toLowerCase() === musicianName?.toLowerCase()
+      );
+
+      if (pendingMusicianDoc) {
+        await deleteDoc(pendingMusicianDoc.ref);
+      }
+
+      // Go back to homepage using React router
       window.location.href = '/';
     } catch (err) {
       console.log(err);
-      alert('error uploading musician profile');
+      alert('Error approving musician profile.');
     }
   };
 
@@ -116,14 +126,20 @@ const MusicianApproveForm = () => {
   };
 
   const uploadImage = async () => {
-    if (!imageUpload) {
-      alert('please add a file');
-      throw new Error('no file added');
+    if (imageUpload) {
+      // New image is uploaded
+      const storageRef = ref(storage, `images/${formData.name + v4()}`);
+      await uploadBytes(storageRef, imageUpload);
+      return await getDownloadURL(storageRef);
+    } else {
+      // No new image uploaded, use existing image URL from formData
+      if (formData.profileImage) {
+        return formData.profileImage;
+      } else {
+        alert('No existing image found and no new image uploaded.');
+        throw new Error('No image available');
+      }
     }
-    const storageRef = ref(storage, `images/${formData.name + v4()}`);
-    await uploadBytes(storageRef, imageUpload);
-    const url = await getDownloadURL(storageRef);
-    return url;
   };
 
   // if fields in formData.music and formData.social is not empty, set disabled to false
@@ -137,6 +153,7 @@ const MusicianApproveForm = () => {
         );
 
         if (musicianDoc) {
+          setProfileImageUrl(musicianDoc.data().profileImage);
           // Set the fetched data to formData
           setFormData({
             name: musicianDoc.data().name,
@@ -154,6 +171,7 @@ const MusicianApproveForm = () => {
               threads: musicianDoc.data().social.threads,
             },
             genre: musicianDoc.data().genre,
+            profileImage: musicianDoc.data().profileImage,
           });
           setIsFetched(true);
         }
@@ -164,7 +182,6 @@ const MusicianApproveForm = () => {
 
     if (
       formData.name !== '' &&
-      imageUpload instanceof File &&
       formData.genre[0] !== '' &&
       // validateURLs(formData.music) &&
       validateURLs(formData.social)
@@ -307,7 +324,18 @@ const MusicianApproveForm = () => {
           </label>
         </div>
         <div className={styles.formSection}>
-          <h4>Add a profile image</h4>
+          {profileImageUrl && (
+            <div>
+              <h4>Current Profile Image:</h4>
+              <img
+                src={profileImageUrl}
+                alt='Current Profile'
+                width='100'
+              />{' '}
+              {/* Adjust width as needed */}
+            </div>
+          )}
+          <h4>Change Profile Image?</h4>
           <input
             type='file'
             onChange={(event) => {

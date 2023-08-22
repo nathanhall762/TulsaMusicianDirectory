@@ -2,10 +2,30 @@ import { Link, useOutletContext } from 'react-router-dom';
 import MusicianCard from './MusicianCard';
 import Login from './login';
 import { OutletContextProps } from '../types';
+import { useState, useEffect } from 'react';
+import { collection, onSnapshot } from 'firebase/firestore';
+import { db } from '../firebase';
+import { Musician } from '../types';
 
 const MusicianApprovePage = () => {
   // const musicians: Musician[], user = useOutletContext();
-  const { musicians, user } = useOutletContext<OutletContextProps>();
+  const [musicians, setPendingMusicians] = useState<Musician[]>([]);
+  const { user } = useOutletContext<OutletContextProps>();
+
+  useEffect(() => {
+    const pendingMusiciansCol = collection(db, 'pendingMusicians');
+
+    // Subscribe to real-time updates
+    const unsubscribe = onSnapshot(pendingMusiciansCol, (snapshot) => {
+      const fetchedMusicians = snapshot.docs.map(
+        (doc) => doc.data() as Musician
+      );
+      setPendingMusicians(fetchedMusicians);
+    });
+
+    // Unsubscribe from updates when the component unmounts
+    return () => unsubscribe();
+  }, []);
 
   if (musicians.length) {
     return (
