@@ -22,7 +22,9 @@ function App() {
     });
   };
 
-  helloWorld().then((res) => console.log(JSON.stringify(res)));
+  helloWorld().then((result) => {
+    console.log(result);
+  });
 
   useEffect(() => {
     getData();
