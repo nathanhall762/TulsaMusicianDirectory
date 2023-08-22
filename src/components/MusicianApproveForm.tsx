@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { storage } from '../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { doc, setDoc, collection } from 'firebase/firestore';
+import { doc, setDoc, collection, getDocs, deleteDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { v4 } from 'uuid';
 import { validateURLs } from '../utils';
-import { Link, useOutletContext } from 'react-router-dom';
+import { Link, useOutletContext, useParams } from 'react-router-dom';
 import styles from '../css/MusicianAddForm.module.css';
 import { OutletContextProps } from '../types';
+import Login from './login';
 
 type MusicianFormData = {
   name: string;
@@ -28,10 +29,12 @@ type MusicianFormData = {
 };
 
 // Component
-const MusicianForm = () => {
+const MusicianApproveForm = () => {
   const { user } = useOutletContext<OutletContextProps>();
   const [imageUpload, setImageUpload] = useState<File>();
   const [submitActive, setSubmitActive] = useState<boolean>(false);
+  const { musicianId } = useParams<{ musicianId: string }>();
+  const musicianName = musicianId?.replaceAll('_', ' ');
   const [formData, setFormData] = useState<MusicianFormData>({
     name: '',
     music: {
@@ -49,6 +52,9 @@ const MusicianForm = () => {
     },
     genre: [''],
   });
+  const [isFetched, setIsFetched] = useState(false);
+
+  console.log(musicianName); // output: good
 
   const handleSubmit = async (e: React.FormEvent) => {
     try {
@@ -73,6 +79,16 @@ const MusicianForm = () => {
       } else {
         alert('musician profile uploaded');
       }
+      // If musician was added to the 'musicians' collection, delete from 'pendingMusicians'
+      if (targetCollection === 'musicians') {
+        const pendingMusiciansCol = collection(db, 'pendingMusicians');
+        const pendingMusicianSnapshot = await getDocs(pendingMusiciansCol);
+        const pendingMusicianDoc = pendingMusicianSnapshot.docs.find(doc => doc.data().name.toLowerCase() === musicianName?.toLowerCase());
+
+        if (pendingMusicianDoc) {
+            await deleteDoc(pendingMusicianDoc.ref);
+        }
+    }
       // go back to homepage using React router
       window.location.href = '/';
     } catch (err) {
@@ -112,6 +128,40 @@ const MusicianForm = () => {
 
   // if fields in formData.music and formData.social is not empty, set disabled to false
   useEffect(() => {
+    const fetchMusician = async () => {
+      if (!isFetched) {
+        const musiciansCol = collection(db, 'pendingMusicians');
+        const musicianSnapshot = await getDocs(musiciansCol);
+        const musicianDoc = musicianSnapshot.docs.find(
+          (doc) => doc.data().name.toLowerCase() === musicianName?.toLowerCase()
+        );
+
+        if (musicianDoc) {
+          // Set the fetched data to formData
+          setFormData({
+            name: musicianDoc.data().name,
+            music: {
+              bandcamp: musicianDoc.data().music.bandcamp,
+              spotify: musicianDoc.data().music.spotify,
+              youtube: musicianDoc.data().music.youtube,
+              soundcloud: musicianDoc.data().music.soundcloud,
+              twitch: musicianDoc.data().music.twitch,
+            },
+            social: {
+              facebook: musicianDoc.data().social.facebook,
+              instagram: musicianDoc.data().social.instagram,
+              tiktok: musicianDoc.data().social.tiktok,
+              threads: musicianDoc.data().social.threads,
+            },
+            genre: musicianDoc.data().genre,
+          });
+          setIsFetched(true);
+        }
+      }
+    };
+
+    fetchMusician();
+
     if (
       formData.name !== '' &&
       imageUpload instanceof File &&
@@ -123,15 +173,13 @@ const MusicianForm = () => {
     } else {
       setSubmitActive(false);
     }
-  }, [formData, imageUpload]);
+  }, [formData, imageUpload, musicianName, isFetched]);
 
   if (!user) {
     return (
       <div>
         <p>You Must Login to Add a Musician</p>
-        <Link to={'..'}>
-          <button>Go Back</button>
-        </Link>
+        <Login />
       </div>
     );
   }
@@ -281,4 +329,4 @@ const MusicianForm = () => {
   );
 };
 
-export default MusicianForm;
+export default MusicianApproveForm;

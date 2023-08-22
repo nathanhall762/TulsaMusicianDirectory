@@ -3,6 +3,8 @@ import App from './components/App';
 import HomePage from './components/homepage';
 import MusicianPage from './components/MusicianPage';
 import MusicianForm from './components/MusicianAddForm';
+import MusicianApproveForm from './components/MusicianApproveForm';
+import MusicianApprovePage from './components/MusicianApprovePage';
 
 const router = createBrowserRouter([
   {
@@ -18,6 +20,14 @@ const router = createBrowserRouter([
         path: '/addmusician',
         element: <MusicianForm />,
       },
+      {
+        path: '/approvemusician',
+        element: <MusicianApprovePage />,
+      },
+      {
+        path: '/approvemusician/:musicianId',
+        element: <MusicianApproveForm />,
+      }
     ],
   },
 ]);
