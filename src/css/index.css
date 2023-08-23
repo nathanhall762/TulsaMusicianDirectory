@@ -3,12 +3,38 @@
   line-height: 1.5;
   font-weight: 400;
 
-  --background-color: #171219;
+  --background-color: 23, 18, 25; /* #171219 */
   --primary-color: #ECB028;
   --secondary-color: #1D324F;
   --tertiary-color: #C82735;
   --font-color: #E9F1F7;
 
+  /* Bandcamp: The Bandcamp blue */
+  --bandcamp-color: #1DA1F2;
+
+  /* Spotify: The Spotify green */
+  --spotify-color: #1DB954;
+
+  /* YouTube: The YouTube red */
+  --youtube-color: #FF0000;
+
+  /* SoundCloud: The SoundCloud orange */
+  --soundcloud-color: #FF5500;
+
+  /* Facebook: The Facebook blue */
+  --facebook-color: #1877F2;
+
+  /* Instagram: The Instagram gradient (Note: This is more complicated as it's a gradient, not a solid color) */
+  --instagram-gradient: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D, #F56040);
+
+  /* TikTok: The TikTok black */
+  --tiktok-color: #000000;
+
+  /* Twitch: The Twitch purple */
+  --twitch-color: #9146FF;
+
+  /* Threads: I'm not sure of the official color, so I'll use a placeholder grey for now. Adjust as needed */
+  --threads-color: #808080;
 
   color-scheme: light dark;
   color: var(--font-color);

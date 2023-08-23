@@ -45,11 +45,34 @@
   align-items: center;
 }
 
+.addButton {
+  background-color: var(--tertiary-color);
+  transition: background-color 0.25s;
+  margin: 0 .5rem;
+}
+
+.addButton:hover {
+  background-color: var(--primary-color);
+}
+
 .buttonBox {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   position: fixed;
   bottom: 1rem;
   right: 1rem;
+  width: fit-content;
+  background-color: rgba(var(--background-color), 0.5);
+  border-radius: 8px;
+  box-shadow: 0px 0px 2rem 2rem rgba(var(--background-color), 0.5);
+}
+
+@media screen and (max-width: 576px) {
+  .buttonBox {
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    right: 0;
+  }
 }

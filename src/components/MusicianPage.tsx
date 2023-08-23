@@ -1,12 +1,14 @@
 // MusicianPage.tsx
-import { Link, useParams, useOutletContext } from 'react-router-dom';
+import { useParams, useOutletContext } from 'react-router-dom';
 import styles from '../css/MusicianPage.module.css';
 import EmbedSelector from './EmbedSelector';
 import { OutletContextProps } from '../types';
+import { useNavigate } from 'react-router-dom';
 
 const MusicianPage = () => {
   const { musicians } = useOutletContext<OutletContextProps>();
   const { musicianId } = useParams();
+  const navigate = useNavigate();
 
   if (!musicians) {
     return <p>...Loading</p>;
@@ -49,9 +51,7 @@ const MusicianPage = () => {
   return (
     <>
       <div className={styles.musicianPage}>
-        <Link to={'..'}>
-          <button>Go Back</button>
-        </Link>
+        <button style={{margin: "0 1rem 2rem 1rem"}} onClick={() => navigate(-1)}>Go Back</button>
         <div className={styles.pageHeader}>
           <div className={styles.nameAndPhoto}>
             <img
@@ -71,12 +71,13 @@ const MusicianPage = () => {
                   href={typeof bandcampURL == 'string' ? bandcampURL : ''}
                   target='_blank'
                   rel='noopener noreferrer'
+                  className={styles.bandcamp}
                 >
                   <i className='fa fa-bandcamp' aria-hidden='true'></i>
                 </a>
               )}
               {spotify && (
-                <a href={spotify} target='_blank' rel='noopener noreferrer'>
+                <a href={spotify} target='_blank' rel='noopener noreferrer' className={styles.spotifyLink}>
                   <i className='fa fa-spotify' aria-hidden='true'></i>
                 </a>
               )}

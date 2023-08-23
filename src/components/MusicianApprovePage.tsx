@@ -1,4 +1,4 @@
-import { Link, useOutletContext } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
 import MusicianCard from './MusicianCard';
 import Login from './login';
 import { OutletContextProps } from '../types';
@@ -47,12 +47,6 @@ const MusicianApprovePage = () => {
             <MusicianCard key={musician.name} musician={musician} />
           ))}
         </div>
-        {/* show add muscian button only if logged in */}
-        {user ? (
-          <Link to={'/addmusician'}>
-            <button className='addButton'>Add Musician</button>
-          </Link>
-        ) : null}
       </div>
     );
   } else {

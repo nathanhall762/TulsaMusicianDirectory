@@ -7,12 +7,15 @@ const HomePage = () => {
   // const musicians: Musician[], user = useOutletContext();
   const { musicians, user } = useOutletContext<OutletContextProps>();
 
+  const sortedMusicians = [...musicians].sort((a, b) => a.name.localeCompare(b.name));
+
+
   if (musicians.length) {
     return (
       <div>
         <Login />
         <div className='cardContainer'>
-          {musicians.map((musician) => (
+          {sortedMusicians.map((musician) => (
             <MusicianCard key={musician.name} musician={musician} />
           ))}
         </div>

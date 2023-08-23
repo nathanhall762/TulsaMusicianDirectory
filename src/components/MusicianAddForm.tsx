@@ -8,6 +8,7 @@ import { validateURLs } from '../utils';
 import { Link, useOutletContext } from 'react-router-dom';
 import styles from '../css/MusicianAddForm.module.css';
 import { OutletContextProps } from '../types';
+import { useNavigate } from 'react-router-dom';
 
 type MusicianFormData = {
   name: string;
@@ -49,6 +50,7 @@ const MusicianForm = () => {
     },
     genre: [''],
   });
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     try {
@@ -74,7 +76,7 @@ const MusicianForm = () => {
         alert('musician profile uploaded');
       }
       // go back to homepage using React router
-      window.location.href = '/';
+      navigate(-1);
     } catch (err) {
       console.log(err);
       alert('error uploading musician profile');
@@ -138,9 +140,7 @@ const MusicianForm = () => {
 
   return (
     <div className={styles.musicianAddFormContainer}>
-      <Link to={'..'}>
-        <button>Exit</button>
-      </Link>
+      <button onClick={() => navigate(-1)}>Go Back</button>
       <form onSubmit={handleSubmit}>
         <div>
           <label>
