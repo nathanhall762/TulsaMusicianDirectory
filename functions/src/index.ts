@@ -1,26 +1,43 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * import {onCall} from "firebase-functions/v2/https";
- * import {onDocumentWritten} from "firebase-functions/v2/firestore";
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
-import { onCall } from 'firebase-functions/v2/https';
-export const helloWorld = onCall(() => {
-  return { hello: 'world' };
-});
-// export const helloWorld = onCall({ cors: true }, () => {
-//   return { hello: 'world' };
-// });
-// import { onRequest } from 'firebase-functions/v2/https';
-// export const helloWorld = onRequest({ cors: true }, (req, res) => {
-//   res.json({ hello: 'world' });
-// });
-// Start writing functions
-// https://firebase.google.com/docs/functions/typescript
+import { HttpsError, onCall } from 'firebase-functions/v2/https';
+import { log } from 'firebase-functions/logger';
+import { initializeApp } from 'firebase-admin/app';
 
-// export const helloWorld = onRequest((request, response) => {
-//   logger.info('Hello logs!', { structuredData: true });
-//   response.send('Hello from Firebase!');
+// imports for running stuff locally
+// import { applicationDefault } from 'firebase-admin/app';
+// initializeApp({
+//   credential: applicationDefault(),
 // });
+
+initializeApp();
+import * as admin from 'firebase-admin';
+
+const auth = admin.auth();
+
+export const isAdmin = onCall(async (request) => {
+  const uid = request.data.uid;
+
+  if (!uid) {
+    throw new HttpsError('unauthenticated', 'uid is null or undefined');
+  }
+
+  const user = await auth.getUser(uid);
+  log('is user an admin??', user);
+
+  const isAdmin = user.customClaims?.admin;
+
+  return { isAdmin: isAdmin === true };
+});
+
+// (async () => {
+//   const uid = uid;
+//   await auth.setCustomUserClaims(uid, { admin: true });
+//   const user = await auth.getUser(uid);
+//   console.log('success', user);
+//   process.exit();
+// })();
+
+// (async () => {
+//   const uid = uid;
+//   const user = await auth.getUser(uid);
+//   console.log('Nathan is an admin?', user.customClaims?.admin);
+// })();
