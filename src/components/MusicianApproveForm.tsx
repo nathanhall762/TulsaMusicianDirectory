@@ -11,11 +11,12 @@ import {
 import { db } from '../firebase';
 import { v4 } from 'uuid';
 import { validateURLs } from '../utils';
-import { Link, useOutletContext, useParams } from 'react-router-dom';
+import { useOutletContext, useParams } from 'react-router-dom';
 import styles from '../css/MusicianAddForm.module.css';
 import { OutletContextProps } from '../types';
 import Login from './login';
 import { isAdmin } from '../cloudFunctions';
+import { useNavigate } from 'react-router-dom';
 
 type MusicianFormData = {
   name: string;
@@ -62,6 +63,7 @@ const MusicianApproveForm = () => {
   });
   const [isFetched, setIsFetched] = useState(false);
   const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   console.log(musicianName); // output: good
 
@@ -206,9 +208,7 @@ const MusicianApproveForm = () => {
 
   return (
     <div className={styles.musicianAddFormContainer}>
-      <Link to={'..'}>
-        <button>Exit</button>
-      </Link>
+      <button onClick={() => navigate(-1)}>Go Back</button>
       <form onSubmit={handleSubmit}>
         <div>
           <label>
