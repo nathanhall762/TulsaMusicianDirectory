@@ -6,7 +6,6 @@ import { Musician, OutletContextProps } from '../types';
 import { UserCredential } from 'firebase/auth';
 import 'font-awesome/css/font-awesome.min.css';
 import '../css/App.css';
-import { helloWorld } from '../cloudFunctions';
 
 function App() {
   const [user, setUser] = useState<UserCredential | void>();
@@ -21,10 +20,6 @@ function App() {
       setMusicians(fetchedMusicians);
     });
   };
-
-  helloWorld().then((result) => {
-    console.log(result);
-  });
 
   useEffect(() => {
     getData();
