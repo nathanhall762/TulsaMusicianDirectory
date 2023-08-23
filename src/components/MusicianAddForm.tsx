@@ -9,6 +9,8 @@ import { Link, useOutletContext } from 'react-router-dom';
 import styles from '../css/MusicianAddForm.module.css';
 import { OutletContextProps } from '../types';
 import { useNavigate } from 'react-router-dom';
+import { isAdmin } from '../cloudFunctions';
+
 
 type MusicianFormData = {
   name: string;
@@ -27,6 +29,7 @@ type MusicianFormData = {
   };
   genre: string[];
 };
+
 
 // Component
 const MusicianForm = () => {
@@ -52,6 +55,8 @@ const MusicianForm = () => {
   });
   const navigate = useNavigate();
 
+
+
   const handleSubmit = async (e: React.FormEvent) => {
     try {
       e.preventDefault();
@@ -60,9 +65,12 @@ const MusicianForm = () => {
       // add musician to firestore
       // if logged in user is admin, set const targetCollection to 'musicians'
       // else set const targetCollection to 'pendingMusicians'
+
+      if (!user?.user.uid) return
+      const isAdminBool = await isAdmin({ uid: user?.user?.uid }).then(res => res.data.isAdmin)
+
       const targetCollection =
-        user?.user?.uid ===
-        ('UeRplqnzeTTKZmFrZxSNKs6hlt62' || 'hbrLp0oqRCWkSmL9qAbfy4tGUdc2')
+        isAdminBool === true
           ? 'musicians'
           : 'pendingMusicians';
       const musicianRef = doc(collection(db, targetCollection));

@@ -99,7 +99,6 @@
   text-decoration: none;
   color: var(--primary-color);
   transition: color .4s ease;
-  z-index: 1;
 }
 
 .socialLinks a:hover {

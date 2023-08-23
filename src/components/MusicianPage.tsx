@@ -51,7 +51,7 @@ const MusicianPage = () => {
   return (
     <>
       <div className={styles.musicianPage}>
-        <button style={{margin: "0 1rem 2rem 1rem"}} onClick={() => navigate(-1)}>Go Back</button>
+        <button onClick={() => navigate(-1)}>Go Back</button>
         <div className={styles.pageHeader}>
           <div className={styles.nameAndPhoto}>
             <img

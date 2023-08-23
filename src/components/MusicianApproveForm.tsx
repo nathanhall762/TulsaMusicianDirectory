@@ -15,6 +15,7 @@ import { Link, useOutletContext, useParams } from 'react-router-dom';
 import styles from '../css/MusicianAddForm.module.css';
 import { OutletContextProps } from '../types';
 import Login from './login';
+import { isAdmin } from '../cloudFunctions';
 
 type MusicianFormData = {
   name: string;
@@ -68,11 +69,13 @@ const MusicianApproveForm = () => {
     try {
       e.preventDefault();
 
+      if (!user?.user.uid) return;
+      const isAdminBool = await isAdmin({ uid: user?.user?.uid }).then(
+        (res) => res.data.isAdmin
+      );
+
       // Ensure the logged-in user is an admin
-      if (
-        user?.user?.uid !== 'UeRplqnzeTTKZmFrZxSNKs6hlt62' &&
-        user?.user?.uid !== 'hbrLp0oqRCWkSmL9qAbfy4tGUdc2'
-      ) {
+      if (!isAdminBool) {
         alert('Only admin can approve musicians.');
         return;
       }

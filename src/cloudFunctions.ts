@@ -4,4 +4,15 @@ import { app } from './firebase';
 const functions = getFunctions(app);
 // const helloWorld = httpsCallable(functions, 'helloWorld');
 // const setAdmin = httpsCallable(functions, 'setAdmin');
-export const isAdmin = httpsCallable(functions, 'isAdmin');
+
+interface ReqInterface {
+  uid: string;
+}
+
+interface ResInterface {
+  isAdmin: boolean;
+}
+
+
+
+export const isAdmin = httpsCallable<ReqInterface, ResInterface>(functions, 'isAdmin');
