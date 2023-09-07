@@ -62,6 +62,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background: url(../assets/tulsamusiciandirectorybackground.png) no-repeat center center fixed var(--background-color);
 }
 
 h1 {

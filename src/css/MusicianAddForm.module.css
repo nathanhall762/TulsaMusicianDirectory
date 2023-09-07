@@ -1,9 +1,9 @@
 .musicianAddFormContainer {
   border: 1px solid var(--font-color);
+  margin: 1rem;
   padding: 20px;
   border-radius: 5px;
   width: 80vw;
-  height: fit-content;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
