@@ -108,7 +108,7 @@ const Login = () => {
       <div className={styles.loginContainer}>
         <div className={styles.heading} onClick={toggleAccordion}>
           <h1>The Tulsa Musician Directory</h1>
-          <p>show {isAccordionOpen ? 'less' : 'more'}</p>
+          <p>{isAccordionOpen ? 'show less' : 'add to the directory'}</p>
         </div>
         <div id='intro-accordion' className={isAccordionOpen ? styles.accordionOpen : styles.accordionClosed}>
           <ul>
