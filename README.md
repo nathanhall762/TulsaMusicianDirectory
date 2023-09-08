@@ -110,10 +110,10 @@ Remember, every city has its unique rhythm, and through this platform, we hope t
 
 ## Todos
 
-!!! recreate credentials
-dont push the new ones to git
+- !!! recreate credentials
+- dont push the new ones to git
 
-Logout functionality
-email verification for user profile creation
-Image resizing
-filetype verification for image upload
+- Logout functionality
+- email verification for user profile creation
+- Image resizing
+- filetype verification for image upload
