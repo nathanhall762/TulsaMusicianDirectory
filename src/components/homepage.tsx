@@ -7,8 +7,9 @@ const HomePage = () => {
   // const musicians: Musician[], user = useOutletContext();
   const { musicians, user } = useOutletContext<OutletContextProps>();
 
-  const sortedMusicians = [...musicians].sort((a, b) => a.name.localeCompare(b.name));
-
+  const sortedMusicians = [...musicians].sort((a, b) =>
+    a.name.localeCompare(b.name)
+  );
 
   if (musicians.length) {
     return (
@@ -21,12 +22,11 @@ const HomePage = () => {
         </div>
         <div className='buttonBox'>
           {/* show button link to MusicianApprovePage if user is admin */}
-          {user?.user?.uid ===
-          ('UeRplqnzeTTKZmFrZxSNKs6hlt62' || 'hbrLp0oqRCWkSmL9qAbfy4tGUdc2')
-            ? <Link to={'/approvemusician'}>
-            <button className='addButton'>Approve Musician</button>
-          </Link>
-          : null}
+          {user?.isAdmin ? (
+            <Link to={'/approvemusician'}>
+              <button className='addButton'>Approve Musician</button>
+            </Link>
+          ) : null}
           {/* show add musician button only if logged in */}
           {user ? (
             <Link to={'/addmusician'}>

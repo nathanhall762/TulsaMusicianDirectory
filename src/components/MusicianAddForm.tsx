@@ -9,9 +9,7 @@ import { Link, useOutletContext } from 'react-router-dom';
 import styles from '../css/MusicianAddForm.module.css';
 import { OutletContextProps } from '../types';
 import { useNavigate } from 'react-router-dom';
-import { isAdmin } from '../cloudFunctions';
 import { logEvent } from 'firebase/analytics';
-
 
 type MusicianFormData = {
   name: string;
@@ -30,7 +28,6 @@ type MusicianFormData = {
   };
   genre: string[];
 };
-
 
 // Component
 const MusicianForm = () => {
@@ -56,8 +53,6 @@ const MusicianForm = () => {
   });
   const navigate = useNavigate();
 
-
-
   const handleSubmit = async (e: React.FormEvent) => {
     try {
       e.preventDefault();
@@ -67,13 +62,10 @@ const MusicianForm = () => {
       // if logged in user is admin, set const targetCollection to 'musicians'
       // else set const targetCollection to 'pendingMusicians'
 
-      if (!user?.user.uid) return
-      const isAdminBool = await isAdmin({ uid: user?.user?.uid }).then(res => res.data.isAdmin)
+      if (!user) return;
 
       const targetCollection =
-        isAdminBool === true
-          ? 'musicians'
-          : 'pendingMusicians';
+        user.isAdmin === true ? 'musicians' : 'pendingMusicians';
       const musicianRef = doc(collection(db, targetCollection));
       await setDoc(musicianRef, {
         ...formData,
