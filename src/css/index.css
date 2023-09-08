@@ -4,39 +4,48 @@
   font-weight: 400;
 
   --background-color: 23, 18, 25; /* #171219 */
-  --primary-color: #ECB028;
-  --secondary-color: #1D324F;
-  --tertiary-color: #C82735;
-  --font-color: #E9F1F7;
+  --primary-color: #ecb028;
+  --secondary-color: #1d324f;
+  --tertiary-color: #c82735;
+  --font-color: #e9f1f7;
 
   /* Bandcamp: The Bandcamp blue */
-  --bandcamp-color: #1DA1F2;
+  --bandcamp-color: #1da1f2;
 
   /* Spotify: The Spotify green */
-  --spotify-color: #1DB954;
+  --spotify-color: #1db954;
 
   /* YouTube: The YouTube red */
-  --youtube-color: #FF0000;
+  --youtube-color: #ff0000;
 
   /* SoundCloud: The SoundCloud orange */
-  --soundcloud-color: #FF5500;
+  --soundcloud-color: #ff5500;
 
   /* Facebook: The Facebook blue */
-  --facebook-color: #1877F2;
+  --facebook-color: #1877f2;
 
   /* Instagram: The Instagram gradient (Note: This is more complicated as it's a gradient, not a solid color) */
-  --instagram-gradient: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D, #F56040);
+  --instagram-gradient: linear-gradient(
+    45deg,
+    #405de6,
+    #5851db,
+    #833ab4,
+    #c13584,
+    #e1306c,
+    #fd1d1d,
+    #f56040
+  );
 
   /* TikTok: The TikTok black */
   --tiktok-color: #000000;
 
   /* Twitch: The Twitch purple */
-  --twitch-color: #9146FF;
+  --twitch-color: #9146ff;
 
   /* Threads: I'm not sure of the official color, so I'll use a placeholder grey for now. Adjust as needed */
   --threads-color: #808080;
 
-  color-scheme: light dark;
+  color-scheme: dark;
   color: var(--font-color);
   background-color: var(--background-color);
 
@@ -62,7 +71,8 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background: url(../assets/tulsamusiciandirectorybackground.png) no-repeat center center fixed var(--background-color);
+  background: url(../assets/tulsamusiciandirectorybackground.png) no-repeat
+    center center fixed var(--background-color);
 }
 
 h1 {
@@ -82,22 +92,9 @@ button {
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: var(--secondary-color)
+  border-color: var(--secondary-color);
 }
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
 }
