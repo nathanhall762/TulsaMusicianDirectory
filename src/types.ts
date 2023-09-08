@@ -19,7 +19,7 @@ export type Musician = {
   profileImage: string;
 };
 
-interface UserData {
+export interface UserData {
   userCredential: UserCredential;
   isAdmin: boolean;
 }

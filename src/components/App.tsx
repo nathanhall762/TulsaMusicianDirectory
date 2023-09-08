@@ -3,16 +3,16 @@ import { Outlet } from 'react-router-dom';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { db, analytics } from '../firebase';
 import { Musician, OutletContextProps } from '../types';
-import { UserCredential } from 'firebase/auth';
 import 'font-awesome/css/font-awesome.min.css';
 import '../css/App.css';
-import { logEvent } from "firebase/analytics";
+import { logEvent } from 'firebase/analytics';
+import { UserData } from '../types';
 
 // to test if analytics is working
-logEvent(analytics, "test_event");
+logEvent(analytics, 'test_event');
 
 function App() {
-  const [user, setUser] = useState<UserCredential | void>();
+  const [user, setUser] = useState<UserData | void>();
   const [musicians, setMusicians] = useState<Musician[]>([]);
 
   const getData = async () => {
