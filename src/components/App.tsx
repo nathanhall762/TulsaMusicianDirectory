@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { collection, onSnapshot } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db, analytics } from '../firebase';
 import { Musician, OutletContextProps } from '../types';
 import { UserCredential } from 'firebase/auth';
 import 'font-awesome/css/font-awesome.min.css';
 import '../css/App.css';
+import { logEvent } from "firebase/analytics";
+
+// to test if analytics is working
+logEvent(analytics, "test_event");
 
 function App() {
   const [user, setUser] = useState<UserCredential | void>();

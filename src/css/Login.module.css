@@ -62,6 +62,10 @@
     background-color: var(--primary-color);
 }
 
+.loginContainer h1 {
+  color: var(--primary-color);
+}
+
 @media screen and (max-width: 576px) {
   .loginContainer {
     display: flex;
@@ -96,7 +100,6 @@
   }
 
   .loginContainer h1 {
-    color: var(--primary-color);
     font-size: 2rem;
   }
 }

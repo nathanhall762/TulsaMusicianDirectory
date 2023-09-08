@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { storage } from '../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { doc, setDoc, collection } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db, analytics } from '../firebase';
 import { v4 } from 'uuid';
 import { validateURLs } from '../utils';
 import { Link, useOutletContext } from 'react-router-dom';
@@ -10,6 +10,7 @@ import styles from '../css/MusicianAddForm.module.css';
 import { OutletContextProps } from '../types';
 import { useNavigate } from 'react-router-dom';
 import { isAdmin } from '../cloudFunctions';
+import { logEvent } from 'firebase/analytics';
 
 
 type MusicianFormData = {
@@ -80,8 +81,10 @@ const MusicianForm = () => {
       });
       if (targetCollection === 'pendingMusicians') {
         alert('musician profile uploaded for approval');
+        logEvent(analytics, 'musician_added_pending');
       } else {
         alert('musician profile uploaded');
+        logEvent(analytics, 'musician_added');
       }
       // go back to homepage using React router
       navigate(-1);
