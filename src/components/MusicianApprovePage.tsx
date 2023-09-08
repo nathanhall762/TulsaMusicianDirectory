@@ -28,10 +28,9 @@ const MusicianApprovePage = () => {
   }, []);
 
   //   if user is not admin, only show login component and message
-  if (
-    user?.user?.uid !==
-    ('UeRplqnzeTTKZmFrZxSNKs6hlt62' || 'hbrLp0oqRCWkSmL9qAbfy4tGUdc2')
-  ) {
+  if (!user) return;
+
+  if (!user.isAdmin) {
     return (
       <div>
         <Login />

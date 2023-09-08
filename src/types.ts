@@ -19,8 +19,13 @@ export type Musician = {
   profileImage: string;
 };
 
+interface UserData {
+  userCredential: UserCredential;
+  isAdmin: boolean;
+}
+
 export type OutletContextProps = {
   musicians: Musician[];
-  user: UserCredential | void;
-  setUser: React.Dispatch<React.SetStateAction<void | UserCredential>>;
+  user: UserData | void;
+  setUser: React.Dispatch<React.SetStateAction<void | UserData>>;
 };

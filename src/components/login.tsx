@@ -8,6 +8,7 @@ import { FirebaseError } from 'firebase/app';
 import { useOutletContext } from 'react-router-dom';
 import { OutletContextProps } from '../types';
 import styles from '../css/Login.module.css';
+import { isAdmin } from '../cloudFunctions';
 
 interface LoginData {
   email: string;
@@ -46,7 +47,16 @@ const Login = () => {
       console.log(err);
     });
     console.log(userData);
-    setUser(userData);
+
+    if (!userData) {
+      alert('Error Creating User');
+      return;
+    }
+
+    setUser({
+      userCredential: userData,
+      isAdmin: false,
+    });
   }
 
   async function signIn() {
@@ -69,7 +79,20 @@ const Login = () => {
       }
       console.log(err);
     });
-    setUser(user);
+
+    // check for if is admin
+
+    if (!user?.user.uid) {
+      alert('error creating creating user');
+      return;
+    }
+    const isAdminBool = await isAdmin({ uid: user.user?.uid }).then(
+      (res) => res.data.isAdmin
+    );
+    setUser({
+      userCredential: user,
+      isAdmin: isAdminBool,
+    });
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,7 +102,7 @@ const Login = () => {
   };
 
   if (user) {
-    return <p>Hello {user.user.email}</p>;
+    return <p>Hello {user.userCredential.user.email}</p>;
   } else {
     return (
       <div className={styles.loginContainer}>
