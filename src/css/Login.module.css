@@ -24,46 +24,86 @@
 }
 
 .buttonBox {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin: 1rem;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 1rem;
 }
 
 .buttonBox button {
-    margin: 0 1rem;
+  margin: 0 1rem;
 }
 
 .loginForm {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .loginContainer h2 {
-    padding: 0 2rem 0 0;
-    color: var(--primary-color);
+  padding: 0 2rem 0 0;
+  color: var(--primary-color);
 }
 
 .loginContainer li {
-    text-align: start;
-    margin: 0.5rem 0;
+  text-align: start;
+  margin: 0.5rem 0;
 }
 
 .loginContainer ul {
-    padding: 0 2rem;
+  padding: 0 2rem;
 }
 
 .loginContainer button {
-    background-color: var(--secondary-color);
+  background-color: var(--secondary-color);
 }
 
 .loginContainer button:hover {
-    background-color: var(--primary-color);
+  background-color: var(--primary-color);
 }
 
 .loginContainer h1 {
   color: var(--primary-color);
+}
+
+.loginContainer p {
+  opacity: 0.8;
+}
+
+.heading:hover {
+  color: var(--tertiary-color);
+  cursor: pointer;
+}
+
+.accordionClosed {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.accordionOpen {
+  max-height: 500px; /* You may need to adjust this */
+  transition: max-height 0.3s ease-in-out;
+}
+
+.accordionClosed ul {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out 0s;
+}
+
+.accordionOpen ul {
+  opacity: 1;
+  transition: opacity 0.1s ease-in-out 0.1s; /* Delay equal to max-height transition time */
+}
+
+.accordionClosed .loginForm {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.accordionOpen .loginForm {
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out 0.2s; /* Delay equal to max-height transition time */
 }
 
 @media screen and (max-width: 576px) {
@@ -74,6 +114,11 @@
     justify-content: center;
     margin: 1rem 0;
     width: 100%;
+    opacity: 1;
+  }
+
+  .loginContainer p {
+    margin: 0.5rem 0;
   }
 
   .inputContainer {

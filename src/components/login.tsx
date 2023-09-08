@@ -21,6 +21,12 @@ const Login = () => {
     email: '',
     password: '',
   });
+  // State to manage accordion collapse
+  const [isAccordionOpen, setAccordionOpen] = useState(false);
+
+  const toggleAccordion = () => {
+    setAccordionOpen(!isAccordionOpen);
+  };
 
   async function signUp() {
     const userData = await createUserWithEmailAndPassword(
@@ -100,44 +106,42 @@ const Login = () => {
   } else {
     return (
       <div className={styles.loginContainer}>
-        <h1>The Tulsa Musician Directory</h1>
-        <ul>
-          How to support:
-          <li>
-            Discover local bands by exploring the directory and listening to
-            music previews.
-          </li>
-          <li>
-            Use the social links to follow and engage with artist content.
-          </li>
-          <li>Use the music links to stream the artists' music.</li>
-          <li>
-            Help build a working directory of Tulsa musicians by signing up to
-            add bands/musicians!
-          </li>
-        </ul>
-        <div className={styles.loginForm}>
-          <div className={styles.inputContainer}>
-            <input
-              type='email'
-              name='email'
-              placeholder='email'
-              value={loginData.email}
-              onChange={handleInputChange}
-            />
-            <input
-              type='password'
-              name='password'
-              placeholder='password'
-              minLength={6}
-              value={loginData.password}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className={styles.buttonBox}>
-            <button onClick={signUp}>sign up</button>
-            <button onClick={signIn}>login</button>
-          </div>
+        <div className={styles.heading} onClick={toggleAccordion}>
+          <h1>The Tulsa Musician Directory</h1>
+          <p>show {isAccordionOpen ? 'less' : 'more'}</p>
+        </div>
+        <div id='intro-accordion' className={isAccordionOpen ? styles.accordionOpen : styles.accordionClosed}>
+          <ul>
+            How to support:
+            <li>Discover local bands by exploring the directory and listening to music previews.</li>
+            <li>Use the social links to follow and engage with artist content.</li>
+            <li>Use the music links to stream the artists' music.</li>
+            <li>Help build a working directory of Tulsa musicians by signing
+            up to add bands/musicians!</li>
+          </ul>
+          <div className={styles.loginForm}>
+            <div className={styles.inputContainer}>
+              <input
+                type='email'
+                name='email'
+                placeholder='email'
+                value={loginData.email}
+                onChange={handleInputChange}
+              />
+              <input
+                type='password'
+                name='password'
+                placeholder='password'
+                minLength={6}
+                value={loginData.password}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className={styles.buttonBox}>
+              <button onClick={signUp}>sign up</button>
+              <button onClick={signIn}>login</button>
+            </div>
+        </div>
         </div>
       </div>
     );
