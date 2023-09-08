@@ -4,7 +4,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { doc, setDoc, collection } from 'firebase/firestore';
 import { db, analytics } from '../firebase';
 import { v4 } from 'uuid';
-import { validateURLs } from '../utils';
+// import { validateURLs } from '../utils';
 import { Link, useOutletContext } from 'react-router-dom';
 import styles from '../css/MusicianAddForm.module.css';
 import { OutletContextProps } from '../types';
@@ -120,9 +120,9 @@ const MusicianForm = () => {
     if (
       formData.name !== '' &&
       imageUpload instanceof File &&
-      formData.genre[0] !== '' &&
+      formData.genre[0] !== ''
       // validateURLs(formData.music) &&
-      validateURLs(formData.social)
+      // validateURLs(formData.social)
     ) {
       setSubmitActive(true);
     } else {
@@ -145,7 +145,7 @@ const MusicianForm = () => {
     <div className={styles.musicianAddFormContainer}>
       <button onClick={() => navigate(-1)}>Go Back</button>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className={formData.name == '' ? styles.formSection : styles.formSectionGood}>
           <label>
             <h4>Musician/Artist/Band Name (required):</h4>
             <input
@@ -157,7 +157,7 @@ const MusicianForm = () => {
             />
           </label>
         </div>
-        <div className={styles.formSection}>
+        <div className={formData.music.bandcamp == '' && formData.music.spotify == '' && formData.music.soundcloud == '' ? styles.formSection : styles.formSectionGood}>
           <h4>Music (must have at least one link)</h4>
           <label>
             Bandcamp Track or Album EMBED:<br></br>
@@ -205,7 +205,7 @@ const MusicianForm = () => {
             />
           </label>
         </div>
-        <div className={styles.formSection}>
+        <div className={formData.social.threads == '' && formData.social.instagram == '' && formData.social.facebook == '' && formData.social.tiktok == '' ? styles.formSection : styles.formSectionGood}>
           <h4>Social (must have at least one link)</h4>
           <label>
             Facebook Artist/Page URL:<br></br>
@@ -244,7 +244,7 @@ const MusicianForm = () => {
             />
           </label>
         </div>
-        <div className={styles.formSection}>
+        <div className={formData.genre[0] == '' ? styles.formSection : styles.formSectionGood}>
           <label>
             <h4>Genre (at least one genre required):</h4>
             <input
@@ -261,7 +261,7 @@ const MusicianForm = () => {
             />
           </label>
         </div>
-        <div className={styles.formSection}>
+        <div className={imageUpload == undefined ? styles.formSection : styles.formSectionGood}>
           <h4>Add a profile image</h4>
           <input
             type='file'
@@ -279,6 +279,11 @@ const MusicianForm = () => {
         >
           Submit
         </button>
+        <p className={styles.submitHelper}>{formData.name == '' ? 'must add name' : ''}</p>
+        <p className={styles.submitHelper}>{formData.music.bandcamp == '' && formData.music.spotify == '' && formData.music.soundcloud == '' ? 'must add music link or embed' : ''}</p>
+        <p className={styles.submitHelper}>{formData.social.threads == '' && formData.social.instagram == '' && formData.social.facebook == '' && formData.social.tiktok == '' ? 'must add social link' : ''}</p>
+        <p className={styles.submitHelper}>{formData.genre[0] == '' ? 'must add genre' : ''}</p>
+        <p className={styles.submitHelper}>{imageUpload == undefined ? 'must add image' : ''}</p>
       </form>
     </div>
   );

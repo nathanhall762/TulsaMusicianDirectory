@@ -102,7 +102,14 @@ const Login = () => {
   };
 
   if (user) {
-    return <p>Hello {user.userCredential.user.email}</p>;
+    return (
+      <div className={styles.loginContainer}>
+        <div>
+          <h1>The Tulsa Musician Directory</h1>
+          <p>Hello {user.userCredential.user.email}</p>
+        </div>
+      </div>
+    );
   } else {
     return (
       <div className={styles.loginContainer}>
@@ -110,14 +117,26 @@ const Login = () => {
           <h1>The Tulsa Musician Directory</h1>
           <p>{isAccordionOpen ? 'show less' : 'add to the directory'}</p>
         </div>
-        <div id='intro-accordion' className={isAccordionOpen ? styles.accordionOpen : styles.accordionClosed}>
+        <div
+          id='intro-accordion'
+          className={
+            isAccordionOpen ? styles.accordionOpen : styles.accordionClosed
+          }
+        >
           <ul>
             How to support:
-            <li>Discover local bands by exploring the directory and listening to music previews.</li>
-            <li>Use the social links to follow and engage with artist content.</li>
+            <li>
+              Discover local bands by exploring the directory and listening to
+              music previews.
+            </li>
+            <li>
+              Use the social links to follow and engage with artist content.
+            </li>
             <li>Use the music links to stream the artists' music.</li>
-            <li>Help build a working directory of Tulsa musicians by signing
-            up to add bands/musicians!</li>
+            <li>
+              Help build a working directory of Tulsa musicians by signing up to
+              add bands/musicians!
+            </li>
           </ul>
           <div className={styles.loginForm}>
             <div className={styles.inputContainer}>
@@ -141,7 +160,7 @@ const Login = () => {
               <button onClick={signUp}>sign up</button>
               <button onClick={signIn}>login</button>
             </div>
-        </div>
+          </div>
         </div>
       </div>
     );
