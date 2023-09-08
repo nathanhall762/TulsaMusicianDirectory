@@ -16,7 +16,7 @@
 
 .musicianCard p {
   color: var(--font-color);
-  opacity: .9;
+  opacity: .8;
 }
 
 .musicianCard:hover {
