@@ -23,7 +23,6 @@ const Login = () => {
   });
   // State to manage accordion collapse
   const [isAccordionOpen, setAccordionOpen] = useState(false);
-
   const toggleAccordion = () => {
     setAccordionOpen(!isAccordionOpen);
   };
@@ -104,9 +103,20 @@ const Login = () => {
   if (user) {
     return (
       <div className={styles.loginContainer}>
-        <div>
-          <h1>The Tulsa Musician Directory</h1>
-          <p>Hello {user.userCredential.user.email}</p>
+        <h1>The Tulsa Musician Directory</h1>
+        <div className={styles.userInfo}>
+          <p className={styles.welcomeText}>
+            Hello {user.userCredential.user.email}
+          </p>
+          <button
+            onClick={() => {
+              // remove user info
+              let v: void;
+              setUser(v);
+            }}
+          >
+            Logout
+          </button>
         </div>
       </div>
     );

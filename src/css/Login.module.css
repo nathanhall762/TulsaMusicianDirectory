@@ -107,6 +107,17 @@
   transition: opacity 0.2s ease-in-out 0.2s; /* Delay equal to max-height transition time */
 }
 
+.userInfo {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.welcomeText {
+  font-weight: bold;
+  font-size: medium;
+}
+
 @media screen and (max-width: 576px) {
   .loginContainer {
     display: flex;
@@ -147,5 +158,11 @@
 
   .loginContainer h1 {
     font-size: 2rem;
+  }
+
+  .userInfo {
+    position: relative;
+    top: auto;
+    right: auto;
   }
 }
