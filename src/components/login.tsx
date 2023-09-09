@@ -113,6 +113,7 @@ const Login = () => {
               // remove user info
               let v: void;
               setUser(v);
+              setAccordionOpen(false);
             }}
           >
             Logout
@@ -125,7 +126,9 @@ const Login = () => {
       <div className={styles.loginContainer}>
         <div className={styles.heading} onClick={toggleAccordion}>
           <h1>The Tulsa Musician Directory</h1>
-          <p>{isAccordionOpen ? 'show less' : 'add to the directory'}</p>
+          <p className={styles.accordionText}>
+            {isAccordionOpen ? 'show less' : 'add to the directory'}
+          </p>
         </div>
         <div
           id='intro-accordion'

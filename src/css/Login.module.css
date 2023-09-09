@@ -118,6 +118,11 @@
   font-size: medium;
 }
 
+.accordionText {
+  font-weight: bold;
+  font-size: medium;
+}
+
 @media screen and (max-width: 576px) {
   .loginContainer {
     display: flex;
