@@ -20,7 +20,6 @@ function App() {
       const fetchedMusicians: Musician[] = doc.docs.map(
         (doc) => doc.data() as Musician
       );
-      console.log(fetchedMusicians);
       setMusicians(fetchedMusicians);
     });
   };
