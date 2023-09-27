@@ -27,3 +27,4 @@ dist-ssr
 
 firebase.json
 *.json
+SpotifyToFirestore/.env

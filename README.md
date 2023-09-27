@@ -117,3 +117,6 @@ Remember, every city has its unique rhythm, and through this platform, we hope t
 - email verification for user profile creation
 - Image resizing
 - filetype verification for image upload
+- firestore backup
+- edit suggestion button on artist page
+- ability for users to add images to musician document???
