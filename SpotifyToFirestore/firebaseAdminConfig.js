@@ -5,9 +5,7 @@ import process from 'process';
 dotenv.config();
 
 const adminPrivateKey = process.env.ADMIN_PRIVATE_KEY;
-console.log(`adminPrivateKey: ${adminPrivateKey}`); // undefined when ran from JSONtoFirestore.js
 const newAdminPrivateKey = adminPrivateKey.replace(/\\n/g, '\n');
-console.log(`newAdminPrivateKey: ${newAdminPrivateKey}`);
 
 // Accessing the Vite environment variables
 const serviceAccount = {
@@ -28,7 +26,5 @@ const serviceAccount = {
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
-
-console.log(serviceAccount.private_key);
 
 export const adminDb = admin.firestore();
