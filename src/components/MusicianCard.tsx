@@ -116,28 +116,53 @@ const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
             </a>
           )}
           {facebook && (
-            <a href={facebook} target='_blank' rel='noopener noreferrer' className={styles.facebookLink}>
+            <a
+              href={facebook}
+              target='_blank'
+              rel='noopener noreferrer'
+              className={styles.facebookLink}
+            >
               <i className='fa fa-facebook' aria-hidden='true'></i>
             </a>
           )}
           {instagram && (
-            <a href={instagram} target='_blank' rel='noopener noreferrer' className={styles.instagramLink}>
+            <a
+              href={instagram}
+              target='_blank'
+              rel='noopener noreferrer'
+              className={styles.instagramLink}
+            >
               <i className='fa fa-instagram' aria-hidden='true'></i>
             </a>
           )}
           {tiktok && (
-            <a href={tiktok} target='_blank' rel='noopener noreferrer' className={styles.tiktokLink}>
+            <a
+              href={tiktok}
+              target='_blank'
+              rel='noopener noreferrer'
+              className={styles.tiktokLink}
+            >
               <i className='fa fa-tiktok' aria-hidden='true'></i>
             </a>
           )}
           {threads && (
-            <a href={threads} target='_blank' rel='noopener noreferrer' className={styles.threadsLink}>
+            <a
+              href={threads}
+              target='_blank'
+              rel='noopener noreferrer'
+              className={styles.threadsLink}
+            >
               {/* Placeholder icon for Threads (since I'm not sure if there's a FontAwesome icon for it yet) */}
               <i className='fa fa-threads' aria-hidden='true'></i>
             </a>
           )}
           {twitch && (
-            <a href={twitch} target='_blank' rel='noopener noreferrer' className={styles.twitchLink}>
+            <a
+              href={twitch}
+              target='_blank'
+              rel='noopener noreferrer'
+              className={styles.twitchLink}
+            >
               <i className='fa fa-twitch' aria-hidden='true'></i>
             </a>
           )}

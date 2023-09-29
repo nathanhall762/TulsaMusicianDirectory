@@ -57,28 +57,6 @@ async function processAudioFeatures(artistAudioFeatures) {
     artistAudioFeatures.albumTracksFeatures[0].trackFeatures
   );
 
-  // // Flatten the data structure
-  // const flattenedData =
-  //   artistAudioFeatures.albumTracksFeatures.trackFeatures.flatMap(
-  //     (item) => item.audio_features
-  //   );
-
-  // // Map the Data
-  // const mappedData = flattenedData.map((track) => {
-  //   return {
-  //     id: track.id,
-  //     acousticness: track.acousticness,
-  //     danceability: track.danceability,
-  //     energy: track.energy,
-  //     instrumentalness: track.instrumentalness,
-  //     liveness: track.liveness,
-  //     loudness: track.loudness,
-  //     valence: track.valence,
-  //   };
-  // });
-
-  // artistAudioFeatures.albumTracksFeatures.trackFeatures = mappedData;
-
   console.log('artist features', artistAudioFeatures);
 
   // Push Data to Firebase
@@ -98,53 +76,5 @@ async function processAudioFeatures(artistAudioFeatures) {
     );
   }
 }
-
-async function testPush() {
-  const newCollection = 'testCollection';
-
-  const artistId = 'fakeId';
-  const otherArtist = 'otherFakeId';
-  const albumId = 'fakeAlbum';
-  const features = ['fakeFeatures', 'features 2'];
-
-  const mappedData = [
-    {
-      artistId: artistId,
-      albumTracksFeatures: {
-        albumId: albumId,
-        TrackFeatures: {
-          features,
-        },
-      },
-    },
-    {
-      artistId: otherArtist,
-      albumTracksFeatures: {
-        albumId: albumId,
-        TrackFeatures: {
-          features,
-        },
-      },
-    },
-  ];
-
-  const collection = adminDb.collection(newCollection);
-  mappedData.forEach(async (artist) => {
-    try {
-      if (!artist.artistId) {
-        console.error(
-          `artist ID is undefined for artist: ${JSON.stringify(artist)}`
-        );
-        return;
-      }
-      await collection.doc(artist.artistId).set(artist);
-      console.log(`Added track with ID: ${artist.artistId}`);
-    } catch (error) {
-      console.error(`Error adding track with ID: ${artist.artistId}.${error}`);
-    }
-  });
-}
-
-// testPush();
 
 getSpotifyAudioFeatures();

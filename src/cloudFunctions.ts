@@ -13,6 +13,7 @@ interface ResInterface {
   isAdmin: boolean;
 }
 
-
-
-export const isAdmin = httpsCallable<ReqInterface, ResInterface>(functions, 'isAdmin');
+export const isAdmin = httpsCallable<ReqInterface, ResInterface>(
+  functions,
+  'isAdmin'
+);

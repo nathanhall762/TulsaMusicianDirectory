@@ -2,7 +2,7 @@ import admin from 'firebase-admin';
 import dotenv from 'dotenv';
 import process from 'process';
 
-dotenv.config();
+dotenv.config({ path: 'SpotifyToFirestore/.env' });
 
 const adminPrivateKey = process.env.ADMIN_PRIVATE_KEY;
 const newAdminPrivateKey = adminPrivateKey.replace(/\\n/g, '\n');

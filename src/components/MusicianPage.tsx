@@ -77,7 +77,12 @@ const MusicianPage = () => {
                 </a>
               )}
               {spotify && (
-                <a href={spotify} target='_blank' rel='noopener noreferrer' className={styles.spotifyLink}>
+                <a
+                  href={spotify}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className={styles.spotifyLink}
+                >
                   <i className='fa fa-spotify' aria-hidden='true'></i>
                 </a>
               )}

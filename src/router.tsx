@@ -27,7 +27,7 @@ const router = createBrowserRouter([
       {
         path: '/approvemusician/:musicianId',
         element: <MusicianApproveForm />,
-      }
+      },
     ],
   },
 ]);
