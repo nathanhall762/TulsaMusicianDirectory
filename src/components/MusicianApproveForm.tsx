@@ -333,6 +333,7 @@ const MusicianApproveForm = () => {
                 src={profileImageUrl}
                 alt='Current Profile'
                 width='100'
+                loading='lazy'
               />{' '}
               {/* Adjust width as needed */}
             </div>

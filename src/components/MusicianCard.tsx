@@ -66,6 +66,7 @@ const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
               className={styles.profileImage}
               src={profileImage}
               alt={name}
+              loading='lazy'
             />
             <p>Genre: {genre.length !== 0 ? genre.join(', ') : 'NA'}</p>
           </div>

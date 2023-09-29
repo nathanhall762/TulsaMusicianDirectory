@@ -58,6 +58,7 @@ const MusicianPage = () => {
               className={styles.profileImage}
               src={profileImage}
               alt={name}
+              loading='lazy'
             />
             <h2>{name}</h2>
           </div>

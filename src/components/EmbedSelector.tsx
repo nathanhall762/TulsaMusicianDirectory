@@ -26,6 +26,7 @@ const EmbedSelector: React.FC<Props> = ({ Music }) => {
         // allowTransparency={true}
         allow='encrypted-media'
         title='Spotify'
+        loading='lazy'
       ></iframe>
     );
   }
@@ -42,6 +43,7 @@ const EmbedSelector: React.FC<Props> = ({ Music }) => {
           Music.bandcamp.split('.com/')[1]
         }`}
         seamless
+        loading='lazy'
       ></iframe>
     );
   }
