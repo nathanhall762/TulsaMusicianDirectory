@@ -35,6 +35,8 @@ const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
     profileImage,
   } = musician;
 
+  console.log('musician card my name is', name);
+
   const urlName = name.replaceAll(' ', '_').toLowerCase();
 
   function extractBandcampURL(iframeString: string): string | null {
