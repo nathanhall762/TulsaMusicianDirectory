@@ -1,0 +1,14 @@
+# cloudbuild for TMD
+
+steps:
+  # install
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['install']
+
+  # build
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['run', 'build']
+
+  # deploy
+  - name: 'gcr.io/tulsamusiciandirectory/firebase'
+    args: ['deploy', '--project=tulsamusiciandirectory', '--only=hosting']
