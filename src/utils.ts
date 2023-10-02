@@ -1,5 +1,3 @@
-import isUrlHttp from 'is-url-http';
-
 function validateURLs(urlMap: object): boolean {
   /* validates URL map, checks if at least one value is non empty, then checks
   if its a valid URL that matches its map */
@@ -20,8 +18,13 @@ function validateURLs(urlMap: object): boolean {
 
   // validate URLs by using the URL constructor
   const isEveryUrlValid = nonEmptyValues.every(([, value]) => {
-    // this line is broke and idk why
-    return isUrlHttp(value);
+    try {
+      const url = new URL(value);
+      console.log(url.protocol);
+      return url.protocol === 'http:' || url.protocol === 'https:';
+    } catch (error) {
+      return false;
+    }
   });
 
   return isEveryUrlValid;
