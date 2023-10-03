@@ -23,9 +23,3 @@ export interface UserData {
   userCredential: UserCredential;
   isAdmin: boolean;
 }
-
-export type OutletContextProps = {
-  musicians: Musician[];
-  user: UserData | void;
-  setUser: React.Dispatch<React.SetStateAction<void | UserData>>;
-};

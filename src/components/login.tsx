@@ -5,10 +5,10 @@ import {
 import { useState } from 'react';
 import { auth } from '../firebase';
 import { FirebaseError } from 'firebase/app';
-import { useOutletContext } from 'react-router-dom';
-import { OutletContextProps } from '../types';
 import styles from '../css/Login.module.css';
 import { isAdmin } from '../cloudFunctions';
+import useBearStore from '../bearStore';
+import { UserData } from '../types';
 
 interface LoginData {
   email: string;
@@ -16,12 +16,12 @@ interface LoginData {
 }
 
 const Login = () => {
-  const { user, setUser } = useOutletContext<OutletContextProps>();
+  const user = useBearStore((state) => state.user);
+  const setUser = useBearStore((state) => state.setUser);
   const [loginData, setLoginData] = useState<LoginData>({
     email: '',
     password: '',
   });
-  // State to manage accordion collapse
   const [isAccordionOpen, setAccordionOpen] = useState(false);
   const toggleAccordion = () => {
     setAccordionOpen(!isAccordionOpen);
@@ -100,19 +100,18 @@ const Login = () => {
     setLoginData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  if (user) {
+  if (user.userCredential) {
     return (
       <div className={styles.loginContainer}>
         <h1>The Tulsa Musician Directory</h1>
         <div className={styles.userInfo}>
           <p className={styles.welcomeText}>
-            Hello {user.userCredential.user.email}
+            Hello {user.userCredential?.user.email}
           </p>
           <button
             onClick={() => {
               // remove user info
-              let v: void;
-              setUser(v);
+              setUser({} as UserData);
               setAccordionOpen(false);
             }}
           >
