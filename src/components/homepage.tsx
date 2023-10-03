@@ -1,11 +1,11 @@
-import { Link, useOutletContext } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import MusicianCard from './MusicianCard';
 import Login from './login';
-import { OutletContextProps } from '../types';
+import useBearStore from '../bearStore';
 
 const HomePage = () => {
-  // const musicians: Musician[], user = useOutletContext();
-  const { musicians, user } = useOutletContext<OutletContextProps>();
+  const user = useBearStore((state) => state.user);
+  const musicians = useBearStore((state) => state.musicians);
 
   const sortedMusicians = [...musicians].sort((a, b) =>
     a.name.localeCompare(b.name)
@@ -22,13 +22,13 @@ const HomePage = () => {
         </div>
         <div className='buttonBox'>
           {/* show button link to MusicianApprovePage if user is admin */}
-          {user?.isAdmin ? (
+          {user.isAdmin ? (
             <Link to={'/approvemusician'}>
               <button className='addButton'>Approve Musician</button>
             </Link>
           ) : null}
           {/* show add musician button only if logged in */}
-          {user ? (
+          {user.userCredential ? (
             <Link to={'/addmusician'}>
               <button className='addButton'>Add Musician</button>
             </Link>

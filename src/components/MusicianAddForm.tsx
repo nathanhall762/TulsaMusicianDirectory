@@ -5,11 +5,11 @@ import { doc, setDoc, collection } from 'firebase/firestore';
 import { db, analytics } from '../firebase';
 import { v4 } from 'uuid';
 // import { validateURLs } from '../utils';
-import { Link, useOutletContext } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styles from '../css/MusicianAddForm.module.css';
-import { OutletContextProps } from '../types';
 import { useNavigate } from 'react-router-dom';
 import { logEvent } from 'firebase/analytics';
+import useBearStore from '../bearStore';
 
 type MusicianFormData = {
   name: string;
@@ -31,7 +31,7 @@ type MusicianFormData = {
 
 // Component
 const MusicianForm = () => {
-  const { user } = useOutletContext<OutletContextProps>();
+  const user = useBearStore((state) => state.user);
   const [imageUpload, setImageUpload] = useState<File>();
   const [submitActive, setSubmitActive] = useState<boolean>(false);
   const [formData, setFormData] = useState<MusicianFormData>({
@@ -62,7 +62,7 @@ const MusicianForm = () => {
       // if logged in user is admin, set const targetCollection to 'musicians'
       // else set const targetCollection to 'pendingMusicians'
 
-      if (!user) return;
+      if (!user.userCredential) return;
 
       const targetCollection =
         user.isAdmin === true ? 'musicians' : 'pendingMusicians';
@@ -138,7 +138,7 @@ const MusicianForm = () => {
     }
   }, [formData, imageUpload]);
 
-  if (!user) {
+  if (!user.userCredential) {
     return (
       <div>
         <p>You Must Login to Add a Musician</p>

@@ -1,16 +1,14 @@
-import { useOutletContext } from 'react-router-dom';
 import MusicianCard from './MusicianCard';
 import Login from './login';
-import { OutletContextProps } from '../types';
 import { useState, useEffect } from 'react';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
 import { Musician } from '../types';
+import useBearStore from '../bearStore';
 
 const MusicianApprovePage = () => {
-  // const musicians: Musician[], user = useOutletContext();
   const [musicians, setPendingMusicians] = useState<Musician[]>([]);
-  const { user } = useOutletContext<OutletContextProps>();
+  const user = useBearStore((state) => state.user);
 
   useEffect(() => {
     const pendingMusiciansCol = collection(db, 'pendingMusicians');
@@ -28,7 +26,7 @@ const MusicianApprovePage = () => {
   }, []);
 
   //   if user is not admin, only show login component and message
-  if (!user) return;
+  if (!user.userCredential) return;
 
   if (!user.isAdmin) {
     return (

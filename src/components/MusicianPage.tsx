@@ -1,12 +1,12 @@
 // MusicianPage.tsx
-import { useParams, useOutletContext } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styles from '../css/MusicianPage.module.css';
 import EmbedSelector from './EmbedSelector';
-import { OutletContextProps } from '../types';
 import { useNavigate } from 'react-router-dom';
+import useBearStore from '../bearStore';
 
 const MusicianPage = () => {
-  const { musicians } = useOutletContext<OutletContextProps>();
+  const musicians = useBearStore((state) => state.musicians);
   const { musicianId } = useParams();
   const navigate = useNavigate();
 
