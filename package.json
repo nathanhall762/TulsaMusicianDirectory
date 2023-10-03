@@ -9,6 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "preview-build": "tsc && vite build && vite preview",
+    "deploy": "firebase deploy --token \"$FIREBASE_TOKEN\" --only hosting",
     "test": "vitest"
   },
   "dependencies": {

@@ -7,6 +7,10 @@ import { getAnalytics } from 'firebase/analytics';
 
 console.log('can you see this?');
 
+const env = import.meta.env;
+
+console.log('env', env);
+
 const {
   VITE_API_KEY,
   VITE_AUTH_DOMAIN,
@@ -15,7 +19,7 @@ const {
   VITE_MESSAGING_SENDER_ID,
   VITE_APP_ID,
   VITE_MEASUREMENT_ID,
-} = import.meta.env;
+} = env;
 
 console.log('VITE_API_KEY', VITE_API_KEY);
 
