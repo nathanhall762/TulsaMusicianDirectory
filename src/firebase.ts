@@ -5,11 +5,7 @@ import { getStorage } from 'firebase/storage';
 import { getAuth } from 'firebase/auth';
 import { getAnalytics } from 'firebase/analytics';
 
-console.log('can you see this?');
-
 const env = import.meta.env;
-
-console.log('env', env);
 
 const {
   VITE_API_KEY,
@@ -21,8 +17,6 @@ const {
   VITE_MEASUREMENT_ID,
 } = env;
 
-console.log('VITE_API_KEY', VITE_API_KEY);
-
 const firebaseConfig = {
   apiKey: VITE_API_KEY,
   authDomain: VITE_AUTH_DOMAIN,
@@ -32,8 +26,6 @@ const firebaseConfig = {
   appId: VITE_APP_ID,
   measurementId: VITE_MEASUREMENT_ID,
 };
-
-console.log('firebaseConfig', firebaseConfig);
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
