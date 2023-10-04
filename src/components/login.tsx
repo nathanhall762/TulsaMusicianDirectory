@@ -22,10 +22,6 @@ const Login = () => {
     email: '',
     password: '',
   });
-  const [isAccordionOpen, setAccordionOpen] = useState(false);
-  const toggleAccordion = () => {
-    setAccordionOpen(!isAccordionOpen);
-  };
 
   async function signUp() {
     const userData = await createUserWithEmailAndPassword(
@@ -101,78 +97,46 @@ const Login = () => {
   };
 
   if (user.userCredential) {
+    // logout button
     return (
-      <div className={styles.loginContainer}>
-        <h1>The Tulsa Musician Directory</h1>
-        <div className={styles.userInfo}>
-          <p className={styles.welcomeText}>
-            Hello {user.userCredential?.user.email}
-          </p>
+      <div className={styles.loginForm}>
+        <div className={styles.logoutContainer}>
+          <h3>Logged in as {user.userCredential.user.email}</h3>
           <button
             onClick={() => {
-              // remove user info
+              auth.signOut();
               setUser({} as UserData);
-              setAccordionOpen(false);
             }}
+            style={{ marginLeft: '1rem' }}
           >
-            Logout
+            logout
           </button>
         </div>
       </div>
     );
   } else {
     return (
-      <div className={styles.loginContainer}>
-        <div className={styles.heading} onClick={toggleAccordion}>
-          <h1>The Tulsa Musician Directory</h1>
-          <p className={styles.accordionText}>
-            {isAccordionOpen ? 'show less' : 'add to the directory'}
-          </p>
+      <div className={styles.loginForm}>
+        <div className={styles.inputContainer}>
+          <input
+            type='email'
+            name='email'
+            placeholder='email'
+            value={loginData.email}
+            onChange={handleInputChange}
+          />
+          <input
+            type='password'
+            name='password'
+            placeholder='password'
+            minLength={6}
+            value={loginData.password}
+            onChange={handleInputChange}
+          />
         </div>
-        <div
-          id='intro-accordion'
-          className={
-            isAccordionOpen ? styles.accordionOpen : styles.accordionClosed
-          }
-        >
-          <ul>
-            How to support:
-            <li>
-              Discover local bands by exploring the directory and listening to
-              music previews.
-            </li>
-            <li>
-              Use the social links to follow and engage with artist content.
-            </li>
-            <li>Use the music links to stream the artists' music.</li>
-            <li>
-              Help build a working directory of Tulsa musicians by signing up to
-              add bands/musicians!
-            </li>
-          </ul>
-          <div className={styles.loginForm}>
-            <div className={styles.inputContainer}>
-              <input
-                type='email'
-                name='email'
-                placeholder='email'
-                value={loginData.email}
-                onChange={handleInputChange}
-              />
-              <input
-                type='password'
-                name='password'
-                placeholder='password'
-                minLength={6}
-                value={loginData.password}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className={styles.buttonBox}>
-              <button onClick={signUp}>sign up</button>
-              <button onClick={signIn}>login</button>
-            </div>
-          </div>
+        <div className={styles.buttonBox}>
+          <button onClick={signUp}>sign up</button>
+          <button onClick={signIn}>login</button>
         </div>
       </div>
     );
