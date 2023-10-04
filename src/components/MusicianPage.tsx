@@ -48,13 +48,6 @@ const MusicianPage = () => {
     return match ? match[1] : null;
   }
 
-  // const goToExternal => analytic event for all outgoing links
-  const goToExternal = (url: string) => {
-    logEvent(analytics, 'outgoing_link', {
-      link: url,
-    });
-  };
-
   const soundcloudProfileURL = extractSoundcloudProfileURL(soundcloud);
 
   return (
@@ -82,27 +75,22 @@ const MusicianPage = () => {
                   target='_blank'
                   rel='noopener noreferrer'
                   className={styles.bandcamp}
-                  onClick={() => {
-                    goToExternal(bandcampURL!);
-                  }}
                 >
                   <i className='fa fa-bandcamp' aria-hidden='true'></i>
                 </a>
               )}
               {spotify && (
-                <a href={spotify} target='_blank' rel='noopener noreferrer' className={styles.spotifyLink}>
+                <a
+                  href={spotify}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className={styles.spotifyLink}
+                >
                   <i className='fa fa-spotify' aria-hidden='true'></i>
                 </a>
               )}
               {youtube && (
-                <a
-                  href={youtube}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  onClick={() => {
-                    goToExternal(youtube);
-                  }}
-                >
+                <a href={youtube} target='_blank' rel='noopener noreferrer'>
                   <i className='fa fa-youtube' aria-hidden='true'></i>
                 </a>
               )}
@@ -115,22 +103,12 @@ const MusicianPage = () => {
                   }
                   target='_blank'
                   rel='noopener noreferrer'
-                  onClick={() => {
-                    goToExternal(soundcloudProfileURL!);
-                  }}
                 >
                   <i className='fa fa-soundcloud' aria-hidden='true'></i>
                 </a>
               )}
               {twitch && (
-                <a
-                  href={twitch}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  onClick={() => {
-                    goToExternal(twitch);
-                  }}
-                >
+                <a href={twitch} target='_blank' rel='noopener noreferrer'>
                   <i className='fa fa-twitch' aria-hidden='true'></i>
                 </a>
               )}
@@ -139,46 +117,22 @@ const MusicianPage = () => {
             <div className={styles.socialLinks}>
               <h4>Social:</h4>
               {facebook && (
-                <a
-                  href={facebook}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  onClick={() => {
-                    goToExternal(facebook);
-                  }}
-                >
+                <a href={facebook} target='_blank' rel='noopener noreferrer'>
                   <i className='fa fa-facebook' aria-hidden='true'></i>
                 </a>
               )}
               {instagram && (
-                <a
-                  href={instagram}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  onClick={() => {
-                    goToExternal(instagram);
-                  }}
-                >
+                <a href={instagram} target='_blank' rel='noopener noreferrer'>
                   <i className='fa fa-instagram' aria-hidden='true'></i>
                 </a>
               )}
               {tiktok && (
-                <a
-                  href={tiktok}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  onClick={() => {
-                    goToExternal(tiktok);
-                  }}
-                >
+                <a href={tiktok} target='_blank' rel='noopener noreferrer'>
                   <i className='fa fa-tiktok' aria-hidden='true'></i>
                 </a>
               )}
               {threads && (
-                <a href={threads} target='_blank' rel='noopener noreferrer'
-                onClick={() => {
-                  goToExternal(threads);
-                }}>
+                <a href={threads} target='_blank' rel='noopener noreferrer'>
                   {/* Not sure about the icon for Threads, using a placeholder */}
                   <i className='fa fa-threads' aria-hidden='true'></i>
                 </a>
