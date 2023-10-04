@@ -1,4 +1,3 @@
-// MusicianPage.tsx
 import { useParams } from 'react-router-dom';
 import styles from '../css/MusicianPage.module.css';
 import EmbedSelector from './EmbedSelector';
@@ -10,7 +9,7 @@ const MusicianPage = () => {
   const { musicianId } = useParams();
   const navigate = useNavigate();
 
-  if (!musicians) {
+  if (musicians.length === 0) {
     return <p>...Loading</p>;
   }
 
@@ -19,7 +18,8 @@ const MusicianPage = () => {
   const musician = musicians.find((x) => musicianName === x.name.toLowerCase());
 
   if (!musician) {
-    return <p>...Loading</p>;
+    // FIXME
+    return <p>WE NEED A 404</p>;
   }
 
   // destructure matched musician object

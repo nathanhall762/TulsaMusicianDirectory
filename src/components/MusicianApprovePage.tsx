@@ -25,9 +25,6 @@ const MusicianApprovePage = () => {
     return () => unsubscribe();
   }, []);
 
-  //   if user is not admin, only show login component and message
-  if (!user.userCredential) return;
-
   if (!user.isAdmin) {
     return (
       <div>

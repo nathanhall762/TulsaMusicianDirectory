@@ -53,7 +53,7 @@ const MusicianForm = () => {
   });
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmitToFirestore = async (e: React.FormEvent) => {
     try {
       e.preventDefault();
       // add image to firebase storage
@@ -152,7 +152,7 @@ const MusicianForm = () => {
   return (
     <div className={styles.musicianAddFormContainer}>
       <button onClick={() => navigate(-1)}>Go Back</button>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmitToFirestore}>
         <div
           className={
             formData.name == '' ? styles.formSection : styles.formSectionGood

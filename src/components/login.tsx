@@ -34,12 +34,15 @@ const Login = () => {
         throw new Error('this is broke in a special way');
       }
       if (err.code === 'auth/invalid-email') alert('Invalid Email');
-      if (err.code === 'auth/email-already-in-use')
-        alert('Email Already in Use');
       if (err.code === 'auth/missing-password') alert('Missing Password');
-      if (err.code === 'auth/weak-password')
+      if (err.code === 'auth/email-already-in-use') {
+        alert('Email Already in Use');
+      }
+      if (err.code === 'auth/weak-password') {
         alert('Password should be at least 6 characters');
+      }
       console.log(err);
+      return;
     });
     console.log(userData);
 
@@ -96,19 +99,17 @@ const Login = () => {
     setLoginData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  const handleLogOut = () => {
+    auth.signOut();
+    setUser({} as UserData);
+  };
+
   if (user.userCredential) {
-    // logout button
     return (
       <div className={styles.loginForm}>
         <div className={styles.logoutContainer}>
           <h3>Logged in as {user.userCredential.user.email}</h3>
-          <button
-            onClick={() => {
-              auth.signOut();
-              setUser({} as UserData);
-            }}
-            style={{ marginLeft: '1rem' }}
-          >
+          <button onClick={handleLogOut} style={{ marginLeft: '1rem' }}>
             logout
           </button>
         </div>
