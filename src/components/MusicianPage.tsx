@@ -18,8 +18,7 @@ const MusicianPage = () => {
   const musician = musicians.find((x) => musicianName === x.name.toLowerCase());
 
   if (!musician) {
-    // FIXME
-    return <p>WE NEED A 404</p>;
+    throw new Response('Not Found', { status: 404 });
   }
 
   // destructure matched musician object

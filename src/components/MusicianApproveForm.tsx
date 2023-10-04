@@ -13,7 +13,7 @@ import { v4 } from 'uuid';
 import { validateURLs } from '../utils';
 import { useParams } from 'react-router-dom';
 import styles from '../css/MusicianAddForm.module.css';
-import Login from './login';
+import Login from './Login';
 import { useNavigate } from 'react-router-dom';
 import useBearStore from '../bearStore';
 

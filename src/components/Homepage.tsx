@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import MusicianCard from './MusicianCard';
-import Header from './header';
 import useBearStore from '../bearStore';
 
 const HomePage = () => {
@@ -14,7 +13,7 @@ const HomePage = () => {
   if (musicians.length) {
     return (
       <div>
-        <Header />
+        {/* <Header /> */}
         <div className='cardContainer'>
           {sortedMusicians.map((musician) => (
             <MusicianCard key={musician.name} musician={musician} />

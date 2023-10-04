@@ -1,5 +1,5 @@
 import MusicianCard from './MusicianCard';
-import Login from './login';
+import Login from './Login';
 import { useState, useEffect } from 'react';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
