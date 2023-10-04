@@ -14,7 +14,7 @@ import { validateURLs } from '../utils';
 import { useOutletContext, useParams } from 'react-router-dom';
 import styles from '../css/MusicianAddForm.module.css';
 import { OutletContextProps } from '../types';
-import Login from './login';
+import Login from './Header';
 import { useNavigate } from 'react-router-dom';
 
 type MusicianFormData = {

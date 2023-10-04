@@ -1,6 +1,6 @@
 import { useOutletContext } from 'react-router-dom';
 import MusicianCard from './MusicianCard';
-import Login from './login';
+import Login from './Header';
 import { OutletContextProps } from '../types';
 import { useState, useEffect } from 'react';
 import { collection, onSnapshot } from 'firebase/firestore';

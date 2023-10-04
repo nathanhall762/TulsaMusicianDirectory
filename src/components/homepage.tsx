@@ -1,6 +1,6 @@
 import { Link, useOutletContext } from 'react-router-dom';
 import MusicianCard from './MusicianCard';
-import Login from './login';
+import Login from './Header';
 import { OutletContextProps } from '../types';
 
 const HomePage = () => {

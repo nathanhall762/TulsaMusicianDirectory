@@ -7,6 +7,15 @@
   width: 100%;
 }
 
+.logoutContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 2rem auto;
+  width: 100%;
+}
+
 .loginContainer input {
   margin: 0.5rem;
   width: 80%;
