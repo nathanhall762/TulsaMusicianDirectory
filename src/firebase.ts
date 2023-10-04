@@ -5,6 +5,8 @@ import { getStorage } from 'firebase/storage';
 import { getAuth } from 'firebase/auth';
 import { getAnalytics } from 'firebase/analytics';
 
+const env = import.meta.env;
+
 const {
   VITE_API_KEY,
   VITE_AUTH_DOMAIN,
@@ -13,7 +15,7 @@ const {
   VITE_MESSAGING_SENDER_ID,
   VITE_APP_ID,
   VITE_MEASUREMENT_ID,
-} = import.meta.env;
+} = env;
 
 const firebaseConfig = {
   apiKey: VITE_API_KEY,

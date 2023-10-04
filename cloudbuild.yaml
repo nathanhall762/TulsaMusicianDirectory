@@ -1,0 +1,35 @@
+# cloudbuild for TMD
+
+steps:
+  # decrypt keys
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+    - kms
+    - decrypt
+    - --ciphertext-file=.env.enc
+    - --plaintext-file=.env.local
+    - --location=global
+    - --keyring=TMD
+    - --key=cloudbuild-env
+
+  # install
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['install']
+
+  # runs tests
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['run', 'test']
+
+  # build
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['run', 'build']
+
+  # # deploy
+  # - name: 'gcr.io/cloud-builders/npm'
+  #   args: ['run', 'deploy']
+
+  - name: 'gcr.io/$PROJECT_ID/firebase'
+    args:
+    - deploy
+    # - --token="$FIREBASE_TOKEN"
+    - --only=hosting

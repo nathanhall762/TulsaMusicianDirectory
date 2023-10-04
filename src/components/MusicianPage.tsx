@@ -1,14 +1,14 @@
 // MusicianPage.tsx
-import { useParams, useOutletContext } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styles from '../css/MusicianPage.module.css';
 import EmbedSelector from './EmbedSelector';
-import { OutletContextProps } from '../types';
 import { useNavigate } from 'react-router-dom';
+import useBearStore from '../bearStore';
 import { analytics } from '../firebase';
 import { logEvent } from 'firebase/analytics';
 
 const MusicianPage = () => {
-  const { musicians } = useOutletContext<OutletContextProps>();
+  const musicians = useBearStore((state) => state.musicians);
   const { musicianId } = useParams();
   const navigate = useNavigate();
 
@@ -67,6 +67,7 @@ const MusicianPage = () => {
               className={styles.profileImage}
               src={profileImage}
               alt={name}
+              loading='lazy'
             />
             <h2>{name}</h2>
           </div>
@@ -89,15 +90,7 @@ const MusicianPage = () => {
                 </a>
               )}
               {spotify && (
-                <a
-                  href={spotify}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  className={styles.spotifyLink}
-                  onClick={() => {
-                    goToExternal(spotify);
-                  }}
-                >
+                <a href={spotify} target='_blank' rel='noopener noreferrer' className={styles.spotifyLink}>
                   <i className='fa fa-spotify' aria-hidden='true'></i>
                 </a>
               )}

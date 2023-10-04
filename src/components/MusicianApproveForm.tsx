@@ -11,11 +11,11 @@ import {
 import { db } from '../firebase';
 import { v4 } from 'uuid';
 import { validateURLs } from '../utils';
-import { useOutletContext, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styles from '../css/MusicianAddForm.module.css';
-import { OutletContextProps } from '../types';
 import Login from './Header';
 import { useNavigate } from 'react-router-dom';
+import useBearStore from '../bearStore';
 
 type MusicianFormData = {
   name: string;
@@ -38,7 +38,7 @@ type MusicianFormData = {
 
 // Component
 const MusicianApproveForm = () => {
-  const { user } = useOutletContext<OutletContextProps>();
+  const user = useBearStore((state) => state.user);
   const [imageUpload, setImageUpload] = useState<File>();
   const [submitActive, setSubmitActive] = useState<boolean>(false);
   const { musicianId } = useParams<{ musicianId: string }>();
@@ -70,7 +70,7 @@ const MusicianApproveForm = () => {
     try {
       e.preventDefault();
 
-      if (!user) {
+      if (!user.userCredential) {
         alert('You must be logged in first');
         return;
       }
@@ -196,7 +196,7 @@ const MusicianApproveForm = () => {
     }
   }, [formData, imageUpload, musicianName, isFetched]);
 
-  if (!user) {
+  if (!user.userCredential) {
     return (
       <div>
         <p>You Must Login to Add a Musician</p>
@@ -333,6 +333,7 @@ const MusicianApproveForm = () => {
                 src={profileImageUrl}
                 alt='Current Profile'
                 width='100'
+                loading='lazy'
               />{' '}
               {/* Adjust width as needed */}
             </div>

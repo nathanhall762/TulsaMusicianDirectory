@@ -5,11 +5,11 @@ import { doc, setDoc, collection } from 'firebase/firestore';
 import { db, analytics } from '../firebase';
 import { v4 } from 'uuid';
 // import { validateURLs } from '../utils';
-import { Link, useOutletContext } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styles from '../css/MusicianAddForm.module.css';
-import { OutletContextProps } from '../types';
 import { useNavigate } from 'react-router-dom';
 import { logEvent } from 'firebase/analytics';
+import useBearStore from '../bearStore';
 
 type MusicianFormData = {
   name: string;
@@ -31,7 +31,7 @@ type MusicianFormData = {
 
 // Component
 const MusicianForm = () => {
-  const { user } = useOutletContext<OutletContextProps>();
+  const user = useBearStore((state) => state.user);
   const [imageUpload, setImageUpload] = useState<File>();
   const [submitActive, setSubmitActive] = useState<boolean>(false);
   const [formData, setFormData] = useState<MusicianFormData>({
@@ -62,7 +62,7 @@ const MusicianForm = () => {
       // if logged in user is admin, set const targetCollection to 'musicians'
       // else set const targetCollection to 'pendingMusicians'
 
-      if (!user) return;
+      if (!user.userCredential) return;
 
       const targetCollection =
         user.isAdmin === true ? 'musicians' : 'pendingMusicians';
@@ -109,6 +109,14 @@ const MusicianForm = () => {
       alert('please add a file');
       throw new Error('no file added');
     }
+
+    // file type validation
+    const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+    if (!allowedExtensions.exec(imageUpload.name)) {
+      alert('invalid file type, must be .jpg, .jpeg, or .png');
+      throw new Error('invalid file type');
+    }
+
     const storageRef = ref(storage, `images/${formData.name + v4()}`);
     await uploadBytes(storageRef, imageUpload);
     const url = await getDownloadURL(storageRef);
@@ -130,7 +138,7 @@ const MusicianForm = () => {
     }
   }, [formData, imageUpload]);
 
-  if (!user) {
+  if (!user.userCredential) {
     return (
       <div>
         <p>You Must Login to Add a Musician</p>
@@ -145,7 +153,11 @@ const MusicianForm = () => {
     <div className={styles.musicianAddFormContainer}>
       <button onClick={() => navigate(-1)}>Go Back</button>
       <form onSubmit={handleSubmit}>
-        <div className={formData.name == '' ? styles.formSection : styles.formSectionGood}>
+        <div
+          className={
+            formData.name == '' ? styles.formSection : styles.formSectionGood
+          }
+        >
           <label>
             <h4>Musician/Artist/Band Name (required):</h4>
             <input
@@ -157,7 +169,15 @@ const MusicianForm = () => {
             />
           </label>
         </div>
-        <div className={formData.music.bandcamp == '' && formData.music.spotify == '' && formData.music.soundcloud == '' ? styles.formSection : styles.formSectionGood}>
+        <div
+          className={
+            formData.music.bandcamp == '' &&
+            formData.music.spotify == '' &&
+            formData.music.soundcloud == ''
+              ? styles.formSection
+              : styles.formSectionGood
+          }
+        >
           <h4>Music (must have at least one link)</h4>
           <label>
             Bandcamp Track or Album EMBED:<br></br>
@@ -205,7 +225,16 @@ const MusicianForm = () => {
             />
           </label>
         </div>
-        <div className={formData.social.threads == '' && formData.social.instagram == '' && formData.social.facebook == '' && formData.social.tiktok == '' ? styles.formSection : styles.formSectionGood}>
+        <div
+          className={
+            formData.social.threads == '' &&
+            formData.social.instagram == '' &&
+            formData.social.facebook == '' &&
+            formData.social.tiktok == ''
+              ? styles.formSection
+              : styles.formSectionGood
+          }
+        >
           <h4>Social (must have at least one link)</h4>
           <label>
             Facebook Artist/Page URL:<br></br>
@@ -244,7 +273,13 @@ const MusicianForm = () => {
             />
           </label>
         </div>
-        <div className={formData.genre[0] == '' ? styles.formSection : styles.formSectionGood}>
+        <div
+          className={
+            formData.genre[0] == ''
+              ? styles.formSection
+              : styles.formSectionGood
+          }
+        >
           <label>
             <h4>Genre (at least one genre required):</h4>
             <input
@@ -261,7 +296,13 @@ const MusicianForm = () => {
             />
           </label>
         </div>
-        <div className={imageUpload == undefined ? styles.formSection : styles.formSectionGood}>
+        <div
+          className={
+            imageUpload == undefined
+              ? styles.formSection
+              : styles.formSectionGood
+          }
+        >
           <h4>Add a profile image</h4>
           <input
             type='file'
@@ -279,11 +320,30 @@ const MusicianForm = () => {
         >
           Submit
         </button>
-        <p className={styles.submitHelper}>{formData.name == '' ? 'must add name' : ''}</p>
-        <p className={styles.submitHelper}>{formData.music.bandcamp == '' && formData.music.spotify == '' && formData.music.soundcloud == '' ? 'must add music link or embed' : ''}</p>
-        <p className={styles.submitHelper}>{formData.social.threads == '' && formData.social.instagram == '' && formData.social.facebook == '' && formData.social.tiktok == '' ? 'must add social link' : ''}</p>
-        <p className={styles.submitHelper}>{formData.genre[0] == '' ? 'must add genre' : ''}</p>
-        <p className={styles.submitHelper}>{imageUpload == undefined ? 'must add image' : ''}</p>
+        <p className={styles.submitHelper}>
+          {formData.name == '' ? 'must add name' : ''}
+        </p>
+        <p className={styles.submitHelper}>
+          {formData.music.bandcamp == '' &&
+          formData.music.spotify == '' &&
+          formData.music.soundcloud == ''
+            ? 'must add music link or embed'
+            : ''}
+        </p>
+        <p className={styles.submitHelper}>
+          {formData.social.threads == '' &&
+          formData.social.instagram == '' &&
+          formData.social.facebook == '' &&
+          formData.social.tiktok == ''
+            ? 'must add social link'
+            : ''}
+        </p>
+        <p className={styles.submitHelper}>
+          {formData.genre[0] == '' ? 'must add genre' : ''}
+        </p>
+        <p className={styles.submitHelper}>
+          {imageUpload == undefined ? 'must add image' : ''}
+        </p>
       </form>
     </div>
   );

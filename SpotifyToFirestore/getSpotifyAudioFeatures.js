@@ -39,16 +39,37 @@ class TrackFeatures {
 
   async getFeaturesFromArtist(artistId) {
     try {
-      const albumMap = async (album) => {
-        const trackIds = await this.getTracksFromAlbum(album);
+      const albumMap = async (albumId) => {
+        const trackIds = await this.getTracksFromAlbum(albumId);
         const trackFeatures = await this.getTracksFeatures(trackIds);
-        return trackFeatures;
+
+        const correctedFeatures = trackFeatures.audio_features.map((track) => {
+          return {
+            id: track.id,
+            acousticness: track.acousticness,
+            danceability: track.danceability,
+            energy: track.energy,
+            instrumentalness: track.instrumentalness,
+            liveness: track.liveness,
+            loudness: track.loudness,
+            valence: track.valence,
+          };
+        });
+
+        return {
+          albumId: albumId,
+          trackFeatures: correctedFeatures,
+        };
       };
 
       const albums = await this.getAlbumsFromArtist(artistId);
 
-      const trackFeatures = await Promise.all(albums.map(albumMap));
-      return trackFeatures;
+      const albumTracksFeatures = await Promise.all(albums.map(albumMap));
+      // return trackFeatures;
+      return {
+        artistId: artistId,
+        albumTracksFeatures: albumTracksFeatures,
+      };
     } catch (err) {
       console.error(err);
     }
@@ -83,6 +104,10 @@ class TrackFeatures {
         },
       })
         .then((res) => res.json())
+        .then((data) => {
+          // console.log(data);
+          return data;
+        })
         .then((data) => data.items.map((track) => track.id))
         .then((trackIds) => resolve(trackIds))
         .catch((err) => reject(err));
