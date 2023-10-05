@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import MusicianCard from './MusicianCard';
+import MusicianCard from './MusicianCard/MusicianCard';
 import useBearStore from '../bearStore';
 
 const HomePage = () => {
