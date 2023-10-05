@@ -57,13 +57,15 @@ const MusicianForm = () => {
     try {
       e.preventDefault();
       // add image to firebase storage
+      console.log('about to upload image');
       const url = await uploadImage();
+      console.log('after awaiting upload');
       // add musician to firestore
       // if logged in user is admin, set const targetCollection to 'musicians'
       // else set const targetCollection to 'pendingMusicians'
 
       if (!user.userCredential) return;
-
+      console.log('gonna add to store');
       const targetCollection =
         user.isAdmin === true ? 'musicians' : 'pendingMusicians';
       const musicianRef = doc(collection(db, targetCollection));
@@ -116,11 +118,20 @@ const MusicianForm = () => {
       alert('invalid file type, must be .jpg, .jpeg, or .png');
       throw new Error('invalid file type');
     }
-
+    console.log('uploading image');
     const storageRef = ref(storage, `images/${formData.name + v4()}`);
     await uploadBytes(storageRef, imageUpload);
     const url = await getDownloadURL(storageRef);
-    return url;
+
+    // dont know how to do this wthout hardcoding it idk
+    // get the new url after the automatic image resizing
+    const newUrl = url
+      .replace('images%2F', 'images%2Fwebp%2F')
+      .replace('?alt=media', '_300x300?alt=media')
+      .replace(/&token=(.*)/, '');
+
+    console.log('finshed upload now returning url:', newUrl);
+    return newUrl;
   };
 
   // if fields in formData.music and formData.social is not empty, set disabled to false

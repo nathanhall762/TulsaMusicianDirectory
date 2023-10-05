@@ -4,6 +4,46 @@ import TrackFeatures from './getSpotifyAudioFeatures.js';
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+async function updateImageUrls() {
+  const musicianImages = await adminDb
+    .collection('musicians')
+    .get()
+    .then((res) =>
+      res.docs.map((doc) => {
+        return {
+          imageUrl: doc.data().profileImage,
+          id: doc.id,
+        };
+      })
+    );
+
+  const newMusicianImages = musicianImages.map((image) => {
+    const newUrl = image.imageUrl
+      .replace('images%2F', 'images%2Fwebp%2F')
+      .replace('?alt=media', '_300x300?alt=media')
+      .replace(/&token=(.*)/, '');
+    return {
+      ...image,
+      imageUrl: newUrl,
+    };
+  });
+  console.log(newMusicianImages);
+
+  const collection = adminDb.collection('musicians');
+
+  const res = await Promise.all(
+    newMusicianImages.map(
+      (image) =>
+        collection.doc(image.id).update({ profileImage: image.imageUrl })
+      // collection.doc(image.id).set({ profileImage: image.imageUrl })
+    )
+  );
+
+  console.log(res);
+}
+
+updateImageUrls();
+
 async function getSpotifyAudioFeatures() {
   const t = new TrackFeatures({
     clientId: '770a806687ce48e5ab4c7e134c808978',
@@ -77,4 +117,4 @@ async function processAudioFeatures(artistAudioFeatures) {
   }
 }
 
-getSpotifyAudioFeatures();
+// getSpotifyAudioFeatures();
