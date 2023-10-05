@@ -3,7 +3,8 @@
   line-height: 1.5;
   font-weight: 400;
 
-  --background-color: 23, 18, 25; /* #171219 */
+  --background-color: hsl(249, 11%, 12%);
+  --other-color: hsl(249, 11%, 15%);
   --primary-color: #ecb028;
   --secondary-color: #1d324f;
   --tertiary-color: #c82735;
@@ -71,8 +72,6 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background: url(../assets/tulsamusiciandirectorybackground.png) no-repeat
-    center center fixed var(--background-color);
 }
 
 h1 {

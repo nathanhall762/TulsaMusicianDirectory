@@ -13,6 +13,7 @@
   /* height: 30rem; */
   height: 550px;
   justify-content: space-between;
+  background-color: var(--other-color);
 }
 
 .musicianCard p {
