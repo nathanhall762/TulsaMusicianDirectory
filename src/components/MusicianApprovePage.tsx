@@ -1,4 +1,4 @@
-import MusicianCard from './MusicianCard';
+import MusicianCard from './MusicianCard/MusicianCard';
 import Login from './Login';
 import { useState, useEffect } from 'react';
 import { collection, onSnapshot } from 'firebase/firestore';
