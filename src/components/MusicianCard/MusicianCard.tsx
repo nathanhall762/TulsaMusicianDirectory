@@ -9,7 +9,7 @@ interface MusicianCardProps {
 }
 
 const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
-  const { name, genre, profileImage } = musician;
+  const { name, music, social, genre, profileImage } = musician;
 
   const urlName = name.replaceAll(' ', '_').toLowerCase();
 
@@ -30,7 +30,10 @@ const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
             <p>Genre: {genre.length !== 0 ? genre.join(', ') : 'NA'}</p>
           </div>
         </Link>
-        <LinkContainer musician={musician} title='' />
+        <LinkContainer
+          linkInfo={[...Object.entries(music), ...Object.entries(social)]}
+          title=''
+        />
       </div>
     </>
   );

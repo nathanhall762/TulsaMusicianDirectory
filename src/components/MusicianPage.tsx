@@ -23,7 +23,7 @@ const MusicianPage = () => {
   }
 
   // destructure matched musician object
-  const { name, music, genre, profileImage } = musician;
+  const { name, music, social, genre, profileImage } = musician;
 
   return (
     <>
@@ -44,8 +44,8 @@ const MusicianPage = () => {
           <div className={styles.keyInfo}>
             <EmbedSelector Music={music} />
             <p>Genre: {genre.length !== 0 ? genre.join(', ') : 'NA'}</p>
-            <LinkContainer musician={musician} title='Music:' />
-            <LinkContainer musician={musician} title='Social:' />
+            <LinkContainer linkInfo={Object.entries(music)} title='Music:' />
+            <LinkContainer linkInfo={Object.entries(social)} title='Social:' />
           </div>
         </div>
       </div>
