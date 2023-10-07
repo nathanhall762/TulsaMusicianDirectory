@@ -15,16 +15,17 @@ logEvent(analytics, 'test_event');
 function App() {
   const setMusicians = useBearStore((state) => state.setMusicians);
 
+  const getMusicians = async () => {
+    onSnapshot(collection(db, 'musicians'), (snapshot) => {
+      const fetchedMusicians = snapshot.docs.map((doc) => doc.data());
+
+      setMusicians(fetchedMusicians as Musician[]);
+    });
+  };
+
   useEffect(() => {
-    (async () => {
-      onSnapshot(collection(db, 'musicians'), (doc) => {
-        const fetchedMusicians: Musician[] = doc.docs.map(
-          (doc) => doc.data() as Musician
-        );
-        setMusicians(fetchedMusicians);
-      });
-    })();
-  }, [setMusicians]);
+    getMusicians();
+  }, []);
 
   return (
     <>
