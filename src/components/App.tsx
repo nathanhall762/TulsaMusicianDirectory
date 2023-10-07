@@ -4,10 +4,10 @@ import { collection, onSnapshot } from 'firebase/firestore';
 import { db, analytics } from '../firebase';
 import { Musician } from '../types';
 import 'font-awesome/css/font-awesome.min.css';
-import '../css/App.css';
 import { logEvent } from 'firebase/analytics';
 import useBearStore from '../bearStore';
 import Header from './Header';
+import { GlobalStyle } from './GlobalStyle';
 
 // to test if analytics is working
 logEvent(analytics, 'test_event');
@@ -28,7 +28,8 @@ function App() {
 
   return (
     <>
-      <Header />
+      <GlobalStyle />
+      {/* <Header /> */}
       <Outlet />
     </>
   );

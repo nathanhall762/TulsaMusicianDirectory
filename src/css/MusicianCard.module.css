@@ -1,43 +1,3 @@
-.musicianCard {
-  border: 1px solid var(--font-color);
-  padding: 2rem 20px;
-  border-radius: 5px;
-  width: 250px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  transition: box-shadow 0.4s ease; /* smooth transition for the shadow */
-  box-shadow: none;
-  margin: 0.3rem;
-  align-self: stretch;
-  /* height: 30rem; */
-  height: 550px;
-  justify-content: space-between;
-  background-color: var(--other-color);
-}
-
-.musicianCard p {
-  color: var(--font-color);
-  opacity: 0.8;
-}
-
-.musicianCard:hover {
-  text-decoration: none;
-  background-color: var(--secondary-color);
-  box-shadow: 0px 0px 10px var(--tertiary-color); /* horizontal offset, vertical offset, blur radius, color */
-  cursor: pointer;
-}
-
-.musicianCard img {
-  margin-bottom: 1.7rem;
-  box-shadow: 0px 0px 0.5rem var(--primary-color);
-  transition: box-shadow 0.4s ease;
-}
-
-.musicianCard:hover img {
-  box-shadow: 0px 0px 2rem var(--tertiary-color);
-}
-
 .musicianCard:hover .socialLinks a {
   color: var(--tertiary-color);
 }
@@ -82,16 +42,6 @@
   color: var(--threads-color);
 }
 
-.musicianCard .name {
-  height: 20%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.musicianCard .keyInfo {
-  height: fit-content;
-}
 
 .socialLinks {
   display: flex;
@@ -113,16 +63,6 @@
   color: var(--primary-color);
 }
 
-.profileImage {
-  /* width: 15rem; */
-  /* height: 15rem; */
-  width: 250px;
-  height: 250px;
-  border-radius: 50%;
-  margin-bottom: 10px;
-  object-fit: cover;
-  object-position: center;
-}
 
 @media (max-width: 576px) {
   .musicianCard {
