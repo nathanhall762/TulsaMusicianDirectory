@@ -6,7 +6,7 @@ import { Musician } from '../types';
 import 'font-awesome/css/font-awesome.min.css';
 import { logEvent } from 'firebase/analytics';
 import useBearStore from '../bearStore';
-import Header from './Header';
+// import Header from './Header';
 import { GlobalStyle } from './GlobalStyle';
 
 // to test if analytics is working
