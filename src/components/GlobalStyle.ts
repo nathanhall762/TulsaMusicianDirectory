@@ -7,6 +7,7 @@ export const GlobalStyle = createGlobalStyle`
     font-weight: 400;
   
     --color-background-main: hsl(249, 11%, 12%);
+    --color-background-main-trans: hsla(249, 11%, 12%, 0.8);
     --color-background-alt: hsl(249, 11%, 15%);
     --color-primary: #ecb028;
     --color-secondary: #1d324f;
@@ -21,7 +22,7 @@ export const GlobalStyle = createGlobalStyle`
     --color-warning: #fca321;
 
     --color-shadow: rgba(0, 0, 0, 0.1);
-    --color-border: white;
+    --color-border: var(--color-background-alt);
   
     --bandcamp-color: #1da1f2;
     --spotify-color: #1db954;
@@ -44,6 +45,10 @@ export const GlobalStyle = createGlobalStyle`
   
     color: var(--color-text-primary);
     background-color: var(--color-background-main);
+
+    --animation-speed-slow: 2s;
+    --animation-speed-medium: 0.5s;
+    --animation-speed-fast: 0.3s;
   
     font-synthesis: none;
     text-rendering: optimizeLegibility;

@@ -10,28 +10,47 @@ const CardImage = styled.img`
   object-fit: cover;
   object-position: center;
   box-shadow: 0px 0px 0.5rem var(--color-primary);
-  transition: box-shadow 0.4s ease;
+  transition: all var(--animation-speed-medium) ease;
+`;
+
+const ImageContainer = styled.div`
+  display: flex;
+  box-sizing: border-box;
+  padding: 0px 10px;
+  width: 100%;
+  justify-content: center;
 `;
 
 const CardTitle = styled.h2`
-  transition: color 0.4s ease;
+  display: flex;
+  box-sizing: border-box;
+  padding: 0px 10px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
   color: var(--color-primary);
+  min-height: 72px;
+  transition: all var(--animation-speed-medium) ease;
 `;
 
 const Genres = styled.p`
-  transition: color 0.4s ease;
+  transition: color var(--animation-speed-medium) ease;
+  box-sizing: border-box;
+  padding: 0px 10px;
+  width: 100%;
   color: var(--color-text-secondary);
+  transition: all var(--animation-speed-medium) ease;
 `;
 
 const MusicianCardBody = styled.div<{ backgroundImage: string }>`
   border: 1px solid var(--color-border);
-  padding: 0px 20px;
+  padding: 0px 0px;
   border-radius: 5px;
-  width: 250px;
+  width: 270px;
   display: flex;
   align-items: center;
   flex-direction: column;
-  transition: box-shadow background-color 0.4s ease;
+  transition: all var(--animation-speed-medium) ease;
   box-shadow: none;
   margin: 0.3rem;
   align-self: stretch;
@@ -50,8 +69,8 @@ const MusicianCardBody = styled.div<{ backgroundImage: string }>`
     bottom: 0;
     left: 0;
     transition:
-      filter 0.4s ease,
-      opacity 0.4s ease;
+      filter var(--animation-speed-medium) ease,
+      opacity var(--animation-speed-medium) ease;
     z-index: -1;
   }
 
@@ -84,12 +103,25 @@ const MusicianCardBody = styled.div<{ backgroundImage: string }>`
   }
   &:hover ${CardTitle} {
     color: var(--color-accent);
+    text-shadow:
+      1px 1px 0 var(--color-background-main),
+      1px -1px 0 var(--color-background-main),
+      -1px 1px 0 var(--color-background-main),
+      -1px -1px 0 var(--color-background-main);
+    transform: scale(1.05);
   }
   &:hover ${CardImage} {
     box-shadow: 0px 0px 10px var(--color-accent);
+    transform: scale(1.05);
   }
   &:hover ${Genres} {
     color: var(--color-accent);
+    text-shadow:
+      1px 1px 0 var(--color-background-main),
+      1px -1px 0 var(--color-background-main),
+      -1px 1px 0 var(--color-background-main),
+      -1px -1px 0 var(--color-background-main);
+    transform: scale(1.05);
   }
 `;
 
@@ -129,7 +161,9 @@ const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
         onClick={() => navigate(urlName)}
       >
         <CardTitle>{name}</CardTitle>
-        <CardImage src={profileImage} alt={name} loading='lazy' />
+        <ImageContainer>
+          <CardImage src={profileImage} alt={name} loading='lazy' />
+        </ImageContainer>
         <Genres>Genre: {genre.length !== 0 ? genre.join(', ') : 'NA'}</Genres>
         <LinkContainer musician={musician} />
       </MusicianCardBody>
