@@ -35,11 +35,13 @@ const CardTitle = styled.h2`
 
 const Genres = styled.p`
   transition: color var(--animation-speed-medium) ease;
+  height: 50px;
   box-sizing: border-box;
-  padding: 0px 10px;
+  padding: 0 10px;
   width: 100%;
   color: var(--color-text-secondary);
   transition: all var(--animation-speed-medium) ease;
+  margin-top: 10px;
 `;
 
 const MusicianCardBody = styled.div<{ backgroundImage: string }>`
@@ -104,15 +106,18 @@ const MusicianCardBody = styled.div<{ backgroundImage: string }>`
   &:hover ${CardTitle} {
     color: var(--color-accent);
     text-shadow:
-      1px 1px 0 var(--color-background-main),
-      1px -1px 0 var(--color-background-main),
-      -1px 1px 0 var(--color-background-main),
-      -1px -1px 0 var(--color-background-main);
+      1px 1px 0 var(--color-background-alt),
+      1px -1px 0 var(--color-background-alt),
+      -1px 1px 0 var(--color-background-alt),
+      -1px -1px 0 var(--color-background-alt);
     transform: scale(1.05);
+    padding-top: 5px;
+    z-index: 1;
   }
   &:hover ${CardImage} {
     box-shadow: 0px 0px 10px var(--color-accent);
     transform: scale(1.05);
+    margin-top: 5px;
   }
   &:hover ${Genres} {
     color: var(--color-accent);
@@ -122,6 +127,7 @@ const MusicianCardBody = styled.div<{ backgroundImage: string }>`
       -1px 1px 0 var(--color-background-main),
       -1px -1px 0 var(--color-background-main);
     transform: scale(1.05);
+    margin-top: 10px;
   }
 `;
 
