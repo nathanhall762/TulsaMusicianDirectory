@@ -94,7 +94,7 @@ const MusicianCardBody = styled.div<{ backgroundImage: string }>`
   }
 
   &:hover::after {
-    opacity: 0; // Fades out the overlay on hover
+    opacity: .5; // Fades out the overlay on hover
   }
 
   &:hover {
