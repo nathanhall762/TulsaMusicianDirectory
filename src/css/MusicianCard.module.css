@@ -1,104 +1,9 @@
-.musicianCard {
-  border: 1px solid var(--font-color);
-  padding: 2rem 20px;
-  border-radius: 5px;
-  width: 250px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  transition: box-shadow 0.4s ease; /* smooth transition for the shadow */
-  box-shadow: none;
-  margin: 0.3rem;
-  align-self: stretch;
-  /* height: 30rem; */
-  height: 550px;
-  justify-content: space-between;
-  background-color: var(--other-color);
-}
-
-.musicianCard p {
-  color: var(--font-color);
-  opacity: 0.8;
-}
-
-.musicianCard:hover {
-  text-decoration: none;
-  background-color: var(--secondary-color);
-  box-shadow: 0px 0px 10px var(--tertiary-color); /* horizontal offset, vertical offset, blur radius, color */
-  cursor: pointer;
-}
-
-.musicianCard img {
-  margin-bottom: 1.7rem;
-  box-shadow: 0px 0px 0.5rem var(--primary-color);
-  transition: box-shadow 0.4s ease;
-}
-
-.musicianCard:hover img {
-  box-shadow: 0px 0px 2rem var(--tertiary-color);
-}
-
-.musicianCard:hover .socialLinks a {
-  color: var(--tertiary-color);
-}
-
-.musicianCard:hover .socialLinks .bandcampLink:hover {
-  color: var(--bandcamp-color);
-}
-
-.musicianCard:hover .socialLinks .soundcloudLink:hover {
-  color: var(--soundcloud-color);
-}
-
-.musicianCard:hover .socialLinks .spotifyLink:hover {
-  color: var(--spotify-color);
-}
-
-.musicianCard:hover .socialLinks .youtubeLink:hover {
-  color: var(--youtube-color);
-}
-
-.musicianCard:hover .socialLinks .instagramLink:hover {
-  color: var(--instagram-color);
-}
-
-.musicianCard:hover .socialLinks .facebookLink:hover {
-  color: var(--facebook-color);
-}
-
-.musicianCard:hover .socialLinks .twitterLink:hover {
-  color: var(--twitter-color);
-}
-
-.musicianCard:hover .socialLinks .tiktokLink:hover {
-  color: var(--tiktok-color);
-}
-
-.musicianCard:hover .socialLinks .twitchLink:hover {
-  color: var(--twitch-color);
-}
-
-.musicianCard:hover .socialLinks .threadsLink:hover {
-  color: var(--threads-color);
-}
-
-.musicianCard .name {
-  height: 20%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.musicianCard .keyInfo {
-  height: fit-content;
-}
-
 .socialLinks {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  font-size: 1.7rem;
-  width: 80%;
+  /* font-size: 1.7rem; */
+  /* width: 80%; */
 }
 
 .socialLinks a {
@@ -111,21 +16,4 @@
 .socialLinks a:hover {
   text-decoration: underline;
   color: var(--primary-color);
-}
-
-.profileImage {
-  /* width: 15rem; */
-  /* height: 15rem; */
-  width: 250px;
-  height: 250px;
-  border-radius: 50%;
-  margin-bottom: 10px;
-  object-fit: cover;
-  object-position: center;
-}
-
-@media (max-width: 576px) {
-  .musicianCard {
-    align-self: center;
-  }
 }

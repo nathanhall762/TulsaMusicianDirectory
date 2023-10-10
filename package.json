@@ -17,9 +17,11 @@
     "firebase": "^10.1.0",
     "firebase-admin": "^11.10.1",
     "font-awesome": "^4.7.0",
+    "normalize.css": "^8.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0",
+    "styled-components": "^6.0.8",
     "uuid": "^9.0.0",
     "zustand": "^4.4.2"
   },
