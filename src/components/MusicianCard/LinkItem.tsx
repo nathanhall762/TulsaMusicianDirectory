@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-// generally styling for div wrapping each link
 const Link = styled.a`
   display: flex;
   justify-content: center;
@@ -95,23 +94,11 @@ interface LinkItemProps {
   styleClassName: LinkStyleClassNames;
 }
 
-const LinkItem: React.FC<LinkItemProps> = ({ linkName: name, url }) => {
-  const extractBandcampURL = (iframeString: string): string => {
-    const match = iframeString.match(
-      /href="(https:\/\/.*?\.bandcamp\.com)\/.*?"/
-    );
-    return match ? match[1] : '';
-  };
-
-  const extractSoundcloudProfileURL = (embedCode: string): string => {
-    const match = embedCode.match(
-      /<a href="(https:\/\/soundcloud\.com\/[^"]+)"/
-    );
-    return match ? match[1] : '';
-  };
-
-  if (name === 'bandcamp') url = extractBandcampURL(url);
-  if (name === 'soundcloud') url = extractSoundcloudProfileURL(url);
+const LinkItem: React.FC<LinkItemProps> = ({
+  url,
+  iconClassName,
+  styleClassName,
+}) => {
   if (!url) return null;
 
   // LinkIcon is a styled component from linkComponentMap
