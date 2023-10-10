@@ -2,15 +2,6 @@ import MusicianCard from './MusicianCard';
 import useBearStore from '../../bearStore';
 import styled from 'styled-components';
 
-const CardContainerDiv = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-`;
-
 const CardContainer = () => {
   const musicians = useBearStore((state) => state.musicians);
 
@@ -26,5 +17,14 @@ const CardContainer = () => {
     </CardContainerDiv>
   );
 };
+
+const CardContainerDiv = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+`;
 
 export default CardContainer;
