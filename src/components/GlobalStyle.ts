@@ -87,4 +87,8 @@ line-height: 1.1;
 h2 {
     margin: 0;
 }
+iframe {
+    border: none;
+    opacity: 0.8;
+}
 `;
