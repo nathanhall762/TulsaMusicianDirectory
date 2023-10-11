@@ -30,7 +30,7 @@ const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
   );
 };
 
-const CardImage = styled.img`
+export const CardImage = styled.img`
   width: 250px;
   height: 250px;
   border-radius: 50%;
@@ -48,7 +48,7 @@ const ImageContainer = styled.div`
   justify-content: center;
 `;
 
-const CardTitle = styled.h2`
+export const CardTitle = styled.h2`
   display: flex;
   box-sizing: border-box;
   padding: 0px 10px;
@@ -60,7 +60,7 @@ const CardTitle = styled.h2`
   transition: all var(--animation-speed-medium) ease;
 `;
 
-const Genres = styled.p`
+export const Genres = styled.p`
   transition: color var(--animation-speed-medium) ease;
   height: 50px;
   box-sizing: border-box;

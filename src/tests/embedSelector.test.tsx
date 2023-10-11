@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import EmbedSelector from '../components/EmbedSelector';
+import EmbedSelector from '../components/MusicianPage/EmbedSelector';
 
 // Tests
 describe('Renders embed selector correctly', async () => {

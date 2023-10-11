@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from './components/App';
 import HomePage from './components/Homepage';
-import MusicianPage from './components/MusicianPage';
+import MusicianPage from './components/MusicianPage/MusicianPage';
 import MusicianForm from './components/MusicianAddForm';
 import MusicianApproveForm from './components/MusicianApproveForm';
 import MusicianApprovePage from './components/MusicianApprovePage';
