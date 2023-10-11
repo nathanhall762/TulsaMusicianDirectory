@@ -1,37 +1,10 @@
 import LinkItem from './LinkItem';
 import styled from 'styled-components';
-
-export type Musician = {
-  name: string;
-  music: {
-    bandcamp: string;
-    spotify: string;
-    youtube: string;
-    soundcloud: string;
-    twitch: string;
-  };
-  social: {
-    facebook: string;
-    instagram: string;
-    tiktok: string;
-    threads: string;
-  };
-  genre: string[];
-  profileImage: string;
-};
+import { Musician } from '../../types';
 
 interface MusicianCardProps {
   musician: Musician;
 }
-
-const LinkContainerBody = styled.div`
-  display: flex;
-  box-sizing: border-box;
-  justify-content: center;
-  flex-wrap: wrap;
-  width: 100%;
-  padding: 0 10px;
-`;
 
 const LinkContainer: React.FC<MusicianCardProps> = ({ musician }) => {
   const {
@@ -107,5 +80,14 @@ const LinkContainer: React.FC<MusicianCardProps> = ({ musician }) => {
     </>
   );
 };
+
+const LinkContainerBody = styled.div`
+  display: flex;
+  box-sizing: border-box;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 0 10px;
+`;
 
 export default LinkContainer;

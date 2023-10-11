@@ -1,7 +1,34 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import LinkContainer from './LinkContainer';
 import styled from 'styled-components';
+import { Musician } from '../../types';
+
+interface MusicianCardProps {
+  musician: Musician;
+}
+
+const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
+  const { name, genre, profileImage } = musician;
+  const navigate = useNavigate();
+
+  const urlName = name.replaceAll(' ', '_').toLowerCase();
+
+  return (
+    <>
+      <MusicianCardBody
+        backgroundImage={profileImage}
+        onClick={() => navigate(urlName)}
+      >
+        <CardTitle>{name}</CardTitle>
+        <ImageContainer>
+          <CardImage src={profileImage} alt={name} loading='lazy' />
+        </ImageContainer>
+        <Genres>Genre: {genre.length !== 0 ? genre.join(', ') : 'NA'}</Genres>
+        <LinkContainer musician={musician} />
+      </MusicianCardBody>
+    </>
+  );
+};
 
 export const CardImage = styled.img`
   width: 250px;
@@ -94,7 +121,7 @@ const MusicianCardBody = styled.div<{ backgroundImage: string }>`
   }
 
   &:hover::after {
-    opacity: .5; // Fades out the overlay on hover
+    opacity: 0.5; // Fades out the overlay on hover
   }
 
   &:hover {
@@ -130,51 +157,5 @@ const MusicianCardBody = styled.div<{ backgroundImage: string }>`
     margin-top: 10px;
   }
 `;
-
-export type Musician = {
-  name: string;
-  music: {
-    bandcamp: string;
-    spotify: string;
-    youtube: string;
-    soundcloud: string;
-    twitch: string;
-  };
-  social: {
-    facebook: string;
-    instagram: string;
-    tiktok: string;
-    threads: string;
-  };
-  genre: string[];
-  profileImage: string;
-};
-
-interface MusicianCardProps {
-  musician: Musician;
-}
-
-const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
-  const { name, genre, profileImage } = musician;
-  const navigate = useNavigate();
-
-  const urlName = name.replaceAll(' ', '_').toLowerCase();
-
-  return (
-    <>
-      <MusicianCardBody
-        backgroundImage={profileImage}
-        onClick={() => navigate(urlName)}
-      >
-        <CardTitle>{name}</CardTitle>
-        <ImageContainer>
-          <CardImage src={profileImage} alt={name} loading='lazy' />
-        </ImageContainer>
-        <Genres>Genre: {genre.length !== 0 ? genre.join(', ') : 'NA'}</Genres>
-        <LinkContainer musician={musician} />
-      </MusicianCardBody>
-    </>
-  );
-};
 
 export default MusicianCard;
