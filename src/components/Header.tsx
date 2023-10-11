@@ -13,11 +13,9 @@ const genres = [
 
 type NavSelect = 'About' | 'Directory' | 'Discover';
 
-const Header = () => {
+const UHeader = () => {
   const [navSelected, setNavSelected] = useState<NavSelect>('Directory');
   const [genreFilter, setGenreFilter] = useState<string[]>([]);
-
-  // console.log(genreFilter);
 
   const handleNavigation = (e: any) => {
     setNavSelected(e.target.textContent);
@@ -26,12 +24,9 @@ const Header = () => {
   const handleGenreToggle = (e: any) => {
     const genre = e.target.textContent;
     if (genreFilter.includes(genre)) {
-      const r = genreFilter.filter((g) => g !== genre);
-      console.log(r);
-      setGenreFilter(r);
+      setGenreFilter(genreFilter.filter((g) => g !== genre));
       return;
     }
-    console.log('adding');
     setGenreFilter([...genreFilter, genre]);
   };
 
@@ -81,26 +76,32 @@ const Header = () => {
   );
 };
 
+const Header = styled(UHeader)`
+  background-color: var(--color-background-alt);
+  postion: static;
+  top: 0;
+`;
+
 const Logo = styled.img`
-  height: 120px;
-  width: 120px;
+  height: 100px;
+  width: 100px;
   border-radius: 100%;
   position: absolute;
-  margin: 0.5em;
+  margin: 0.75em;
 `;
 
 const Title = styled.h1`
-  font-size: 30px;
+  font-size: 25px;
   color: var(--color-primary);
 `;
 
 const TopHeader = styled.div`
+  margin-left: 120px;
+  gap: 0;
   display: flex;
-  justify-content: space-between;
-  padding: 1em 0 0 200px;
-  margin-left: auto;
+  justify-content: space-around;
+  padding: 0.25em 0 0.25em 0;
   margin-right: 0;
-  background-color: var(--color-background-alt);
 `;
 
 const NavBar = styled.div`
@@ -119,6 +120,8 @@ const PageNavigation = styled.ul`
   border-radius: 25px;
   list-style: none;
   padding: 0;
+  font-size: 15px;
+  font-weight: bold;
 `;
 
 const Navigation = styled.li<{ $navSelected: boolean }>`
@@ -159,21 +162,22 @@ const Search = styled.i`
 
 const BottomHeader = styled.div`
   background-color: var(--color-secondary);
-  padding: 0.5em 0;
+  padding: 0.25em 0 0.25em 10em;
 `;
 
 const GenreList = styled.ul`
   display: flex;
   list-style: none;
-  margin: 0 0 0 200px;
   padding: 0;
+  margin: 0 0 0 0;
+  font-size: 15px;
 `;
 
 const Genre = styled.li<{ $genreSelected: boolean }>`
   border-radius: 25px;
   margin: 0 0.5em;
   background-color: var(--color-accent);
-  padding: 0.2em 0.75em;
+  padding: 0 0.75em;
   &:hover {
     opacity: 80%;
   }
