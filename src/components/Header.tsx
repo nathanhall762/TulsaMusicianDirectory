@@ -31,7 +31,7 @@ const Header = () => {
   };
 
   return (
-    <div>
+    <HeaderWrapper>
       <Logo src='src/assets/TMD-logo.png' alt='TMD logo' />
       <TopHeader>
         <Title>The Tulsa Musician Directory</Title>
@@ -72,13 +72,21 @@ const Header = () => {
           ))}
         </GenreList>
       </BottomHeader>
-    </div>
+    </HeaderWrapper>
   );
 };
 
+const HeaderWrapper = styled.div`
+  position: fixed;
+  width: 100vw;
+  height: 6rem;
+  z-index: 5;
+  background-color: var(--color-background-alt);
+`;
+
 const Logo = styled.img`
-  height: 100px;
-  width: 100px;
+  height: 90px;
+  width: 90px;
   border-radius: 100%;
   position: absolute;
   margin: 0.75em;
@@ -88,14 +96,15 @@ const Title = styled.h1`
   color: var(--color-primary);
   font-size: 25px;
   padding: 0 auto;
+  margin-top: 0.75rem;
 `;
 
 const TopHeader = styled.div`
-  margin-left: min(9em, 15%);
   display: flex;
   justify-content: space-between;
-  padding: 0.25em 0 0.25em 0;
+  padding: 0.25em 0 0.25em min(9em, 15%);
   margin-right: 0;
+  height: 3rem;
 `;
 
 const NavBar = styled.div`
@@ -157,6 +166,7 @@ const Search = styled.i`
 const BottomHeader = styled.div`
   background-color: var(--color-secondary);
   padding: 0.25em 0 0.25em 10em;
+  height: 1.5rem;
 `;
 
 const GenreList = styled.ul`

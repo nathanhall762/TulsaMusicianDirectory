@@ -1,14 +1,12 @@
 import { Link } from 'react-router-dom';
 import useBearStore from '../bearStore';
 import CardContainer from './MusicianCard/CardContainer';
-import Header from './Header';
 
 const HomePage = () => {
   const user = useBearStore((state) => state.user);
 
   return (
     <div>
-      <Header />
       <CardContainer />
       <div className='buttonBox'>
         {/* show button link to MusicianApprovePage if user is admin */}
