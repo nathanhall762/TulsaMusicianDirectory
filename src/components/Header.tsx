@@ -15,9 +15,24 @@ type NavSelect = 'About' | 'Directory' | 'Discover';
 
 const Header = () => {
   const [navSelected, setNavSelected] = useState<NavSelect>('Directory');
+  const [genreFilter, setGenreFilter] = useState<string[]>([]);
+
+  // console.log(genreFilter);
 
   const handleNavigation = (e: any) => {
     setNavSelected(e.target.textContent);
+  };
+
+  const handleGenreToggle = (e: any) => {
+    const genre = e.target.textContent;
+    if (genreFilter.includes(genre)) {
+      const r = genreFilter.filter((g) => g !== genre);
+      console.log(r);
+      setGenreFilter(r);
+      return;
+    }
+    console.log('adding');
+    setGenreFilter([...genreFilter, genre]);
   };
 
   return (
@@ -51,9 +66,14 @@ const Header = () => {
       </TopHeader>
       <BottomHeader>
         <GenreList>
-          <Genre>Tulsa</Genre>
+          <Genre $genreSelected={true}>Tulsa</Genre>
           {genres.map((genre) => (
-            <Genre>{genre}</Genre>
+            <Genre
+              onClick={handleGenreToggle}
+              $genreSelected={genreFilter.includes(genre)}
+            >
+              {genre}
+            </Genre>
           ))}
         </GenreList>
       </BottomHeader>
@@ -149,14 +169,15 @@ const GenreList = styled.ul`
   padding: 0;
 `;
 
-const Genre = styled.li`
+const Genre = styled.li<{ $genreSelected: boolean }>`
   border-radius: 25px;
   margin: 0 0.5em;
   background-color: var(--color-accent);
-  padding: 0 0.75em;
+  padding: 0.2em 0.75em;
   &:hover {
     opacity: 80%;
   }
+  ${(props) => props.$genreSelected && 'background-color: black;'}
 `;
 
 export default Header;
