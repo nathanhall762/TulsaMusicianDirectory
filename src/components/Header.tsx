@@ -13,7 +13,7 @@ const genres = [
 
 type NavSelect = 'About' | 'Directory' | 'Discover';
 
-const UHeader = () => {
+const Header = () => {
   const [navSelected, setNavSelected] = useState<NavSelect>('Directory');
   const [genreFilter, setGenreFilter] = useState<string[]>([]);
 
@@ -34,9 +34,7 @@ const UHeader = () => {
     <div>
       <Logo src='src/assets/TMD-logo.png' alt='TMD logo' />
       <TopHeader>
-        <TitleSpan>
-          <Title>The Tulsa Musician Directory</Title>
-        </TitleSpan>
+        <Title>The Tulsa Musician Directory</Title>
         <NavBar>
           <PageNavigation>
             <About
@@ -78,12 +76,6 @@ const UHeader = () => {
   );
 };
 
-const Header = styled(UHeader)`
-  background-color: var(--color-background-alt);
-  position: sticky;
-  top: 0;
-`;
-
 const Logo = styled.img`
   height: 100px;
   width: 100px;
@@ -92,12 +84,8 @@ const Logo = styled.img`
   margin: 0.75em;
 `;
 
-const TitleSpan = styled.span`
-  font-size: 25px;
-  color: var(--color-primary);
-`;
-
 const Title = styled.h1`
+  color: var(--color-primary);
   font-size: 25px;
   padding: 0 auto;
 `;
