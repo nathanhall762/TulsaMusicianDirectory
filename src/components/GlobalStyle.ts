@@ -15,7 +15,7 @@ export const GlobalStyle = createGlobalStyle`
 
     --color-text-primary: #e9f1f7;
     --color-text-secondary: #c9d1d9;
-    --color-text-inverse: #0d1117;
+    --color-text-inverse: #fff;
 
     --color-success: #2ea44f;
     --color-danger: #cb2431;

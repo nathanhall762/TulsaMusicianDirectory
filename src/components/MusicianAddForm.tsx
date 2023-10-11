@@ -10,6 +10,7 @@ import styles from '../css/MusicianAddForm.module.css';
 import { useNavigate } from 'react-router-dom';
 import { logEvent } from 'firebase/analytics';
 import useBearStore from '../bearStore';
+import Login from './Login';
 
 type MusicianFormData = {
   name: string;
@@ -148,9 +149,7 @@ const MusicianForm = () => {
     return (
       <div>
         <p>You Must Login to Add a Musician</p>
-        <Link to={'..'}>
-          <button>Go Back</button>
-        </Link>
+        <Login />
       </div>
     );
   }
