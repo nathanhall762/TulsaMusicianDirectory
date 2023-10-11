@@ -16,8 +16,6 @@ type NavSelect = 'About' | 'Directory' | 'Discover';
 const Header = () => {
   const [navSelected, setNavSelected] = useState<NavSelect>('Directory');
 
-  console.log(navSelected);
-
   const handleNavigation = (e: any) => {
     setNavSelected(e.target.textContent);
   };
@@ -29,11 +27,26 @@ const Header = () => {
         <Title>The Tulsa Musician Directory</Title>
         <NavBar>
           <PageNavigation>
-            <Navigation onClick={handleNavigation}>About</Navigation>
-            <Navigation onClick={handleNavigation}>Directory</Navigation>
-            <Navigation onClick={handleNavigation}>Discover</Navigation>
+            <Navigation
+              onClick={handleNavigation}
+              $navSelected={navSelected === 'About'}
+            >
+              <p>About</p>
+            </Navigation>
+            <Navigation
+              onClick={handleNavigation}
+              $navSelected={navSelected === 'Directory'}
+            >
+              <p>Directory</p>
+            </Navigation>
+            <Navigation
+              onClick={handleNavigation}
+              $navSelected={navSelected === 'Discover'}
+            >
+              <p>Discover</p>
+            </Navigation>
           </PageNavigation>
-          <SearchIcon>Search</SearchIcon>
+          <Search className='fa-solid fa-magnifying-glass'></Search>
         </NavBar>
       </TopHeader>
       <BottomHeader>
@@ -74,25 +87,40 @@ const TopHeader = styled.div`
 const NavBar = styled.div`
   display: flex;
   align-items: center;
-  gap: 20px;
+  justify-content: space-between;
+  min-width: 33%;
+  margin: 0 10px;
 `;
 
-const PageNavigation = styled.div`
+const PageNavigation = styled.ul`
   display: flex;
   align-items: center;
   background-color: var(--color-secondary);
   height: 2.5rem;
   border-radius: 25px;
+  list-style: none;
+  padding: 0;
 `;
 
-const Navigation = styled.div`
+const Navigation = styled.li<{ $navSelected: boolean }>`
   padding: 0 1em;
+  text-align: center;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
+  width: 4em;
   &:hover {
-    opacity: 50%;
+    transform: scale(1.1);
+    opacity: 80%;
   }
+  ${(props) => props.$navSelected && 'background-color: black'}
 `;
 
-const SearchIcon = styled.span``;
+const Search = styled.i`
+  color: var(--color-primary);
+  font-size: 1.5em;
+`;
 
 const BottomHeader = styled.div`
   background-color: var(--color-secondary);
@@ -111,11 +139,6 @@ const Genre = styled.li`
   margin: 0 0.5em;
   background-color: var(--color-accent);
   padding: 0 0.75em;
-`;
-
-const Directory = styled(Genre)`
-  border-left: solid;
-  border-right: solid;
 `;
 
 export default Header;
