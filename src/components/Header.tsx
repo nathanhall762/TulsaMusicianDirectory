@@ -27,26 +27,26 @@ const Header = () => {
         <Title>The Tulsa Musician Directory</Title>
         <NavBar>
           <PageNavigation>
-            <Navigation
+            <About
               onClick={handleNavigation}
               $navSelected={navSelected === 'About'}
             >
               <p>About</p>
-            </Navigation>
+            </About>
             <Navigation
               onClick={handleNavigation}
               $navSelected={navSelected === 'Directory'}
             >
               <p>Directory</p>
             </Navigation>
-            <Navigation
+            <Discover
               onClick={handleNavigation}
               $navSelected={navSelected === 'Discover'}
             >
               <p>Discover</p>
-            </Navigation>
+            </Discover>
           </PageNavigation>
-          <Search className='fa-solid fa-magnifying-glass'></Search>
+          <Search className='fa-solid fa-magnifying-glass' />
         </NavBar>
       </TopHeader>
       <BottomHeader>
@@ -66,8 +66,7 @@ const Logo = styled.img`
   width: 120px;
   border-radius: 100%;
   position: absolute;
-  // top: 10%;
-  // left: 10%;
+  margin: 0.5em;
 `;
 
 const Title = styled.h1`
@@ -78,7 +77,7 @@ const Title = styled.h1`
 const TopHeader = styled.div`
   display: flex;
   justify-content: space-between;
-  padding-left: 200px;
+  padding: 1em 0 0 200px;
   margin-left: auto;
   margin-right: 0;
   background-color: var(--color-background-alt);
@@ -87,7 +86,7 @@ const TopHeader = styled.div`
 const NavBar = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   min-width: 33%;
   margin: 0 10px;
 `;
@@ -108,18 +107,34 @@ const Navigation = styled.li<{ $navSelected: boolean }>`
   height: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
   transition: all 0.2s ease-in-out;
   width: 4em;
   &:hover {
     transform: scale(1.1);
     opacity: 80%;
   }
-  ${(props) => props.$navSelected && 'background-color: black'}
+  ${(props) => props.$navSelected && 'background-color: black;'}
+`;
+
+const About = styled(Navigation)`
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+`;
+
+const Discover = styled(Navigation)`
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
 `;
 
 const Search = styled.i`
   color: var(--color-primary);
   font-size: 1.5em;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    transform: scale(1.1);
+    opacity: 80%;
+  }
 `;
 
 const BottomHeader = styled.div`
@@ -139,6 +154,9 @@ const Genre = styled.li`
   margin: 0 0.5em;
   background-color: var(--color-accent);
   padding: 0 0.75em;
+  &:hover {
+    opacity: 80%;
+  }
 `;
 
 export default Header;
