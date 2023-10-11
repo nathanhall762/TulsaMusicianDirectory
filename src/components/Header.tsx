@@ -33,6 +33,7 @@ const Header = () => {
   return (
     <HeaderWrapper>
       <Logo src='src/assets/TMD-logo.png' alt='TMD logo' />
+      <ShortTitle>TMD</ShortTitle>
       <TopHeader>
         <Title>The Tulsa Musician Directory</Title>
         <NavBar>
@@ -57,6 +58,7 @@ const Header = () => {
             </Discover>
           </PageNavigation>
           <Search className='fa-solid fa-magnifying-glass' />
+          <Hamburger className='fa-solid fa-bars' />
         </NavBar>
       </TopHeader>
       <BottomHeader>
@@ -82,6 +84,9 @@ const HeaderWrapper = styled.div`
   height: 6rem;
   z-index: 5;
   background-color: var(--color-background-alt);
+  @media (max-width: 1000px) {
+    height: 3rem;
+  }
 `;
 
 const Logo = styled.img`
@@ -90,6 +95,10 @@ const Logo = styled.img`
   border-radius: 100%;
   position: absolute;
   margin: 0.75em;
+  @media (max-width: 1000px) {
+    height: 65px;
+    width: 65px;
+  }
 `;
 
 const Title = styled.h1`
@@ -97,6 +106,21 @@ const Title = styled.h1`
   font-size: 25px;
   padding: 0 auto;
   margin-top: 0.75rem;
+  @media (max-width: 800px) {
+    display: none;
+  }
+`;
+
+const ShortTitle = styled.h1`
+  color: var(--color-primary);
+  text-align: center;
+  display: none;
+  font-size: 20px;
+  width: 100%;
+  position: absolute;
+  @media (max-width: 800px) {
+    display: block;
+  }
 `;
 
 const TopHeader = styled.div`
@@ -105,6 +129,9 @@ const TopHeader = styled.div`
   padding: 0.25em 0 0.25em min(9em, 15%);
   margin-right: 0;
   height: 3rem;
+  @media (max-width: 1000px) {
+    padding-left: 100px;
+  }
 `;
 
 const NavBar = styled.div`
@@ -113,6 +140,9 @@ const NavBar = styled.div`
   justify-content: space-around;
   min-width: 33%;
   margin: 0 10px;
+  @media (max-width: 1000px) {
+    margin-left: auto;
+  }
 `;
 
 const PageNavigation = styled.ul`
@@ -125,6 +155,9 @@ const PageNavigation = styled.ul`
   padding: 0;
   font-size: 15px;
   font-weight: bold;
+  @media (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 const Navigation = styled.li<{ $navSelected: boolean }>`
@@ -163,10 +196,27 @@ const Search = styled.i`
   }
 `;
 
+const Hamburger = styled.i`
+  display: none;
+  color: var(--color-primary);
+  font-size: 1.5em;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    transform: scale(1.1);
+    opacity: 80%;
+  }
+  @media (max-width: 1000px) {
+    display: block;
+  }
+`;
+
 const BottomHeader = styled.div`
   background-color: var(--color-secondary);
   padding: 0.25em 0 0.25em 10em;
   height: 1.5rem;
+  @media (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 const GenreList = styled.ul`
