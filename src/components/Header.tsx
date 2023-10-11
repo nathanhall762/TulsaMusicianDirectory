@@ -91,8 +91,7 @@ const Title = styled.h1`
 `;
 
 const TopHeader = styled.div`
-  // margin-left: min(10em, 15%);
-  margin-left: 15%;
+  margin-left: min(9em, 15%);
   display: flex;
   justify-content: space-between;
   padding: 0.25em 0 0.25em 0;
