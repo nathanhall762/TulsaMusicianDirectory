@@ -1,13 +1,12 @@
 import useBearStore from '../../bearStore';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 const AddButtons = () => {
   const user = useBearStore((state) => state.user);
-  const navigate = useNavigate();
 
   const [isAddButtonHovered, setIsAddButtonHovered] = useState(false);
   const [isApproveButtonHovered, setIsApproveButtonHovered] = useState(false);
@@ -16,32 +15,34 @@ const AddButtons = () => {
     <AddButtonContainer>
       {/* show button link to MusicianApprovePage if user is admin */}
       {user.isAdmin ? (
-        <AddButton
-          $backgroundColor='var(--color-primary)'
-          onClick={() => navigate('/approvemusician')}
-          onMouseEnter={() => setIsApproveButtonHovered(true)}
-          onMouseLeave={() => setIsApproveButtonHovered(false)}
-        >
-          {isApproveButtonHovered ? (
-            'Approve Musician'
-          ) : (
-            <FontAwesomeIcon icon={faCheck} />
-          )}
-        </AddButton>
+        <Link to='/approvemusician'>
+          <AddButton
+            $backgroundColor='var(--color-primary)'
+            onMouseEnter={() => setIsApproveButtonHovered(true)}
+            onMouseLeave={() => setIsApproveButtonHovered(false)}
+          >
+            {isApproveButtonHovered ? (
+              'Approve Musician'
+            ) : (
+              <FontAwesomeIcon icon={faCheck} />
+            )}
+          </AddButton>
+        </Link>
       ) : null}
       {/* show add musician button only if logged in */}
-      <AddButton
-        $backgroundColor='var(--color-accent)'
-        onClick={() => navigate('/addmusician')}
-        onMouseEnter={() => setIsAddButtonHovered(true)}
-        onMouseLeave={() => setIsAddButtonHovered(false)}
-      >
-        {isAddButtonHovered ? (
-          'Add Musician'
-        ) : (
-          <FontAwesomeIcon icon={faPlus} />
-        )}
-      </AddButton>
+      <Link to='/addmusician'>
+        <AddButton
+          $backgroundColor='var(--color-accent)'
+          onMouseEnter={() => setIsAddButtonHovered(true)}
+          onMouseLeave={() => setIsAddButtonHovered(false)}
+        >
+          {isAddButtonHovered ? (
+            'Add Musician'
+          ) : (
+            <FontAwesomeIcon icon={faPlus} />
+          )}
+        </AddButton>
+      </Link>
     </AddButtonContainer>
   );
 };

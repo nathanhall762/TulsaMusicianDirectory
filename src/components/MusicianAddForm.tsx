@@ -5,7 +5,6 @@ import { doc, setDoc, collection } from 'firebase/firestore';
 import { db, analytics } from '../firebase';
 import { v4 } from 'uuid';
 // import { validateURLs } from '../utils';
-import { Link } from 'react-router-dom';
 import styles from '../css/MusicianAddForm.module.css';
 import { useNavigate } from 'react-router-dom';
 import { logEvent } from 'firebase/analytics';
