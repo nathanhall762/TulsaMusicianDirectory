@@ -5,7 +5,11 @@ import { Link } from 'react-router-dom';
 import useBearStore from '../../bearStore';
 import LinkContainer from './LinkContainerPage';
 import { styled } from 'styled-components';
-import { CardTitle, Genres, CardImage } from '../MusicianCard/MusicianCard';
+import {
+  CardTitle as CardTitleBase,
+  Genres,
+  CardImage,
+} from '../MusicianCard/MusicianCard';
 
 const MusicianPage = () => {
   const musicians = useBearStore((state) => state.musicians);
@@ -30,16 +34,19 @@ const MusicianPage = () => {
   return (
     <>
       <MusicianPageBody>
-        <MusicianPageContainerA>
+        <MusicianPageContainerA backgroundImage={profileImage}>
           <Link to='/'>
             <BackButton>Go Back</BackButton>
           </Link>
           <CardImage src={profileImage} alt={name} loading='lazy' />
           <CardTitle>{name}</CardTitle>
+          <EmbedContainerA>
+            <EmbedSelector Music={music} />
+          </EmbedContainerA>
           <Genres>Genre: {genre.length !== 0 ? genre.join(', ') : 'NA'}</Genres>
           <LinkContainer musician={musician}></LinkContainer>
         </MusicianPageContainerA>
-        <MusicianPageContainerB>
+        <MusicianPageContainerB backgroundImage={profileImage}>
           <EmbedContainer>
             <EmbedSelector Music={music} />
           </EmbedContainer>
@@ -57,8 +64,12 @@ const EmbedContainer = styled.div`
   @media (max-width: 768px) {
     padding: 0;
   }
-  & > div {
-    justify-content: center;
+`;
+
+const EmbedContainerA = styled(EmbedContainer)`
+max-height: 20vh;
+  @media (min-width: 768px) {
+    display: none;
   }
 `;
 
@@ -70,10 +81,12 @@ const MusicianPageBody = styled.div`
   box-sizing: border-box;
   @media (max-width: 768px) {
     flex-direction: column;
+    justify-content: end;
+    overflow: hidden;
   }
 `;
 
-const MusicianPageContainer = styled.div`
+const MusicianPageContainer = styled.div<{ backgroundImage: string }>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -88,18 +101,50 @@ const MusicianPageContainerA = styled(MusicianPageContainer)`
   width: 30%;
   background-color: var(--color-background-alt);
   @media (max-width: 768px) {
-    /* background-color: var(--color-background-main); */
+    background-color: var(--color-background-main);
     width: 100%;
+    height: 100%;
+    justify-content: space-around;
+  }
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transition:
+      filter var(--animation-speed-medium) ease,
+      opacity var(--animation-speed-medium) ease;
+    z-index: -1;
+  }
+
+  &::before {
+    background-image: url(${(props) => props.backgroundImage});
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(5px);
+  }
+
+  &::after {
+    background-color: rgba(0, 0, 0, 0.8);
+    opacity: 1;
   }
 `;
 
 const MusicianPageContainerB = styled(MusicianPageContainer)`
   justify-content: space-around;
   width: 70%;
+  box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
   @media (max-width: 768px) {
+    display: none;
     width: 100%;
     padding: 0;
     justify-content: start;
+    box-shadow: none;
+    background-color: var(--color-background-main);
   }
 `;
 
@@ -123,6 +168,10 @@ const BackButton = styled.button`
   @media (max-width: 768px) {
     visibility: hidden;
   }
+`;
+
+const CardTitle = styled(CardTitleBase)`
+  padding: 1rem;
 `;
 
 export default MusicianPage;
