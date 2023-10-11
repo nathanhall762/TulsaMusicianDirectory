@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import logo from '../assets/TMD-logo.png';
 
 const genres = [
   'Rock',
@@ -32,7 +33,7 @@ const Header = () => {
 
   return (
     <HeaderWrapper>
-      <Logo src='src/assets/TMD-logo.png' alt='TMD logo' />
+      <Logo src={logo} alt='TMD logo' />
       <ShortTitle>TMD</ShortTitle>
       <TopHeader>
         <Title>The Tulsa Musician Directory</Title>
