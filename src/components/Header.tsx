@@ -1,44 +1,242 @@
 import { useState } from 'react';
-import styles from '../css/Login.module.css';
-import Login from './Login';
+import styled from 'styled-components';
+import logo from '../assets/TMD-logo.png';
+
+const genres = [
+  'Rock',
+  'Americana',
+  'Folk',
+  'Electronic',
+  'Rap',
+  'Metal',
+  'Bluegrass',
+];
+
+type NavSelect = 'About' | 'Directory' | 'Discover';
 
 const Header = () => {
-  const [isAccordionOpen, setAccordionOpen] = useState(false);
-  const toggleAccordion = () => {
-    setAccordionOpen(!isAccordionOpen);
+  const [navSelected, setNavSelected] = useState<NavSelect>('Directory');
+  const [genreFilter, setGenreFilter] = useState<string[]>([]);
+
+  const handleNavigation = (e: any) => {
+    setNavSelected(e.target.textContent);
+  };
+
+  const handleGenreToggle = (e: any) => {
+    const genre = e.target.textContent;
+    if (genreFilter.includes(genre)) {
+      setGenreFilter(genreFilter.filter((g) => g !== genre));
+      return;
+    }
+    setGenreFilter([...genreFilter, genre]);
   };
 
   return (
-    <div className={styles.loginContainer}>
-      <div className={styles.heading} onClick={toggleAccordion}>
-        <h1>The Tulsa Musician Directory</h1>
-        <p>{isAccordionOpen ? 'show less' : 'add to the directory'}</p>
-      </div>
-      <div
-        id='intro-accordion'
-        className={
-          isAccordionOpen ? styles.accordionOpen : styles.accordionClosed
-        }
-      >
-        <ul>
-          How to support:
-          <li>
-            Discover local bands by exploring the directory and listening to
-            music previews.
-          </li>
-          <li>
-            Use the social links to follow and engage with artist content.
-          </li>
-          <li>Use the music links to stream the artists' music.</li>
-          <li>
-            Help build a working directory of Tulsa musicians by signing up to
-            add bands/musicians!
-          </li>
-        </ul>
-        <Login />
-      </div>
-    </div>
+    <HeaderWrapper>
+      <Logo src={logo} alt='TMD logo' />
+      <ShortTitle>TMD</ShortTitle>
+      <TopHeader>
+        <Title>The Tulsa Musician Directory</Title>
+        <NavBar>
+          <PageNavigation>
+            <About
+              onClick={handleNavigation}
+              $navSelected={navSelected === 'About'}
+            >
+              <p>About</p>
+            </About>
+            <Navigation
+              onClick={handleNavigation}
+              $navSelected={navSelected === 'Directory'}
+            >
+              <p>Directory</p>
+            </Navigation>
+            <Discover
+              onClick={handleNavigation}
+              $navSelected={navSelected === 'Discover'}
+            >
+              <p>Discover</p>
+            </Discover>
+          </PageNavigation>
+          <Search className='fa-solid fa-magnifying-glass' />
+          <Hamburger className='fa-solid fa-bars' />
+        </NavBar>
+      </TopHeader>
+      <BottomHeader>
+        <GenreList>
+          <Genre $genreSelected={true}>Tulsa</Genre>
+          {genres.map((genre) => (
+            <Genre
+              onClick={handleGenreToggle}
+              $genreSelected={genreFilter.includes(genre)}
+            >
+              {genre}
+            </Genre>
+          ))}
+        </GenreList>
+      </BottomHeader>
+    </HeaderWrapper>
   );
 };
+
+const HeaderWrapper = styled.div`
+  position: fixed;
+  width: 100vw;
+  height: 6rem;
+  z-index: 5;
+  background-color: var(--color-background-alt);
+  @media (max-width: 1000px) {
+    height: 3rem;
+  }
+`;
+
+const Logo = styled.img`
+  height: 90px;
+  width: 90px;
+  border-radius: 100%;
+  position: absolute;
+  margin: 0.75em;
+  @media (max-width: 1000px) {
+    height: 65px;
+    width: 65px;
+  }
+`;
+
+const Title = styled.h1`
+  color: var(--color-primary);
+  font-size: 25px;
+  padding: 0 auto;
+  margin-top: 0.75rem;
+  @media (max-width: 800px) {
+    display: none;
+  }
+`;
+
+const ShortTitle = styled.h1`
+  color: var(--color-primary);
+  text-align: center;
+  display: none;
+  font-size: 20px;
+  width: 100%;
+  position: absolute;
+  @media (max-width: 800px) {
+    display: block;
+  }
+`;
+
+const TopHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 0.25em 0 0.25em min(9em, 15%);
+  margin-right: 0;
+  height: 3rem;
+  @media (max-width: 1000px) {
+    padding-left: 100px;
+  }
+`;
+
+const NavBar = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  min-width: 33%;
+  margin: 0 10px;
+  @media (max-width: 1000px) {
+    margin-left: auto;
+  }
+`;
+
+const PageNavigation = styled.ul`
+  display: flex;
+  align-items: center;
+  background-color: var(--color-secondary);
+  height: 2.5rem;
+  border-radius: 25px;
+  list-style: none;
+  padding: 0;
+  font-size: 15px;
+  font-weight: bold;
+  @media (max-width: 1000px) {
+    display: none;
+  }
+`;
+
+const Navigation = styled.li<{ $navSelected: boolean }>`
+  padding: 0 1em;
+  text-align: center;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease-in-out;
+  width: 4em;
+  &:hover {
+    transform: scale(1.1);
+    opacity: 80%;
+  }
+  ${(props) => props.$navSelected && 'background-color: black;'}
+`;
+
+const About = styled(Navigation)`
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+`;
+
+const Discover = styled(Navigation)`
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+`;
+
+const Search = styled.i`
+  color: var(--color-primary);
+  font-size: 1.5em;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    transform: scale(1.1);
+    opacity: 80%;
+  }
+`;
+
+const Hamburger = styled.i`
+  display: none;
+  color: var(--color-primary);
+  font-size: 1.5em;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    transform: scale(1.1);
+    opacity: 80%;
+  }
+  @media (max-width: 1000px) {
+    display: block;
+  }
+`;
+
+const BottomHeader = styled.div`
+  background-color: var(--color-secondary);
+  padding: 0.25em 0 0.25em 10em;
+  height: 1.5rem;
+  @media (max-width: 1000px) {
+    display: none;
+  }
+`;
+
+const GenreList = styled.ul`
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0 0;
+  font-size: 15px;
+`;
+
+const Genre = styled.li<{ $genreSelected: boolean }>`
+  border-radius: 25px;
+  margin: 0 0.5em;
+  background-color: var(--color-accent);
+  padding: 0 0.75em;
+  &:hover {
+    opacity: 80%;
+  }
+  ${(props) => props.$genreSelected && 'background-color: black;'}
+`;
 
 export default Header;
