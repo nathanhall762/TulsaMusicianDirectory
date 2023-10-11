@@ -34,7 +34,9 @@ const UHeader = () => {
     <div>
       <Logo src='src/assets/TMD-logo.png' alt='TMD logo' />
       <TopHeader>
-        <Title>The Tulsa Musician Directory</Title>
+        <TitleSpan>
+          <Title>The Tulsa Musician Directory</Title>
+        </TitleSpan>
         <NavBar>
           <PageNavigation>
             <About
@@ -78,7 +80,7 @@ const UHeader = () => {
 
 const Header = styled(UHeader)`
   background-color: var(--color-background-alt);
-  postion: static;
+  position: sticky;
   top: 0;
 `;
 
@@ -90,16 +92,21 @@ const Logo = styled.img`
   margin: 0.75em;
 `;
 
-const Title = styled.h1`
+const TitleSpan = styled.span`
   font-size: 25px;
   color: var(--color-primary);
 `;
 
+const Title = styled.h1`
+  font-size: 25px;
+  padding: 0 auto;
+`;
+
 const TopHeader = styled.div`
-  margin-left: 120px;
-  gap: 0;
+  // margin-left: min(10em, 15%);
+  margin-left: 15%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   padding: 0.25em 0 0.25em 0;
   margin-right: 0;
 `;
