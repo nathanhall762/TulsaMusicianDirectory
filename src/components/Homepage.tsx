@@ -8,7 +8,6 @@ const HomePage = () => {
 
   return (
     <div>
-      {/* <Header /> */}
       <CardContainer />
       <div className='buttonBox'>
         {/* show button link to MusicianApprovePage if user is admin */}
