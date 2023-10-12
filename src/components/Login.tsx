@@ -5,17 +5,22 @@ import {
 import { useState } from 'react';
 import { auth } from '../firebase';
 import { FirebaseError } from 'firebase/app';
-import styles from '../css/Login.module.css';
+// import styles from '../css/Login.module.css';
 import { isAdmin } from '../cloudFunctions';
 import useBearStore from '../bearStore';
 import { UserData } from '../types';
+import styled from 'styled-components';
 
 interface LoginData {
   email: string;
   password: string;
 }
 
-const Login = () => {
+interface LoginProps {
+  message?: string;
+}
+
+const Login: React.FC<LoginProps> = ({message}) => {
   const user = useBearStore((state) => state.user);
   const setUser = useBearStore((state) => state.setUser);
   const [loginData, setLoginData] = useState<LoginData>({
@@ -78,8 +83,6 @@ const Login = () => {
       console.log(err);
     });
 
-    // check for if is admin
-
     if (!user?.user.uid) {
       alert('error creating creating user');
       return;
@@ -106,19 +109,20 @@ const Login = () => {
 
   if (user.userCredential) {
     return (
-      <div className={styles.loginForm}>
-        <div className={styles.logoutContainer}>
+      <LoginForm>
+        <LogoutContainer>
           <h3>Logged in as {user.userCredential.user.email}</h3>
           <button onClick={handleLogOut} style={{ marginLeft: '1rem' }}>
             logout
           </button>
-        </div>
-      </div>
+        </LogoutContainer>
+      </LoginForm>
     );
   } else {
     return (
-      <div className={styles.loginForm}>
-        <div className={styles.inputContainer}>
+      <LoginForm>
+        <LoginMessage>{message}</LoginMessage>
+        <InputContainer>
           <input
             type='email'
             name='email'
@@ -134,14 +138,111 @@ const Login = () => {
             value={loginData.password}
             onChange={handleInputChange}
           />
-        </div>
-        <div className={styles.buttonBox}>
-          <button onClick={signUp}>sign up</button>
-          <button onClick={signIn}>login</button>
-        </div>
-      </div>
+          <ButtonBox>
+            <button onClick={signUp}>sign up</button>
+            <button onClick={signIn}>login</button>
+          </ButtonBox>
+        </InputContainer>
+      </LoginForm>
     );
   }
 };
+
+const LoginForm = styled.div`
+  // centered on screen
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
+const LoginMessage = styled.h3`
+  // sexy looking message
+  color: var(--color-text-primary);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-align: center;
+`;
+
+const InputContainer = styled.div`
+  // sexy looking container
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: var(--color-background-alt);
+  box-shadow: var(--shadow);
+  width: 50vw;
+  height: 10rem;
+  @media (max-width: 1000px) {
+    width: 15rem;
+  }
+  input {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-size: 1rem;
+    border: 1px solid var(--color-text-primary);
+    &:focus {
+      outline: none;
+    }
+  }
+  input::placeholder {
+    color: var(--color-text-alt);
+  }
+  /* input[type='password'] {
+    margin-bottom: 1rem;
+  }
+  input[type='email'] {
+    margin-bottom: 1rem;
+  }
+  input[type='submit'] {
+    background-color: var(--color-accent);
+    color: var(--color-text-inverse);
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    transition: all var(--animation-speed-fast) ease;
+    &:hover {
+      cursor: pointer;
+      background-color: var(--color-accent-alt);
+    }
+  } */
+`;
+
+const ButtonBox = styled.div`
+  // a sexy button box
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  button {
+    background-color: var(--color-accent);
+    color: var(--color-text-inverse);
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    transition: all var(--animation-speed-fast) ease;
+    &:hover {
+      cursor: pointer;
+      background-color: var(--color-accent);
+    }
+  }
+`;
+
+const LogoutContainer = styled.div`
+  // Add styles that you had for .logoutContainer in Login.module.css
+`;
 
 export default Login;

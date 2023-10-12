@@ -148,8 +148,8 @@ const MusicianPageContainerB = styled(MusicianPageContainer)`
   }
 `;
 
-const BackButton = styled.button`
-  background-color: var(--color-primary);
+export const BackButton = styled.button`
+  background-color: var(--color-accent);
   color: var(--color-text-primary);
   border: none;
   border-radius: 5px;

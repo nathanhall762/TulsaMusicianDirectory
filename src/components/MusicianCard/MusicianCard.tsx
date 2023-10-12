@@ -72,9 +72,9 @@ export const Genres = styled.p`
 `;
 
 const MusicianCardBody = styled.div<{ backgroundImage: string }>`
-  border: 1px solid var(--color-border);
+  /* border: 1px solid var(--color-border); */
   padding: 0px 0px;
-  border-radius: 5px;
+  border-radius: 20px;
   width: 270px;
   display: flex;
   align-items: center;
@@ -101,6 +101,7 @@ const MusicianCardBody = styled.div<{ backgroundImage: string }>`
       filter var(--animation-speed-medium) ease,
       opacity var(--animation-speed-medium) ease;
     z-index: -1;
+    border-radius: 20px;
   }
 
   &::before {
@@ -129,6 +130,7 @@ const MusicianCardBody = styled.div<{ backgroundImage: string }>`
     box-shadow: 0px 0px 10px var(--color-accent);
     cursor: pointer;
     overflow: visible;
+    border: none;
   }
   &:hover ${CardTitle} {
     color: var(--color-accent);
