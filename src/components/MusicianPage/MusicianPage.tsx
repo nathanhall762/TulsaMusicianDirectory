@@ -76,7 +76,7 @@ max-height: 20vh;
 const MusicianPageBody = styled.div`
   display: flex;
   width: 100vw;
-  height: 100vh;
+  height: 90vh;
   flex-basis: 100%;
   box-sizing: border-box;
   @media (max-width: 768px) {
@@ -137,7 +137,7 @@ const MusicianPageContainerA = styled(MusicianPageContainer)`
 const MusicianPageContainerB = styled(MusicianPageContainer)`
   justify-content: space-around;
   width: 70%;
-  box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: inset 0px 0px 10px 0px var(--color-shadow);
   @media (max-width: 768px) {
     display: none;
     width: 100%;
@@ -159,8 +159,10 @@ const BackButton = styled.button`
   cursor: pointer;
   transition: all var(--animation-speed-medium) ease;
   margin-bottom: 1rem;
+  display: flex;
+  align-self: start;
   position: absolute;
-  top: 1rem;
+  top: 15vh;
   left: 1rem;
   &:hover {
     background-color: var(--color-background-alt);

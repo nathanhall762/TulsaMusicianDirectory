@@ -48,7 +48,7 @@ export const GlobalStyle = createGlobalStyle`
 
     --animation-speed-slow: 2s;
     --animation-speed-medium: 0.5s;
-    --animation-speed-fast: 0.3s;
+    --animation-speed-fast: 0.1s;
   
     font-synthesis: none;
     text-rendering: optimizeLegibility;
