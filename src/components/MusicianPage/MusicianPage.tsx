@@ -76,7 +76,7 @@ max-height: 20vh;
 const MusicianPageBody = styled.div`
   display: flex;
   width: 100vw;
-  height: 90vh;
+  height: 88vh;
   flex-basis: 100%;
   box-sizing: border-box;
   @media (max-width: 768px) {
