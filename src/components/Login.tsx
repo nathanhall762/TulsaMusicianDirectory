@@ -148,7 +148,7 @@ const Login: React.FC<LoginProps> = ({message}) => {
   }
 };
 
-const LoginForm = styled.div`
+export const LoginForm = styled.div`
   // centered on screen
   position: absolute;
   top: 50%;
@@ -165,7 +165,7 @@ const LoginMessage = styled.h3`
   text-align: center;
 `;
 
-const InputContainer = styled.div`
+export const InputContainer = styled.div`
   // sexy looking container
   display: flex;
   flex-direction: column;
@@ -236,7 +236,7 @@ const ButtonBox = styled.div`
     transition: all var(--animation-speed-fast) ease;
     &:hover {
       cursor: pointer;
-      background-color: var(--color-accent);
+      background-color: var(--color-background-main);
     }
   }
 `;

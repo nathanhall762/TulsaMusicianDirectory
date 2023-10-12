@@ -12,6 +12,7 @@ import useBearStore from '../bearStore';
 import Login from './Login';
 import { Link } from 'react-router-dom';
 import { BackButton } from './MusicianPage/MusicianPage';
+import styled from 'styled-components';
 
 type MusicianFormData = {
   name: string;
@@ -58,11 +59,7 @@ const MusicianForm = () => {
   const handleSubmitToFirestore = async (e: React.FormEvent) => {
     try {
       e.preventDefault();
-      // add image to firebase storage
       const url = await uploadImage();
-      // add musician to firestore
-      // if logged in user is admin, set const targetCollection to 'musicians'
-      // else set const targetCollection to 'pendingMusicians'
 
       if (!user.userCredential) return;
       const targetCollection =
@@ -79,7 +76,6 @@ const MusicianForm = () => {
         alert('musician profile uploaded');
         logEvent(analytics, 'musician_added');
       }
-      // go back to homepage using React router
       navigate(-1);
     } catch (err) {
       console.log(err);
@@ -111,7 +107,6 @@ const MusicianForm = () => {
       throw new Error('no file added');
     }
 
-    // file type validation
     const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
     if (!allowedExtensions.exec(imageUpload.name)) {
       alert('invalid file type, must be .jpg, .jpeg, or .png');
@@ -158,9 +153,11 @@ const MusicianForm = () => {
   }
 
   return (
-    <div className={styles.musicianAddFormContainer}>
-      <button onClick={() => navigate(-1)}>Go Back</button>
-      <form onSubmit={handleSubmitToFirestore}>
+    <FormContainer>
+      <Link to='/'>
+        <BackButton>Go Back</BackButton>
+      </Link>
+      <Form onSubmit={handleSubmitToFirestore}>
         <div
           className={
             formData.name == '' ? styles.formSection : styles.formSectionGood
@@ -322,7 +319,7 @@ const MusicianForm = () => {
           />
         </div>
         <button
-          className={submitActive ? '' : styles.submitButton}
+          // className={submitActive ? '' : styles.submitButton}
           type='submit'
           disabled={submitActive ? false : true}
         >
@@ -352,9 +349,66 @@ const MusicianForm = () => {
         <p className={styles.submitHelper}>
           {imageUpload == undefined ? 'must add image' : ''}
         </p>
-      </form>
-    </div>
+      </Form>
+    </FormContainer>
   );
 };
+
+const Form = styled.form`
+  @media (max-width: 768px) {
+    width: 100vw;
+  }
+`;
+
+const FormContainer = styled.div`
+  // sexy looking container
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: var(--color-background-alt);
+  /* width: 100%; */
+  input {
+    width: 20rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    background-color: var(--color-background-main);
+    color: var(--color-text-primary);
+    font-size: 1rem;
+    border: 1px solid var(--color-text-primary);
+    &:focus {
+      outline: none;
+      background-color: var(--color-background-alt);
+    }
+    @media (max-width: 768px) {
+      width: 15rem;
+    }
+    &:hover {
+      background-color: var(--color-background-alt);
+    }
+  }
+  input::placeholder {
+    color: var(--color-text-alt);
+  }
+  button {
+    background-color: var(--color-accent);
+    color: var(--color-text-inverse);
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    transition: all var(--animation-speed-fast) ease;
+    &:hover {
+      cursor: pointer;
+      background-color: var(--color-background-main);
+    }
+  }
+`;
 
 export default MusicianForm;

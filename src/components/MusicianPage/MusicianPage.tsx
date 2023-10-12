@@ -83,6 +83,7 @@ const MusicianPageBody = styled.div`
     flex-direction: column;
     justify-content: end;
     overflow: hidden;
+    height: 92vh;
   }
 `;
 
