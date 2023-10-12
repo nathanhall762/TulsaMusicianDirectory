@@ -45,7 +45,12 @@ const Header = () => {
                 <p>About</p>
               </StyledLink>
             </About>
-            <Navigation $navSelected={location().pathname === '/'}>
+            <Navigation
+              $navSelected={
+                location().pathname !== '/about' &&
+                location().pathname !== '/discover'
+              }
+            >
               <StyledLink to='/'>
                 <p>Directory</p>
               </StyledLink>
