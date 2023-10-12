@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import logo from '../assets/TMD-logo.png';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const genres = [
   'Rock',
@@ -13,15 +13,9 @@ const genres = [
   'Bluegrass',
 ];
 
-type NavSelect = 'About' | 'Directory' | 'Discover';
-
 const Header = () => {
-  const [navSelected, setNavSelected] = useState<NavSelect>('Directory');
   const [genreFilter, setGenreFilter] = useState<string[]>([]);
-
-  const handleNavigation = (e: any) => {
-    setNavSelected(e.target.textContent);
-  };
+  const location = useLocation;
 
   const handleGenreToggle = (e: any) => {
     const genre = e.target.textContent;
@@ -34,35 +28,32 @@ const Header = () => {
 
   return (
     <HeaderWrapper>
-      <Link to="/">
+      <Link to='/'>
         <Logo src={logo} alt='TMD logo' />
       </Link>
-        <Link to="/">
-          <ShortTitle>TMD</ShortTitle>
-        </Link>
+      <Link to='/'>
+        <ShortTitle>TMD</ShortTitle>
+      </Link>
       <TopHeader>
-        <Link to="/">
+        <Link to='/'>
           <Title>The Tulsa Musician Directory</Title>
         </Link>
         <NavBar>
           <PageNavigation>
-            <About
-              onClick={handleNavigation}
-              $navSelected={navSelected === 'About'}
-            >
-              <p>About</p>
+            <About $navSelected={location().pathname === '/about'}>
+              <StyledLink to='/about'>
+                <p>About</p>
+              </StyledLink>
             </About>
-            <Navigation
-              onClick={handleNavigation}
-              $navSelected={navSelected === 'Directory'}
-            >
-              <p>Directory</p>
+            <Navigation $navSelected={location().pathname === '/'}>
+              <StyledLink to='/'>
+                <p>Directory</p>
+              </StyledLink>
             </Navigation>
-            <Discover
-              onClick={handleNavigation}
-              $navSelected={navSelected === 'Discover'}
-            >
-              <p>Discover</p>
+            <Discover $navSelected={location().pathname === '/discover'}>
+              <StyledLink to='/discover'>
+                <p>Discover</p>
+              </StyledLink>
             </Discover>
           </PageNavigation>
           <Search className='fa-solid fa-magnifying-glass' />
@@ -85,6 +76,14 @@ const Header = () => {
     </HeaderWrapper>
   );
 };
+
+const StyledLink = styled(Link)`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 const HeaderWrapper = styled.div`
   position: fixed;
@@ -194,8 +193,8 @@ const Navigation = styled.li<{ $navSelected: boolean }>`
   width: 4em;
   &:hover {
     transform: scale(1.1);
-    opacity: 80%;
     cursor: pointer;
+    background-color: var(--color-background-main);
   }
   ${(props) => props.$navSelected && 'background-color: black;'}
 `;
