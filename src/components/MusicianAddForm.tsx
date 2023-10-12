@@ -10,6 +10,8 @@ import { useNavigate } from 'react-router-dom';
 import { logEvent } from 'firebase/analytics';
 import useBearStore from '../bearStore';
 import Login from './Login';
+import { Link } from 'react-router-dom';
+import { BackButton } from './MusicianPage/MusicianPage';
 
 type MusicianFormData = {
   name: string;
@@ -147,8 +149,10 @@ const MusicianForm = () => {
   if (!user.userCredential) {
     return (
       <div>
-        <p>You Must Login to Add a Musician</p>
-        <Login />
+        <Link to='/'>
+          <BackButton>Go Back</BackButton>
+        </Link>
+        <Login message={'You Must Login to Add a Musician'} />
       </div>
     );
   }
