@@ -39,10 +39,10 @@ function App() {
 }
 
 const Spacer = styled.div`
-  height: 4.5rem;
-  @media (max-width: 1000px) {
+  height: 10vh;
+  /* @media (max-width: 1000px) {
     height: 3rem;
-  }
+  } */
 `;
 
 export default App;

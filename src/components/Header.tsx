@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import logo from '../assets/TMD-logo.png';
+import { Link } from 'react-router-dom';
 
 const genres = [
   'Rock',
@@ -33,10 +34,16 @@ const Header = () => {
 
   return (
     <HeaderWrapper>
-      <Logo src={logo} alt='TMD logo' />
-      <ShortTitle>TMD</ShortTitle>
+      <Link to="/">
+        <Logo src={logo} alt='TMD logo' />
+      </Link>
+        <Link to="/">
+          <ShortTitle>TMD</ShortTitle>
+        </Link>
       <TopHeader>
-        <Title>The Tulsa Musician Directory</Title>
+        <Link to="/">
+          <Title>The Tulsa Musician Directory</Title>
+        </Link>
         <NavBar>
           <PageNavigation>
             <About
@@ -82,23 +89,30 @@ const Header = () => {
 const HeaderWrapper = styled.div`
   position: fixed;
   width: 100vw;
-  height: 6rem;
+  height: 12vh;
   z-index: 5;
   background-color: var(--color-background-alt);
+  // bottom box shadow
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
   @media (max-width: 1000px) {
-    height: 3rem;
+    height: 8vh;
   }
 `;
 
 const Logo = styled.img`
-  height: 90px;
-  width: 90px;
+  height: 12vh;
+  width: 12vh;
   border-radius: 100%;
   position: absolute;
-  margin: 0.75em;
+  padding: 0.25em;
+  margin-left: 1em;
+  box-sizing: border-box;
   @media (max-width: 1000px) {
-    height: 65px;
-    width: 65px;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
+    /* height: 65px;
+    width: 65px; */
+    margin-left: 0.5em;
+    /* padding: 0; */
   }
 `;
 
@@ -106,7 +120,6 @@ const Title = styled.h1`
   color: var(--color-primary);
   font-size: 25px;
   padding: 0 auto;
-  margin-top: 0.75rem;
   @media (max-width: 800px) {
     display: none;
   }
@@ -114,24 +127,33 @@ const Title = styled.h1`
 
 const ShortTitle = styled.h1`
   color: var(--color-primary);
+  padding: 0;
+  margin: 0;
   text-align: center;
   display: none;
   font-size: 20px;
-  width: 100%;
+  width: 100vw;
+  height: 100%;
   position: absolute;
+  justify-content: center;
+  align-items: center;
   @media (max-width: 800px) {
-    display: block;
+    display: flex;
   }
 `;
 
 const TopHeader = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 0.25em 0 0.25em min(9em, 15%);
+  padding: 0 0 0 min(9em, 15%);
   margin-right: 0;
-  height: 3rem;
+  height: 8vh;
+  align-items: center;
   @media (max-width: 1000px) {
     padding-left: 100px;
+    height: 8vh;
+    width: 100vw;
+    padding: 0;
   }
 `;
 
@@ -173,6 +195,7 @@ const Navigation = styled.li<{ $navSelected: boolean }>`
   &:hover {
     transform: scale(1.1);
     opacity: 80%;
+    cursor: pointer;
   }
   ${(props) => props.$navSelected && 'background-color: black;'}
 `;
@@ -213,8 +236,10 @@ const Hamburger = styled.i`
 
 const BottomHeader = styled.div`
   background-color: var(--color-secondary);
-  padding: 0.25em 0 0.25em 10em;
-  height: 1.5rem;
+  padding: 0 0 0 min(9em, 15%);
+  height: 4vh;
+  display: flex;
+  align-items: center;
   @media (max-width: 1000px) {
     display: none;
   }
@@ -226,17 +251,21 @@ const GenreList = styled.ul`
   padding: 0;
   margin: 0 0 0 0;
   font-size: 15px;
+  justify-content: start;
 `;
 
 const Genre = styled.li<{ $genreSelected: boolean }>`
   border-radius: 25px;
-  margin: 0 0.5em;
-  background-color: var(--color-accent);
+  margin: 0 0.1em;
+  background-color: var(--color-background-alt);
   padding: 0 0.75em;
+  transition: all var(--animation-speed-fast) ease-in-out;
   &:hover {
-    opacity: 80%;
+    /* opacity: 80%; */
+    cursor: pointer;
+    transform: scale(0.95);
   }
-  ${(props) => props.$genreSelected && 'background-color: black;'}
+  ${(props) => props.$genreSelected && 'background-color: var(--color-accent);'}
 `;
 
 export default Header;
