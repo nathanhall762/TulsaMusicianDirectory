@@ -51,7 +51,7 @@ const AddButtonContainer = styled.div`
   display: flex;
   justify-content: end;
   align-items: center;
-  position: sticky;
+  position: fixed;
   bottom: 0;
   right: 0;
   height: 10vh;
