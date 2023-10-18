@@ -1,13 +1,13 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from './components/App';
-import HomePage from './components/Homepage';
+import DiscoverPage from './components/DiscoverPage';
 import MusicianPage from './components/MusicianPage/MusicianPage';
 import MusicianForm from './components/MusicianAddForm';
 import MusicianApproveForm from './components/MusicianApproveForm';
 import MusicianApprovePage from './components/MusicianApprovePage';
 import About from './components/About';
-import Discover from './components/Discover';
 import ErrorElement from './components/ErrorElement';
+import DirectoryPage from './components/DirectoryPage';
 
 const router = createBrowserRouter([
   {
@@ -15,9 +15,9 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorElement />,
     children: [
-      { index: true, element: <HomePage /> },
+      { index: true, element: <DirectoryPage /> },
       { path: '/about', element: <About /> },
-      { path: '/discover', element: <Discover /> },
+      { path: '/discover', element: <DiscoverPage /> },
       {
         path: '/404',
         element: <ErrorElement />,
