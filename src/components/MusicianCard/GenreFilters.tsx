@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import useBearStore from '../../bearStore';
+import { useState } from 'react';
 
 const genres = [
   'Rock',
@@ -13,24 +14,27 @@ const genres = [
 const genreFilters = () => {
   const genreFilter = useBearStore((state) => state.genreFilter);
   const setGenreFilter = useBearStore((state) => state.setGenreFilter);
+  const [orderedGenres, setOrderedGenres] = useState<string[]>([]); // New state for ordered genres
 
   const handleGenreToggle = (e: any) => {
     const genre = e.target.textContent;
     if (genreFilter.includes(genre)) {
       setGenreFilter(genreFilter.filter((g) => g !== genre));
+      setOrderedGenres(orderedGenres.filter((g) => g !== genre)); // Remove genre from ordered list
       return;
     }
     setGenreFilter([...genreFilter, genre]);
+    setOrderedGenres([genre, ...orderedGenres]); // Add genre to the start of the ordered list
   };
-  console.log(genreFilter);
   return (
     <BottomHeader>
       <GenreList>
-        <Genre $genreSelected={true}>Tulsa</Genre>
+        <GenreBase $genreSelected={true}>Tulsa</GenreBase>
         {genres.map((genre) => (
           <Genre
             onClick={handleGenreToggle}
             $genreSelected={genreFilter.includes(genre)}
+            $order={orderedGenres.indexOf(genre)} // Set order based on its position in orderedGenres
           >
             {genre}
           </Genre>
@@ -64,7 +68,7 @@ const GenreList = styled.ul`
   justify-content: start;
 `;
 
-const Genre = styled.li<{ $genreSelected: boolean }>`
+const GenreBase = styled.li<{ $genreSelected: boolean; }>`
   border-radius: 25px;
   margin: 0 0.1em;
   background-color: var(--color-background-alt);
@@ -76,6 +80,10 @@ const Genre = styled.li<{ $genreSelected: boolean }>`
     transform: scale(0.95);
   }
   ${(props) => props.$genreSelected && 'background-color: var(--color-accent);'}
+`;
+
+const Genre = styled(GenreBase)<{ $order: number; }>`
+  order: ${(props) => (props.$order === -1 ? genres.length : props.$order)};
 `;
 
 export default genreFilters;
