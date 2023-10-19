@@ -10,6 +10,7 @@ import {
   Genres,
   CardImage,
 } from '../MusicianCard/MusicianCard';
+import { Spacer } from '../DirectoryPage';
 
 const MusicianPage = () => {
   const musicians = useBearStore((state) => state.musicians);
@@ -33,6 +34,7 @@ const MusicianPage = () => {
 
   return (
     <>
+      <MusicianPageSpacer />
       <MusicianPageBody>
         <MusicianPageContainerA backgroundImage={profileImage}>
           <Link to='/'>
@@ -56,6 +58,10 @@ const MusicianPage = () => {
   );
 };
 
+const MusicianPageSpacer = styled(Spacer)`
+  height: 8vh;
+`;
+
 const EmbedContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -67,7 +73,7 @@ const EmbedContainer = styled.div`
 `;
 
 const EmbedContainerA = styled(EmbedContainer)`
-max-height: 20vh;
+  max-height: 20vh;
   @media (min-width: 768px) {
     display: none;
   }
@@ -76,9 +82,11 @@ max-height: 20vh;
 const MusicianPageBody = styled.div`
   display: flex;
   width: 100vw;
-  height: 88vh;
+  height: 92vh;
   flex-basis: 100%;
   box-sizing: border-box;
+  /* position: fixed; */
+  /* top: 12vh; */
   @media (max-width: 768px) {
     flex-direction: column;
     justify-content: end;
