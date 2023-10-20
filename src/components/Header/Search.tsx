@@ -1,16 +1,19 @@
 import { useState } from 'react';
+import GenreFilters from '../GenreFilters';
 import styled from 'styled-components';
+import { useLocation } from 'react-router-dom';
 
 export default () => {
   const [searchText, setSearchtext] = useState<string>('');
+  const location = useLocation();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setSearchtext(value);
   };
-
+  console.log(location.pathname === '/');
   return (
-    <SearchPanel>
+    <SearchPanel $genrePresent={location.pathname === '/'}>
       <SearchTitle>Search For Artists</SearchTitle>
       <SearchBar
         type='text'
@@ -19,11 +22,12 @@ export default () => {
         onChange={handleInputChange}
       />
       <SearchButton>Search</SearchButton>
+      {window.innerWidth < 1000 && <GenreFilters />}
     </SearchPanel>
   );
 };
 
-const SearchPanel = styled.div`
+const SearchPanel = styled.div<{ $genrePresent: boolean }>`
   background-color: var(--color-background-alt);
   border-top: var(--color-background-main) solid 3px;
   width: 100%;
@@ -31,7 +35,8 @@ const SearchPanel = styled.div`
   align-items: center;
   gap: 10px;
   padding: 10px;
-  margin-top: 4vh;
+  /* margin-top: 4vh; */
+  ${(props) => (props.$genrePresent ? 'margin-top: 4vh;' : 'margin-top: 0;')}
   flex-direction: row;
   justify-content: center;
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);

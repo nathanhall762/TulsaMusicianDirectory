@@ -6,7 +6,7 @@ import styled from 'styled-components';
 const DirectoryPage = () => {
   return (
     <div>
-      <GenreFilters />
+      {window.innerWidth >= 1000 && <GenreFilters />}
       <Spacer />
       <CardContainer />
       <AddButtons />

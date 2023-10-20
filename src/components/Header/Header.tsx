@@ -8,7 +8,7 @@ import { useState } from 'react';
 const Header = () => {
   const [hamburgerClicked, setHamburgerClicked] = useState(false);
   const [searchclicked, setSearchClicked] = useState(false);
-  const location = useLocation;
+  const location = useLocation();
 
   return (
     <>
@@ -23,22 +23,22 @@ const Header = () => {
           </Link>
           <NavBar>
             <PageNavigation>
-              <About $navSelected={location().pathname === '/about'}>
+              <About $navSelected={location.pathname === '/about'}>
                 <StyledLink to='/about'>
                   <p>About</p>
                 </StyledLink>
               </About>
               <Navigation
                 $navSelected={
-                  location().pathname !== '/about' &&
-                  location().pathname !== '/discover'
+                  location.pathname !== '/about' &&
+                  location.pathname !== '/discover'
                 }
               >
                 <StyledLink to='/'>
                   <p>Directory</p>
                 </StyledLink>
               </Navigation>
-              <Discover $navSelected={location().pathname === '/discover'}>
+              <Discover $navSelected={location.pathname === '/discover'}>
                 <StyledLink to='/discover'>
                   <p>Discover</p>
                 </StyledLink>
