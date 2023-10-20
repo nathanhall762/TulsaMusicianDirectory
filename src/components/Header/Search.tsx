@@ -35,7 +35,6 @@ const SearchPanel = styled.div<{ $genrePresent: boolean }>`
   align-items: center;
   gap: 10px;
   padding: 10px;
-  /* margin-top: 4vh; */
   ${(props) => (props.$genrePresent ? 'margin-top: 4vh;' : 'margin-top: 0;')}
   flex-direction: row;
   justify-content: center;
