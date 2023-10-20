@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import useBearStore from '../../bearStore';
+import useBearStore from '../bearStore';
 import { useState } from 'react';
 
 const genreFilters = () => {
