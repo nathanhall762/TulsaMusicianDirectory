@@ -4,15 +4,15 @@ import { Link } from 'react-router-dom';
 export default () => {
   return (
     <NavList>
-      <li>
+      <NavItem>
         <StyledLink to='/about'>About</StyledLink>
-      </li>
-      <li>
+      </NavItem>
+      <NavItem>
         <StyledLink to='/'>Directory</StyledLink>
-      </li>
-      <li>
+      </NavItem>
+      <NavItem>
         <StyledLink to='/discover'>Discover</StyledLink>
-      </li>
+      </NavItem>
     </NavList>
   );
 };
@@ -26,6 +26,10 @@ const NavList = styled.ul`
   flex-direction: column;
   align-items: center;
   border-top: var(--color-background-main) solid 3px;
+`;
+
+const NavItem = styled.li`
+  width: 50%;
 `;
 
 const StyledLink = styled(Link)`

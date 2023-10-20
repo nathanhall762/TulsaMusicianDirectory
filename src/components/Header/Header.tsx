@@ -14,9 +14,7 @@ const Header = () => {
         <Link to='/'>
           <Logo src={logo} alt='TMD logo' />
         </Link>
-        <Link to='/'>
-          <ShortTitle>TMD</ShortTitle>
-        </Link>
+        <ShortTitle>TMD</ShortTitle>
         <TopHeader>
           <Link to='/'>
             <Title>The Tulsa Musician Directory</Title>
