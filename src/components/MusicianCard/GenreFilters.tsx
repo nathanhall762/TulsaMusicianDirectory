@@ -2,19 +2,30 @@ import styled from 'styled-components';
 import useBearStore from '../../bearStore';
 import { useState } from 'react';
 
-const genres = [
-  'Rock',
-  'Americana',
-  'Folk',
-  'Electronic',
-  'Rap',
-  'Metal',
-  'Bluegrass',
-];
 const genreFilters = () => {
+  const musicians = useBearStore((state) => state.musicians);
   const genreFilter = useBearStore((state) => state.genreFilter);
   const setGenreFilter = useBearStore((state) => state.setGenreFilter);
-  const [orderedGenres, setOrderedGenres] = useState<string[]>([]); // New state for ordered genres
+  const [orderedGenres, setOrderedGenres] = useState<string[]>([]);
+
+  const genreFrequency: { [key: string]: number } = {};
+
+  musicians.forEach((musician) => {
+    const genre = musician.genre[0];
+    if (genreFrequency[genre]) {
+      genreFrequency[genre]++;
+    } else {
+      genreFrequency[genre] = 1;
+    }
+  });
+
+  const sortedGenres = Object.keys(genreFrequency).sort(
+    (a, b) => genreFrequency[b] - genreFrequency[a]
+  );
+
+  const genresDynamic = Array.from(new Set(sortedGenres));
+
+  console.log(`genresDynamic: ${genresDynamic}`);
 
   const handleGenreToggle = (e: any) => {
     const genre = e.target.textContent;
@@ -30,7 +41,7 @@ const genreFilters = () => {
     <BottomHeader>
       <GenreList>
         <GenreBase $genreSelected={true}>Tulsa</GenreBase>
-        {genres.map((genre) => (
+        {genresDynamic.map((genre) => (
           <Genre
             onClick={handleGenreToggle}
             $genreSelected={genreFilter.includes(genre)}
@@ -68,12 +79,13 @@ const GenreList = styled.ul`
   justify-content: start;
 `;
 
-const GenreBase = styled.li<{ $genreSelected: boolean; }>`
+const GenreBase = styled.li<{ $genreSelected: boolean }>`
   border-radius: 25px;
   margin: 0 0.1em;
   background-color: var(--color-background-alt);
   padding: 0 0.75em;
   transition: all var(--animation-speed-fast) ease-in-out;
+  z-index: 99;
   &:hover {
     /* opacity: 80%; */
     cursor: pointer;
@@ -82,8 +94,8 @@ const GenreBase = styled.li<{ $genreSelected: boolean; }>`
   ${(props) => props.$genreSelected && 'background-color: var(--color-accent);'}
 `;
 
-const Genre = styled(GenreBase)<{ $order: number; }>`
-  order: ${(props) => (props.$order === -1 ? genres.length : props.$order)};
+const Genre = styled(GenreBase)<{ $order: number }>`
+  order: ${(props) => (props.$order === -1 ? 5 : props.$order)};
 `;
 
 export default genreFilters;
