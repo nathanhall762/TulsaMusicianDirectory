@@ -193,6 +193,8 @@ const Search = styled.i`
   color: var(--color-primary);
   font-size: 1.5em;
   transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  z-index: 99;
   &:hover {
     transform: scale(1.1);
     opacity: 80%;
@@ -205,6 +207,7 @@ const HamburgerIcon = styled.i`
   font-size: 1.5em;
   transition: all 0.2s ease-in-out;
   z-index: 99;
+  cursor: pointer;
   &:hover {
     transform: scale(1.1);
     opacity: 80%;

@@ -25,11 +25,6 @@ const NavList = styled.ul`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: var(--color-background-main) solid;
-  box-shadow: 100px;
-  :hover {
-    color: red;
-  }
 `;
 
 const StyledLink = styled(Link)`
@@ -39,4 +34,7 @@ const StyledLink = styled(Link)`
   align-items: center;
   justify-content: center;
   color: var(--color-text-inverse);
+  :hover {
+    color: var(--color-accent);
+  }
 `;
