@@ -2,14 +2,13 @@ import styled from 'styled-components';
 import useBearStore from '../bearStore';
 import { useState } from 'react';
 
-const genreFilters = () => {
+const GenreFilters = () => {
   const musicians = useBearStore((state) => state.musicians);
   const genreFilter = useBearStore((state) => state.genreFilter);
   const setGenreFilter = useBearStore((state) => state.setGenreFilter);
   const [orderedGenres, setOrderedGenres] = useState<string[]>([]);
 
   const genreFrequency: { [key: string]: number } = {};
-
   musicians.forEach((musician) => {
     const genre = musician.genre[0];
     if (genreFrequency[genre]) {
@@ -66,7 +65,8 @@ const BottomHeader = styled.div`
   position: fixed;
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
   @media (max-width: 1000px) {
-    display: none;
+    position: static;
+    overflow: scroll;
   }
 `;
 
@@ -98,4 +98,4 @@ const Genre = styled(GenreBase)<{ $order: number }>`
   order: ${(props) => (props.$order === -1 ? 5 : props.$order)};
 `;
 
-export default genreFilters;
+export default GenreFilters;
