@@ -10,7 +10,6 @@ import {
   Genres,
   CardImage,
 } from '../MusicianCard/MusicianCard';
-import { Spacer } from '../DirectoryPage';
 
 const MusicianPage = () => {
   const musicians = useBearStore((state) => state.musicians);
@@ -34,7 +33,6 @@ const MusicianPage = () => {
 
   return (
     <>
-      <MusicianPageSpacer />
       <MusicianPageBody>
         <MusicianPageContainerA backgroundImage={profileImage}>
           <Link to='/'>
@@ -57,10 +55,6 @@ const MusicianPage = () => {
     </>
   );
 };
-
-const MusicianPageSpacer = styled(Spacer)`
-  height: 8vh;
-`;
 
 const EmbedContainer = styled.div`
   width: 100%;

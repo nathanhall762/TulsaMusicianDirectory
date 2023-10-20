@@ -6,8 +6,9 @@ import { Musician } from '../types';
 import 'font-awesome/css/font-awesome.min.css';
 import { logEvent } from 'firebase/analytics';
 import useBearStore from '../bearStore';
-import Header from './Header';
+import Header from './Header/Header';
 import { GlobalStyle } from './GlobalStyle';
+import styled from 'styled-components';
 
 // to test if analytics is working
 logEvent(analytics, 'test_event');
@@ -31,9 +32,15 @@ function App() {
     <>
       <GlobalStyle />
       <Header />
+      <Spacer />
       <Outlet />
     </>
   );
 }
+
+const Spacer = styled.div`
+  height: 8vh;
+  z-index: 98;
+`;
 
 export default App;
