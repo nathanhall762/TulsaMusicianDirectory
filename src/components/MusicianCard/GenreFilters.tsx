@@ -25,8 +25,6 @@ const genreFilters = () => {
 
   const genresDynamic = Array.from(new Set(sortedGenres));
 
-  console.log(`genresDynamic: ${genresDynamic}`);
-
   const handleGenreToggle = (e: any) => {
     const genre = e.target.textContent;
     if (genreFilter.includes(genre)) {
@@ -37,6 +35,7 @@ const genreFilters = () => {
     setGenreFilter([...genreFilter, genre]);
     setOrderedGenres([genre, ...orderedGenres]); // Add genre to the start of the ordered list
   };
+
   return (
     <BottomHeader>
       <GenreList>
@@ -54,6 +53,7 @@ const genreFilters = () => {
     </BottomHeader>
   );
 };
+
 const BottomHeader = styled.div`
   background-color: var(--color-secondary);
   padding: 0 0 0 min(9em, 15%);

@@ -1,11 +1,9 @@
 import aaron from '../assets/aaron.jpeg';
-import { Spacer } from './DirectoryPage';
 import styled from 'styled-components';
 
 const DiscoverPage = () => {
   return (
     <>
-      <Spacer />
       <Title>Coming Soon</Title>
       <Container>
         <Aaron src={aaron} alt='' />

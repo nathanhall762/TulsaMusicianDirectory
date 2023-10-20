@@ -1,9 +1,15 @@
+import styled from 'styled-components';
+
 export default () => {
   return (
-    <ul>
+    <NavList>
       <li>About</li>
       <li>Directory</li>
       <li>Discover</li>
-    </ul>
+    </NavList>
   );
 };
+
+const NavList = styled.ul`
+  background-color: var(--color-background-alt);
+`;

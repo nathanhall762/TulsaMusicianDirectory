@@ -7,7 +7,6 @@ import { useState } from 'react';
 const Header = () => {
   const [hamburgerClicked, setHamburgerClicked] = useState(false);
   const location = useLocation;
-  console.log(hamburgerClicked);
 
   return (
     <>
@@ -48,15 +47,11 @@ const Header = () => {
             <Search className='fa-solid fa-magnifying-glass' />
             <HamburgerIcon
               className='fa-solid fa-bars'
-              onClick={(e) => {
-                e.preventDefault();
-                console.log('i was clicked', hamburgerClicked);
-                setHamburgerClicked(!hamburgerClicked);
-              }}
+              onClick={() => setHamburgerClicked(!hamburgerClicked)}
             />
-            {hamburgerClicked && <Hamburger />}
           </NavBar>
         </TopHeader>
+        {hamburgerClicked && <Hamburger />}
       </HeaderWrapper>
     </>
   );
