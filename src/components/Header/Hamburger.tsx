@@ -26,6 +26,7 @@ const NavList = styled.ul`
   flex-direction: column;
   align-items: center;
   border-top: var(--color-background-main) solid 3px;
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
 `;
 
 const NavItem = styled.li`
