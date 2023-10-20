@@ -25,9 +25,11 @@ const NavList = styled.ul`
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-top: var(--color-background-main) solid 3px;
 `;
 
 const StyledLink = styled(Link)`
+  padding: 10px 0;
   height: 100%;
   width: 100%;
   display: flex;
