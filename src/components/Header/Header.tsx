@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 import logo from '../../assets/TMD-logo.png';
 import Hamburger from './Hamburger';
+import Search from './Search';
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 
 const Header = () => {
   const [hamburgerClicked, setHamburgerClicked] = useState(false);
+  const [searchclicked, setSearchClicked] = useState(false);
   const location = useLocation;
 
   return (
@@ -42,13 +44,23 @@ const Header = () => {
                 </StyledLink>
               </Discover>
             </PageNavigation>
-            <Search className='fa-solid fa-magnifying-glass' />
+            <SearchIcon
+              className='fa-solid fa-magnifying-glass'
+              onClick={() => {
+                setSearchClicked(!searchclicked);
+                setHamburgerClicked(false);
+              }}
+            />
             <HamburgerIcon
               className='fa-solid fa-bars'
-              onClick={() => setHamburgerClicked(!hamburgerClicked)}
+              onClick={() => {
+                setHamburgerClicked(!hamburgerClicked);
+                setSearchClicked(false);
+              }}
             />
           </NavBar>
         </TopHeader>
+        {searchclicked && <Search />}
         {hamburgerClicked && <Hamburger />}
       </HeaderWrapper>
     </>
@@ -187,7 +199,7 @@ const Discover = styled(Navigation)`
   border-bottom-right-radius: 25px;
 `;
 
-const Search = styled.i`
+const SearchIcon = styled.i`
   color: var(--color-primary);
   font-size: 1.5em;
   transition: all 0.2s ease-in-out;

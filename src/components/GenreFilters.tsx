@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import useBearStore from '../bearStore';
 import { useState } from 'react';
 
-const genreFilters = () => {
+const GenreFilters = () => {
   const musicians = useBearStore((state) => state.musicians);
   const genreFilter = useBearStore((state) => state.genreFilter);
   const setGenreFilter = useBearStore((state) => state.setGenreFilter);
@@ -98,4 +98,4 @@ const Genre = styled(GenreBase)<{ $order: number }>`
   order: ${(props) => (props.$order === -1 ? 5 : props.$order)};
 `;
 
-export default genreFilters;
+export default GenreFilters;
