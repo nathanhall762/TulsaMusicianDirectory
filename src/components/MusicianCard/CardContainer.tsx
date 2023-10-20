@@ -4,8 +4,16 @@ import styled from 'styled-components';
 
 const CardContainer = () => {
   const musicians = useBearStore((state) => state.musicians);
+  const genreFilter = useBearStore((state) => state.genreFilter);
 
-  const sortedMusicians = [...musicians].sort((a, b) =>
+  console.log(musicians);
+
+  
+  const filteredMusicians = genreFilter.length 
+  ? musicians.filter(musician => genreFilter.includes(musician.genre[0]))
+  : musicians;
+  
+  const sortedMusicians = [...filteredMusicians].sort((a, b) =>
     a.name.localeCompare(b.name)
   );
 

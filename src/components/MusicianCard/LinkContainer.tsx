@@ -85,7 +85,6 @@ const LinkContainerBody = styled.div`
   display: flex;
   box-sizing: border-box;
   justify-content: center;
-  flex-wrap: wrap;
   width: 100%;
   padding: 0 10px;
 `;

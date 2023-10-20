@@ -10,6 +10,7 @@ import {
   Genres,
   CardImage,
 } from '../MusicianCard/MusicianCard';
+import { Spacer } from '../DirectoryPage';
 
 const MusicianPage = () => {
   const musicians = useBearStore((state) => state.musicians);
@@ -33,6 +34,7 @@ const MusicianPage = () => {
 
   return (
     <>
+      <MusicianPageSpacer />
       <MusicianPageBody>
         <MusicianPageContainerA backgroundImage={profileImage}>
           <Link to='/'>
@@ -56,6 +58,10 @@ const MusicianPage = () => {
   );
 };
 
+const MusicianPageSpacer = styled(Spacer)`
+  height: 8vh;
+`;
+
 const EmbedContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -67,7 +73,7 @@ const EmbedContainer = styled.div`
 `;
 
 const EmbedContainerA = styled(EmbedContainer)`
-max-height: 20vh;
+  max-height: 20vh;
   @media (min-width: 768px) {
     display: none;
   }
@@ -76,13 +82,16 @@ max-height: 20vh;
 const MusicianPageBody = styled.div`
   display: flex;
   width: 100vw;
-  height: 100vh;
+  height: 92vh;
   flex-basis: 100%;
   box-sizing: border-box;
+  /* position: fixed; */
+  /* top: 12vh; */
   @media (max-width: 768px) {
     flex-direction: column;
     justify-content: end;
     overflow: hidden;
+    height: 92vh;
   }
 `;
 
@@ -137,7 +146,7 @@ const MusicianPageContainerA = styled(MusicianPageContainer)`
 const MusicianPageContainerB = styled(MusicianPageContainer)`
   justify-content: space-around;
   width: 70%;
-  box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: inset 0px 0px 10px 0px var(--color-shadow);
   @media (max-width: 768px) {
     display: none;
     width: 100%;
@@ -148,8 +157,8 @@ const MusicianPageContainerB = styled(MusicianPageContainer)`
   }
 `;
 
-const BackButton = styled.button`
-  background-color: var(--color-primary);
+export const BackButton = styled.button`
+  background-color: var(--color-accent);
   color: var(--color-text-primary);
   border: none;
   border-radius: 5px;
@@ -159,8 +168,10 @@ const BackButton = styled.button`
   cursor: pointer;
   transition: all var(--animation-speed-medium) ease;
   margin-bottom: 1rem;
+  display: flex;
+  align-self: start;
   position: absolute;
-  top: 1rem;
+  top: 15vh;
   left: 1rem;
   &:hover {
     background-color: var(--color-background-alt);
