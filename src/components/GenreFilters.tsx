@@ -99,6 +99,7 @@ const GenreBase = styled.li<{ $genreSelected: boolean }>`
   padding: 0 0.75em;
   transition: all var(--animation-speed-fast) ease-in-out;
   z-index: 99;
+  max-height: 4vh;
   &:hover {
     /* opacity: 80%; */
     cursor: pointer;
