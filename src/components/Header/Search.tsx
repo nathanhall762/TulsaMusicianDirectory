@@ -2,8 +2,10 @@ import { useState } from 'react';
 import GenreFilters from '../GenreFilters';
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
+import useBearStore from '../../bearStore';
 
 export default () => {
+  const setSearchFilter = useBearStore((state) => state.setSearchFilter);
   const [searchText, setSearchtext] = useState<string>('');
   const location = useLocation();
 
@@ -11,7 +13,11 @@ export default () => {
     const { value } = e.target;
     setSearchtext(value);
   };
-  console.log(location.pathname === '/');
+
+  const handleSearch = () => {
+    setSearchFilter(searchText);
+  };
+
   return (
     <SearchPanel $genrePresent={location.pathname === '/'}>
       <SearchTitle>Search For Artists</SearchTitle>
@@ -21,7 +27,7 @@ export default () => {
         value={searchText}
         onChange={handleInputChange}
       />
-      <SearchButton>Search</SearchButton>
+      <SearchButton onClick={handleSearch}>Search</SearchButton>
       {window.innerWidth < 1000 && <GenreFilters />}
     </SearchPanel>
   );
