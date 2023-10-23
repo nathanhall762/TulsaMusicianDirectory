@@ -18,6 +18,10 @@ export default () => {
     setSearchFilter(searchText);
   };
 
+  const keyboardSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') setSearchFilter(searchText);
+  };
+
   const handleClear = () => {
     setSearchFilter('');
     setSearchtext('');
@@ -31,6 +35,7 @@ export default () => {
         name='search'
         value={searchText}
         onChange={handleInputChange}
+        onKeyDown={keyboardSearch}
       />
       <StyledButton onClick={handleSearch}>Search</StyledButton>
       <StyledButton onClick={handleClear}>Clear</StyledButton>
