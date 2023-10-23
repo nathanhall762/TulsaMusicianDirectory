@@ -37,8 +37,10 @@ export default () => {
         onChange={handleInputChange}
         onKeyDown={keyboardSearch}
       />
-      <StyledButton onClick={handleSearch}>Search</StyledButton>
-      <StyledButton onClick={handleClear}>Clear</StyledButton>
+      <ButtonContainer>
+        <StyledButton onClick={handleSearch}>Search</StyledButton>
+        <StyledButton onClick={handleClear}>Clear</StyledButton>
+      </ButtonContainer>
       {window.innerWidth < 1000 && <GenreFilters />}
     </SearchPanel>
   );
@@ -53,7 +55,6 @@ const SearchPanel = styled.div<{ $genrePresent: boolean }>`
   gap: 10px;
   padding: 10px;
   ${(props) => (props.$genrePresent ? 'margin-top: 4vh;' : 'margin-top: 0;')}
-  flex-direction: row;
   justify-content: center;
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
   @media (max-width: 1000px) {
@@ -86,6 +87,11 @@ const SearchBar = styled.input`
   &:hover {
     background-color: var(--color-background-alt);
   }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 10px;
 `;
 
 const StyledButton = styled.button`
