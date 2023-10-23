@@ -1,14 +1,27 @@
 import MusicianCard from './MusicianCard';
 import useBearStore from '../../bearStore';
 import styled from 'styled-components';
+import { Musician } from '../../types';
 
 const CardContainer = () => {
   const musicians = useBearStore((state) => state.musicians);
   const genreFilter = useBearStore((state) => state.genreFilter);
+  const searchFilter = useBearStore((state) => state.searchFilter);
 
-  const filteredMusicians = genreFilter.length
-    ? musicians.filter((musician) => genreFilter.includes(musician.genre[0]))
-    : musicians;
+  const filterMusicians = (musician: Musician) => {
+    if (!searchFilter) return genreFilter.includes(musician.genre[0]);
+    return (
+      genreFilter.includes(musician.genre[0]) ||
+      musician.name.toLowerCase().includes(searchFilter.toLowerCase())
+    );
+  };
+
+  const filteredMusicians =
+    genreFilter.length || searchFilter
+      ? musicians.filter(filterMusicians)
+      : musicians;
+
+  console.log(filteredMusicians);
 
   const sortedMusicians = [...filteredMusicians].sort((a, b) =>
     a.name.localeCompare(b.name)

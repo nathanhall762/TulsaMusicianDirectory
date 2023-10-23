@@ -6,6 +6,8 @@ const GenreFilters = () => {
   const musicians = useBearStore((state) => state.musicians);
   const genreFilter = useBearStore((state) => state.genreFilter);
   const setGenreFilter = useBearStore((state) => state.setGenreFilter);
+  const searchFilter = useBearStore((state) => state.searchFilter);
+  const setSearchFilter = useBearStore((state) => state.setSearchFilter);
   const [orderedGenres, setOrderedGenres] = useState<string[]>([]);
 
   const genreFrequency: { [key: string]: number } = {};
@@ -24,8 +26,17 @@ const GenreFilters = () => {
 
   const genresDynamic = Array.from(new Set(sortedGenres));
 
+  const filters = searchFilter
+    ? [searchFilter, ...genresDynamic]
+    : genresDynamic;
+
   const handleGenreToggle = (e: any) => {
     const genre = e.target.textContent;
+
+    if (genre === searchFilter) {
+      setSearchFilter('');
+      return;
+    }
     if (genreFilter.includes(genre)) {
       setGenreFilter(genreFilter.filter((g) => g !== genre));
       setOrderedGenres(orderedGenres.filter((g) => g !== genre)); // Remove genre from ordered list
@@ -39,10 +50,12 @@ const GenreFilters = () => {
     <BottomHeader>
       <GenreList>
         <GenreBase $genreSelected={true}>Tulsa</GenreBase>
-        {genresDynamic.map((genre) => (
+        {filters.map((genre) => (
           <Genre
             onClick={handleGenreToggle}
-            $genreSelected={genreFilter.includes(genre)}
+            $genreSelected={
+              genreFilter.includes(genre) || genre === searchFilter
+            }
             $order={orderedGenres.indexOf(genre)} // Set order based on its position in orderedGenres
           >
             {genre}
@@ -86,6 +99,7 @@ const GenreBase = styled.li<{ $genreSelected: boolean }>`
   padding: 0 0.75em;
   transition: all var(--animation-speed-fast) ease-in-out;
   z-index: 99;
+  max-height: 4vh;
   &:hover {
     /* opacity: 80%; */
     cursor: pointer;

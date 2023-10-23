@@ -2,8 +2,10 @@ import { useState } from 'react';
 import GenreFilters from '../GenreFilters';
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
+import useBearStore from '../../bearStore';
 
 export default () => {
+  const setSearchFilter = useBearStore((state) => state.setSearchFilter);
   const [searchText, setSearchtext] = useState<string>('');
   const location = useLocation();
 
@@ -11,7 +13,20 @@ export default () => {
     const { value } = e.target;
     setSearchtext(value);
   };
-  console.log(location.pathname === '/');
+
+  const handleSearch = () => {
+    setSearchFilter(searchText);
+  };
+
+  const keyboardSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') setSearchFilter(searchText);
+  };
+
+  const handleClear = () => {
+    setSearchFilter('');
+    setSearchtext('');
+  };
+
   return (
     <SearchPanel $genrePresent={location.pathname === '/'}>
       <SearchTitle>Search For Artists</SearchTitle>
@@ -20,8 +35,12 @@ export default () => {
         name='search'
         value={searchText}
         onChange={handleInputChange}
+        onKeyDown={keyboardSearch}
       />
-      <SearchButton>Search</SearchButton>
+      <ButtonContainer>
+        <StyledButton onClick={handleSearch}>Search</StyledButton>
+        <StyledButton onClick={handleClear}>Clear</StyledButton>
+      </ButtonContainer>
       {window.innerWidth < 1000 && <GenreFilters />}
     </SearchPanel>
   );
@@ -36,7 +55,6 @@ const SearchPanel = styled.div<{ $genrePresent: boolean }>`
   gap: 10px;
   padding: 10px;
   ${(props) => (props.$genrePresent ? 'margin-top: 4vh;' : 'margin-top: 0;')}
-  flex-direction: row;
   justify-content: center;
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
   @media (max-width: 1000px) {
@@ -71,7 +89,12 @@ const SearchBar = styled.input`
   }
 `;
 
-const SearchButton = styled.button`
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
+const StyledButton = styled.button`
   background-color: var(--color-accent);
   color: var(--color-text-inverse);
   font-size: 0.75;
