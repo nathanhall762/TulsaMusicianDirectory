@@ -18,6 +18,11 @@ export default () => {
     setSearchFilter(searchText);
   };
 
+  const handleClear = () => {
+    setSearchFilter('');
+    setSearchtext('');
+  };
+
   return (
     <SearchPanel $genrePresent={location.pathname === '/'}>
       <SearchTitle>Search For Artists</SearchTitle>
@@ -27,7 +32,8 @@ export default () => {
         value={searchText}
         onChange={handleInputChange}
       />
-      <SearchButton onClick={handleSearch}>Search</SearchButton>
+      <StyledButton onClick={handleSearch}>Search</StyledButton>
+      <StyledButton onClick={handleClear}>Clear</StyledButton>
       {window.innerWidth < 1000 && <GenreFilters />}
     </SearchPanel>
   );
@@ -77,7 +83,7 @@ const SearchBar = styled.input`
   }
 `;
 
-const SearchButton = styled.button`
+const StyledButton = styled.button`
   background-color: var(--color-accent);
   color: var(--color-text-inverse);
   font-size: 0.75;
