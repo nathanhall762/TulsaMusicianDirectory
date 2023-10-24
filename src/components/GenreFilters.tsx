@@ -68,7 +68,6 @@ const GenreFilters = () => {
 
 const BottomHeader = styled.div`
   background-color: var(--color-secondary);
-  padding: 0 0 0 min(9em, 15%);
   height: 4vh;
   display: flex;
   align-items: center;
@@ -77,9 +76,11 @@ const BottomHeader = styled.div`
   width: 100vw;
   position: fixed;
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
+  overflow: scroll;
+  padding: 0 15vw;
   @media (max-width: 1000px) {
     position: static;
-    overflow: scroll;
+    padding: 0;
   }
 `;
 
@@ -87,9 +88,12 @@ const GenreList = styled.ul`
   display: flex;
   list-style: none;
   padding: 0;
-  margin: 0 0 0 0;
   font-size: 15px;
+  width: auto;
   justify-content: start;
+  @media (max-width: 1000px) {
+    margin: 0 5%;
+  }
 `;
 
 const GenreBase = styled.li<{ $genreSelected: boolean }>`
@@ -99,9 +103,9 @@ const GenreBase = styled.li<{ $genreSelected: boolean }>`
   padding: 0 0.75em;
   transition: all var(--animation-speed-fast) ease-in-out;
   z-index: 99;
-  max-height: 4vh;
+  height: 1.5em;
+  width: max-content;
   &:hover {
-    /* opacity: 80%; */
     cursor: pointer;
     transform: scale(0.95);
   }

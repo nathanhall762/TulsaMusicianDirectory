@@ -93,15 +93,12 @@ const Logo = styled.img`
   border-radius: 100%;
   position: fixed;
   padding: 0.25em;
-  margin-left: 1em;
+  margin-left: 0.5em;
   box-sizing: border-box;
   z-index: 99;
   @media (max-width: 1000px) {
     box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
-    /* height: 65px;
-    width: 65px; */
     margin-left: 0.5em;
-    /* padding: 0; */
   }
 `;
 
@@ -109,6 +106,9 @@ const Title = styled.h1`
   color: var(--color-primary);
   font-size: 25px;
   padding: 0 auto;
+  @media (max-width: 1000px) {
+    padding-left: 15vw;
+  }
   @media (max-width: 800px) {
     display: none;
   }
@@ -134,12 +134,11 @@ const ShortTitle = styled.h1`
 const TopHeader = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 0 0 0 min(9em, 15%);
+  padding-left: 11vw;
   margin-right: 0;
   height: 8vh;
   align-items: center;
   @media (max-width: 1000px) {
-    padding-left: 100px;
     height: 8vh;
     width: 100vw;
     padding: 0;
@@ -151,9 +150,9 @@ const NavBar = styled.div`
   align-items: center;
   justify-content: space-around;
   min-width: 33%;
-  margin: 0 10px;
   @media (max-width: 1000px) {
     margin-left: auto;
+    min-width: 25%;
   }
 `;
 
@@ -167,6 +166,7 @@ const PageNavigation = styled.ul`
   padding: 0;
   font-size: 15px;
   font-weight: bold;
+  margin: 0 10px;
   @media (max-width: 1000px) {
     display: none;
   }
@@ -205,6 +205,7 @@ const SearchIcon = styled.i`
   transition: all 0.2s ease-in-out;
   cursor: pointer;
   z-index: 99;
+  margin: 0 10px;
   &:hover {
     transform: scale(1.1);
     opacity: 80%;
@@ -218,6 +219,7 @@ const HamburgerIcon = styled.i`
   transition: all 0.2s ease-in-out;
   z-index: 99;
   cursor: pointer;
+  margin: 0 10px;
   &:hover {
     transform: scale(1.1);
     opacity: 80%;
