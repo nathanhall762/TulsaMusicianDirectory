@@ -68,6 +68,9 @@ const AddButton = styled.button<{ $backgroundColor: string }>`
   transition: all var(--animation-speed-fast) ease;
   margin: 0.5rem;
   font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   &:hover {
     background-color: var(--color-background-alt);
     cursor: pointer;
