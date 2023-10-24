@@ -16,7 +16,11 @@ const Header = () => {
         <Link to='/'>
           <Logo src={logo} alt='TMD logo' />
         </Link>
-        <ShortTitle>TMD</ShortTitle>
+        <ShortTitleWrapper>
+          <Link to='/'>
+            <ShortTitle>TMD</ShortTitle>
+          </Link>
+        </ShortTitleWrapper>
         <TopHeader>
           <Link to='/'>
             <Title>The Tulsa Musician Directory</Title>
@@ -114,6 +118,12 @@ const Title = styled.h1`
   }
 `;
 
+const ShortTitleWrapper = styled.div`
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+`;
+
 const ShortTitle = styled.h1`
   color: var(--color-primary);
   padding: 0;
@@ -121,7 +131,7 @@ const ShortTitle = styled.h1`
   text-align: center;
   display: none;
   font-size: 20px;
-  width: 100vw;
+  /* width: 100vw; */
   height: 100%;
   position: absolute;
   justify-content: center;
