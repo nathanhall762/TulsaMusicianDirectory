@@ -134,7 +134,7 @@ const ShortTitle = styled.h1`
 const TopHeader = styled.div`
   display: flex;
   justify-content: space-between;
-  padding-left: 13vw;
+  padding-left: 11vw;
   margin-right: 0;
   height: 8vh;
   align-items: center;
