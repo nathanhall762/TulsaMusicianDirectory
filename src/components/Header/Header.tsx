@@ -219,6 +219,7 @@ const HamburgerIcon = styled.i`
   transition: all 0.2s ease-in-out;
   z-index: 99;
   cursor: pointer;
+  margin: 0 10px;
   &:hover {
     transform: scale(1.1);
     opacity: 80%;
