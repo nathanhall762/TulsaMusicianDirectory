@@ -48,12 +48,14 @@ const Header = () => {
                 </StyledLink>
               </Discover>
             </PageNavigation>
-            <SearchIcon
-              className='fa-solid fa-magnifying-glass'
-              onClick={() => {
-                setOpenNav(openNav === 'search' ? '' : 'search');
-              }}
-            />
+            {location.pathname === '/' && (
+              <SearchIcon
+                className='fa-solid fa-magnifying-glass'
+                onClick={() => {
+                  setOpenNav(openNav === 'search' ? '' : 'search');
+                }}
+              />
+            )}
             <HamburgerIcon
               className='fa-solid fa-bars'
               onClick={() => {
@@ -129,7 +131,6 @@ const ShortTitle = styled.h1`
   text-align: center;
   display: none;
   font-size: 20px;
-  /* width: 100vw; */
   height: 100%;
   position: absolute;
   justify-content: center;
