@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 import useBearStore from '../../bearStore';
 
 export default () => {
+  const setOpenNav = useBearStore((state) => state.setOpenNav);
   const setSearchFilter = useBearStore((state) => state.setSearchFilter);
   const [searchText, setSearchtext] = useState<string>('');
   const location = useLocation();
@@ -28,23 +29,40 @@ export default () => {
   };
 
   return (
-    <SearchPanel $genrePresent={location.pathname === '/'}>
-      <SearchTitle>Search For Artists</SearchTitle>
-      <SearchBar
-        type='text'
-        name='search'
-        value={searchText}
-        onChange={handleInputChange}
-        onKeyDown={keyboardSearch}
+    <>
+      <CloseButton
+        className='fa-solid fa-xmark'
+        onClick={() => setOpenNav('')}
       />
-      <ButtonContainer>
-        <StyledButton onClick={handleSearch}>Search</StyledButton>
-        <StyledButton onClick={handleClear}>Clear</StyledButton>
-      </ButtonContainer>
-      {window.innerWidth < 1000 && <GenreFilters />}
-    </SearchPanel>
+
+      <SearchPanel $genrePresent={location.pathname === '/'}>
+        <SearchTitle>Search For Artists</SearchTitle>
+        <SearchBar
+          type='text'
+          name='search'
+          value={searchText}
+          onChange={handleInputChange}
+          onKeyDown={keyboardSearch}
+        />
+        <ButtonContainer>
+          <StyledButton onClick={handleSearch}>Search</StyledButton>
+          <StyledButton onClick={handleClear}>Clear</StyledButton>
+        </ButtonContainer>
+        {window.innerWidth < 1000 && <GenreFilters />}
+      </SearchPanel>
+    </>
   );
 };
+
+const CloseButton = styled.i`
+  position: absolute;
+  right: 1em;
+  cursor: pointer;
+  top: calc(1em + 12vh);
+  @media (max-width: 1000px) {
+    top: calc(1em + 8vh);
+  }
+`;
 
 const SearchPanel = styled.div<{ $genrePresent: boolean }>`
   background-color: var(--color-background-alt);
