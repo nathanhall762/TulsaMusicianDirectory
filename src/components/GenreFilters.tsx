@@ -76,7 +76,7 @@ const BottomHeader = styled.div`
   width: 100vw;
   position: fixed;
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
-  overflow: scroll;
+  overflow: auto;
   padding: 0 15vw;
   @media (max-width: 1000px) {
     position: static;

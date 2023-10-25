@@ -7,10 +7,12 @@ interface BearState {
   musicians: Musician[];
   genreFilter: string[];
   searchFilter: string;
+  openNav: 'search' | 'hamburger' | '';
   setUser: (user: UserData) => void;
   setMusicians: (musicians: Musician[]) => void;
   setGenreFilter: (genres: string[]) => void;
   setSearchFilter: (search: string) => void;
+  setOpenNav: (nav: 'search' | 'hamburger' | '') => void;
 }
 
 const useBearStore = create<BearState>()((set) => ({
@@ -18,10 +20,12 @@ const useBearStore = create<BearState>()((set) => ({
   musicians: [],
   genreFilter: [],
   searchFilter: '',
+  openNav: '',
   setUser: (user) => set({ user: user }),
   setMusicians: (musicians) => set({ musicians: musicians }),
   setGenreFilter: (genres) => set({ genreFilter: genres }),
   setSearchFilter: (search) => set({ searchFilter: search }),
+  setOpenNav: (nav) => set({ openNav: nav }),
 }));
 
 export default useBearStore;

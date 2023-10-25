@@ -3,11 +3,11 @@ import logo from '../../assets/TMD-logo.png';
 import Hamburger from './Hamburger';
 import Search from './Search';
 import { Link, useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import useBearStore from '../../bearStore';
 
 const Header = () => {
-  const [hamburgerClicked, setHamburgerClicked] = useState(false);
-  const [searchclicked, setSearchClicked] = useState(false);
+  const openNav = useBearStore((state) => state.openNav);
+  const setOpenNav = useBearStore((state) => state.setOpenNav);
   const location = useLocation();
 
   return (
@@ -48,24 +48,24 @@ const Header = () => {
                 </StyledLink>
               </Discover>
             </PageNavigation>
-            <SearchIcon
-              className='fa-solid fa-magnifying-glass'
-              onClick={() => {
-                setSearchClicked(!searchclicked);
-                setHamburgerClicked(false);
-              }}
-            />
+            {location.pathname === '/' && (
+              <SearchIcon
+                className='fa-solid fa-magnifying-glass'
+                onClick={() => {
+                  setOpenNav(openNav === 'search' ? '' : 'search');
+                }}
+              />
+            )}
             <HamburgerIcon
               className='fa-solid fa-bars'
               onClick={() => {
-                setHamburgerClicked(!hamburgerClicked);
-                setSearchClicked(false);
+                setOpenNav(openNav === 'hamburger' ? '' : 'hamburger');
               }}
             />
           </NavBar>
         </TopHeader>
-        {searchclicked && <Search />}
-        {hamburgerClicked && <Hamburger />}
+        {openNav === 'search' && <Search />}
+        {openNav === 'hamburger' && <Hamburger />}
       </HeaderWrapper>
     </>
   );
@@ -131,7 +131,6 @@ const ShortTitle = styled.h1`
   text-align: center;
   display: none;
   font-size: 20px;
-  /* width: 100vw; */
   height: 100%;
   position: absolute;
   justify-content: center;

@@ -1,21 +1,43 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import useBearStore from '../../bearStore';
 
 export default () => {
+  const setOpenNav = useBearStore((state) => state.setOpenNav);
+
   return (
-    <NavList>
-      <NavItem>
-        <StyledLink to='/about'>About</StyledLink>
-      </NavItem>
-      <NavItem>
-        <StyledLink to='/'>Directory</StyledLink>
-      </NavItem>
-      <NavItem>
-        <StyledLink to='/discover'>Discover</StyledLink>
-      </NavItem>
-    </NavList>
+    <>
+      <CloseButton
+        className='fa-solid fa-xmark'
+        onClick={() => setOpenNav('')}
+      />
+      <NavList>
+        <NavItem>
+          <StyledLink to='/about' onClick={() => setOpenNav('')}>
+            About
+          </StyledLink>
+        </NavItem>
+        <NavItem>
+          <StyledLink to='/' onClick={() => setOpenNav('')}>
+            Directory
+          </StyledLink>
+        </NavItem>
+        <NavItem>
+          <StyledLink to='/discover' onClick={() => setOpenNav('')}>
+            Discover
+          </StyledLink>
+        </NavItem>
+      </NavList>
+    </>
   );
 };
+
+const CloseButton = styled.i`
+  position: absolute;
+  right: 1em;
+  top: calc(1em + 8vh);
+  cursor: pointer;
+`;
 
 const NavList = styled.ul`
   background-color: var(--color-background-alt);
