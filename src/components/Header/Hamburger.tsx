@@ -1,17 +1,26 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import useBearStore from '../../bearStore';
 
 export default () => {
+  const setOpenNav = useBearStore((state) => state.setOpenNav);
+
   return (
     <NavList>
       <NavItem>
-        <StyledLink to='/about'>About</StyledLink>
+        <StyledLink to='/about' onClick={() => setOpenNav('')}>
+          About
+        </StyledLink>
       </NavItem>
       <NavItem>
-        <StyledLink to='/'>Directory</StyledLink>
+        <StyledLink to='/' onClick={() => setOpenNav('')}>
+          Directory
+        </StyledLink>
       </NavItem>
       <NavItem>
-        <StyledLink to='/discover'>Discover</StyledLink>
+        <StyledLink to='/discover' onClick={() => setOpenNav('')}>
+          Discover
+        </StyledLink>
       </NavItem>
     </NavList>
   );
