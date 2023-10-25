@@ -3,7 +3,7 @@ https://tulsamusiciandirectory.web.app
 
 Tulsa Musician Directory is a dynamic web application that puts Tulsa's vibrant music scene at your fingertips. Powered by a React front-end and a robust Firebase back-end, it serves as the ultimate resource for discovering local musicians and their talent. Our platform thrives on community contributions, allowing users to submit musician information while ensuring accuracy through meticulous admin verification.
 
-![](https://gitub.com/nathanhall762/TulsaMusicianDirectory/DesktopDemoTulsaMusicianDirectory.gif)
+![](https://github.com/nathanhall762/TulsaMusicianDirectory/blob/main/DesktopDemoTulsaMusicianDirectory.gif))
 
 Discover the heart and soul of Tulsa's music community through an extensive directory of artists and bands. With automatic music embeds, users can listen to music without leaving the page, and links provided lead to the artists' online presence. Each musician is presented through a user-friendly 'musician card' interface, offering a comprehensive Electronic Press Kit (EPK) experience, all without the artist having to create one themselves.
 
