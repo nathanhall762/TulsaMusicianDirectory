@@ -7,7 +7,7 @@ export const GlobalStyle = createGlobalStyle`
     font-weight: 400;
   
     --color-background-main: hsl(249, 11%, 12%);
-    --color-background-main-trans: hsla(249, 11%, 12%, 0.8);
+    --color-background-main-trans: hsla(249, 11%, 12%, 0.5);
     --color-background-alt: hsl(249, 11%, 15%);
     --color-primary: #ecb028;
     --color-secondary: #1d324f;
@@ -90,4 +90,22 @@ iframe {
     border: none;
     opacity: 0.8;
 }
+
+::-webkit-scrollbar {
+    width: 0.5vw; /* Width of the scrollbar */
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-background-alt); /* Background of the track */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--color-secondary); /* Color of the scrollbar itself */
+    border-radius: 6px; /* Roundness of the scrollbar */
+    border: 2px solid var(--color-background-main-trans); /* Creates padding around the scrollbar */
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-accent); /* Color of scrollbar when hovered */
+  }
 `;
