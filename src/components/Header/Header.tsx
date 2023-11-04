@@ -17,9 +17,7 @@ const Header = () => {
           <Logo src={logo} alt='TMD logo' />
         </Link>
         <ShortTitleWrapper>
-          <Link to='/'>
-            <ShortTitle>TMD</ShortTitle>
-          </Link>
+        <ShortTitle>TMD</ShortTitle>
         </ShortTitleWrapper>
         <TopHeader>
           <Link to='/'>
