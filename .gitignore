@@ -28,3 +28,5 @@ dist-ssr
 firebase.json
 *.json
 SpotifyToFirestore/.env
+
+stats.html

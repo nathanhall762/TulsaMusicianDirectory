@@ -2,8 +2,6 @@ import useBearStore from '../../bearStore';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 const AddButtons = () => {
   const user = useBearStore((state) => state.user);
@@ -25,7 +23,7 @@ const AddButtons = () => {
             {isApproveButtonHovered ? (
               'Approve Musician'
             ) : (
-              <FontAwesomeIcon icon={faCheck} aria-hidden='true' />
+              <i className='fa-solid fa-check' aria-hidden='true' />
             )}
           </AddButton>
         </Link>
@@ -41,7 +39,7 @@ const AddButtons = () => {
           {isAddButtonHovered ? (
             'Add Musician'
           ) : (
-            <FontAwesomeIcon icon={faPlus} aria-hidden='true' />
+            <i className='fa-solid fa-plus' aria-hidden='true' />
           )}
         </AddButton>
       </Link>
