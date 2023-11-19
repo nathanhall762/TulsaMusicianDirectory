@@ -1,11 +1,6 @@
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from 'firebase/auth';
+import { app } from '../firebase';
 import { useState } from 'react';
-import { auth } from '../firebase';
 import { FirebaseError } from 'firebase/app';
-// import styles from '../css/Login.module.css';
 import { isAdmin } from '../cloudFunctions';
 import useBearStore from '../bearStore';
 import { UserData } from '../types';
@@ -20,7 +15,7 @@ interface LoginProps {
   message?: string;
 }
 
-const Login: React.FC<LoginProps> = ({message}) => {
+const Login: React.FC<LoginProps> = ({ message }) => {
   const user = useBearStore((state) => state.user);
   const setUser = useBearStore((state) => state.setUser);
   const [loginData, setLoginData] = useState<LoginData>({
@@ -29,6 +24,11 @@ const Login: React.FC<LoginProps> = ({message}) => {
   });
 
   async function signUp() {
+    const { createUserWithEmailAndPassword, getAuth } = await import(
+      'firebase/auth'
+    );
+    const auth = getAuth(app);
+
     const userData = await createUserWithEmailAndPassword(
       auth,
       loginData.email,
@@ -63,6 +63,11 @@ const Login: React.FC<LoginProps> = ({message}) => {
   }
 
   async function signIn() {
+    const { signInWithEmailAndPassword, getAuth } = await import(
+      'firebase/auth'
+    );
+    const auth = getAuth(app);
+
     const user = await signInWithEmailAndPassword(
       auth,
       loginData.email,
@@ -102,7 +107,10 @@ const Login: React.FC<LoginProps> = ({message}) => {
     setLoginData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleLogOut = () => {
+  const handleLogOut = async () => {
+    const { getAuth } = await import('firebase/auth');
+    const auth = getAuth(app);
+
     auth.signOut();
     setUser({} as UserData);
   };

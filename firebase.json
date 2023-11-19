@@ -16,5 +16,12 @@
         "destination": "/index.html"
       }
     ]
-  }
+  },
+  "headers": [ {
+  }, {
+    "headers": [ {
+      "key": "Cache-Control",
+      "value": "max-age=604800"
+    } ]
+  }]
 }
