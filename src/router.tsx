@@ -1,13 +1,20 @@
 import { createBrowserRouter } from 'react-router-dom';
+import { Suspense, lazy } from 'react';
 import App from './components/App';
-import DiscoverPage from './components/DiscoverPage';
-import MusicianPage from './components/MusicianPage/MusicianPage';
-import MusicianForm from './components/MusicianAddForm';
-import MusicianApproveForm from './components/MusicianApproveForm';
-import MusicianApprovePage from './components/MusicianApprovePage';
-import About from './components/About';
-import ErrorElement from './components/ErrorElement';
-import DirectoryPage from './components/DirectoryPage';
+const DiscoverPage = lazy(() => import('./components/DiscoverPage'));
+const ErrorElement = lazy(() => import('./components/ErrorElement'));
+const MusicianForm = lazy(() => import('./components/MusicianAddForm'));
+const About = lazy(() => import('./components/About'));
+const DirectoryPage = lazy(() => import('./components/DirectoryPage'));
+const MusicianPage = lazy(
+  () => import('./components/MusicianPage/MusicianPage')
+);
+const MusicianApproveForm = lazy(
+  () => import('./components/MusicianApproveForm')
+);
+const MusicianApprovePage = lazy(
+  () => import('./components/MusicianApprovePage')
+);
 
 const router = createBrowserRouter([
   {
@@ -15,28 +22,65 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorElement />,
     children: [
-      { index: true, element: <DirectoryPage /> },
-      { path: '/about', element: <About /> },
-      { path: '/discover', element: <DiscoverPage /> },
+      {
+        index: true,
+        element: (
+          <Suspense>
+            <DirectoryPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: '/about',
+        element: (
+          <Suspense>
+            <About />
+          </Suspense>
+        ),
+      },
+      {
+        path: '/discover',
+        element: (
+          <Suspense>
+            <DiscoverPage />
+          </Suspense>
+        ),
+      },
       {
         path: '/404',
         element: <ErrorElement />,
       },
       {
         path: '/:musicianId',
-        element: <MusicianPage />,
+        element: (
+          <Suspense>
+            <MusicianPage />
+          </Suspense>
+        ),
       },
       {
         path: '/addmusician',
-        element: <MusicianForm />,
+        element: (
+          <Suspense>
+            <MusicianForm />
+          </Suspense>
+        ),
       },
       {
         path: '/approvemusician',
-        element: <MusicianApprovePage />,
+        element: (
+          <Suspense>
+            <MusicianApprovePage />
+          </Suspense>
+        ),
       },
       {
         path: '/approvemusician/:musicianId',
-        element: <MusicianApproveForm />,
+        element: (
+          <Suspense>
+            <MusicianApproveForm />
+          </Suspense>
+        ),
       },
     ],
   },
