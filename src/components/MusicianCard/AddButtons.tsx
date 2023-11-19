@@ -2,8 +2,6 @@ import useBearStore from '../../bearStore';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 const AddButtons = () => {
   const user = useBearStore((state) => state.user);
@@ -15,31 +13,33 @@ const AddButtons = () => {
     <AddButtonContainer>
       {/* show button link to MusicianApprovePage if user is admin */}
       {user.isAdmin ? (
-        <Link to='/approvemusician'>
+        <Link to='/approvemusician' aria-label='approve musician'>
           <AddButton
             $backgroundColor='var(--color-primary)'
             onMouseEnter={() => setIsApproveButtonHovered(true)}
             onMouseLeave={() => setIsApproveButtonHovered(false)}
+            aria-label='approve musician'
           >
             {isApproveButtonHovered ? (
               'Approve Musician'
             ) : (
-              <FontAwesomeIcon icon={faCheck} />
+              <i className='fa-solid fa-check' aria-hidden='true' />
             )}
           </AddButton>
         </Link>
       ) : null}
       {/* show add musician button only if logged in */}
-      <Link to='/addmusician'>
+      <Link to='/addmusician' aria-label='add musician to directory'>
         <AddButton
           $backgroundColor='var(--color-accent)'
           onMouseEnter={() => setIsAddButtonHovered(true)}
           onMouseLeave={() => setIsAddButtonHovered(false)}
+          aria-label='add musician to directory'
         >
           {isAddButtonHovered ? (
             'Add Musician'
           ) : (
-            <FontAwesomeIcon icon={faPlus} />
+            <i className='fa-solid fa-plus' aria-hidden='true' />
           )}
         </AddButton>
       </Link>

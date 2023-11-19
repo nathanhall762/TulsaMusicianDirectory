@@ -106,11 +106,15 @@ const LinkItem: React.FC<LinkItemProps> = ({
   const LinkIcon = linkIconMap[styleClassName] || Link;
 
   return (
-    <LinkIcon href={url} target='_blank' rel='noopener noreferrer'>
+    <LinkIcon
+      href={url}
+      target='_blank'
+      rel='noopener noreferrer'
+      aria-label={styleClassName}
+    >
       <i className={iconClassName} aria-hidden='true'></i>
     </LinkIcon>
   );
 };
 
 export default LinkItem;
-

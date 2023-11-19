@@ -32,6 +32,7 @@ const LinkItem: React.FC<LinkItemProps> = ({
       target='_blank'
       rel='noopener noreferrer'
       $linkName={styleClassName}
+      aria-label={styleClassName}
     >
       <i className={iconClassName} aria-hidden='true'></i>
     </Link>
