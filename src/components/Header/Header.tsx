@@ -13,20 +13,20 @@ const Header = () => {
   return (
     <>
       <HeaderWrapper>
-        <Link to='/'>
+        <Link to='/' aria-label='Homepage'>
           <Logo src={logo} alt='TMD logo' />
         </Link>
         <ShortTitleWrapper>
-        <ShortTitle>TMD</ShortTitle>
+          <ShortTitle>TMD</ShortTitle>
         </ShortTitleWrapper>
         <TopHeader>
-          <Link to='/'>
+          <Link to='/' aria-label='Homepage'>
             <Title>The Tulsa Musician Directory</Title>
           </Link>
           <NavBar>
             <PageNavigation>
               <About $navSelected={location.pathname === '/about'}>
-                <StyledLink to='/about'>
+                <StyledLink to='/about' aria-label='About Page'>
                   <p>About</p>
                 </StyledLink>
               </About>
@@ -36,12 +36,12 @@ const Header = () => {
                   location.pathname !== '/discover'
                 }
               >
-                <StyledLink to='/'>
+                <StyledLink to='/' aria-label='Hompage'>
                   <p>Directory</p>
                 </StyledLink>
               </Navigation>
               <Discover $navSelected={location.pathname === '/discover'}>
-                <StyledLink to='/discover'>
+                <StyledLink to='/discover' aria-label='Discover Page'>
                   <p>Discover</p>
                 </StyledLink>
               </Discover>

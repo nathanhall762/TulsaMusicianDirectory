@@ -35,7 +35,7 @@ const MusicianPage = () => {
     <>
       <MusicianPageBody>
         <MusicianPageContainerA backgroundImage={profileImage}>
-          <Link to='/'>
+          <Link to='/' aria-label='homepage'>
             <BackButton>Go Back</BackButton>
           </Link>
           <CardImage src={profileImage} alt={name} loading='lazy' />

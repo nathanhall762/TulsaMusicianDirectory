@@ -7,8 +7,8 @@ export default function ErrorElement() {
       <p>
         <b>You have defeated the Tulsa Musician Directory</b>
       </p>
-      <Link to='/'>
-        <button>Go Back</button>
+      <Link to='/' aria-label='homepage'>
+        <button aria-hidden='true'>Go Back</button>
       </Link>
     </>
   );
