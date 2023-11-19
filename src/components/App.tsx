@@ -3,7 +3,6 @@ import { Outlet } from 'react-router-dom';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { db, analytics } from '../firebase';
 import { Musician } from '../types';
-import 'font-awesome/css/font-awesome.min.css';
 import { logEvent } from 'firebase/analytics';
 import useBearStore from '../bearStore';
 import Header from './Header/Header';
