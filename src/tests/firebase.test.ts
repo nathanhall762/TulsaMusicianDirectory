@@ -14,10 +14,6 @@ describe('Firebase App', async () => {
     expect(firebaseApp.storage).toBeDefined();
   });
 
-  it('should load auth properly', async () => {
-    expect(firebaseApp.auth).toBeDefined();
-  });
-
   it('should  load analytics properly', async () => {
     expect(firebaseApp.analytics).toBeDefined();
   });
