@@ -21,8 +21,6 @@ const CardContainer = () => {
       ? musicians.filter(filterMusicians)
       : musicians;
 
-  console.log(filteredMusicians);
-
   const sortedMusicians = [...filteredMusicians].sort((a, b) =>
     a.name.localeCompare(b.name)
   );
