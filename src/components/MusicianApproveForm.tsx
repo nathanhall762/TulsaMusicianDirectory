@@ -70,7 +70,7 @@ const MusicianApproveForm = () => {
     try {
       e.preventDefault();
 
-      if (!user.userCredential) {
+      if (!user?.userCredential) {
         alert('You must be logged in first');
         return;
       }
@@ -196,7 +196,7 @@ const MusicianApproveForm = () => {
     }
   }, [formData, imageUpload, musicianName, isFetched]);
 
-  if (!user.userCredential) {
+  if (!user?.userCredential) {
     return (
       <div>
         <p>You Must Login to Add a Musician</p>

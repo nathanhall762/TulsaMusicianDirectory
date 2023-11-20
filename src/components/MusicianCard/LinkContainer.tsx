@@ -1,6 +1,6 @@
 import LinkItem from './LinkItem';
 import styled from 'styled-components';
-import { Musician } from '../../types';
+import { Musician } from '../../global';
 
 interface MusicianCardProps {
   musician: Musician;

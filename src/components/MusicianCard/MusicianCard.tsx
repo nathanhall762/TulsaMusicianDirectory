@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import LinkContainer from './LinkContainer';
 import styled from 'styled-components';
-import { Musician } from '../../types';
+import { Musician } from '../../global';
 
 interface MusicianCardProps {
   musician: Musician;

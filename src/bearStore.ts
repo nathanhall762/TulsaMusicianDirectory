@@ -1,14 +1,14 @@
 import { create } from 'zustand';
-import { UserData } from './types';
-import { Musician } from './types';
+import { UserData } from './global';
+import { Musician } from './global';
 
 interface BearState {
-  user: UserData;
+  user: UserData | null;
   musicians: Musician[];
   genreFilter: string[];
   searchFilter: string;
   openNav: 'search' | 'hamburger' | '';
-  setUser: (user: UserData) => void;
+  setUser: (user: UserData | null) => void;
   setMusicians: (musicians: Musician[]) => void;
   setGenreFilter: (genres: string[]) => void;
   setSearchFilter: (search: string) => void;
@@ -16,7 +16,7 @@ interface BearState {
 }
 
 const useBearStore = create<BearState>()((set) => ({
-  user: {} as UserData,
+  user: null,
   musicians: [],
   genreFilter: [],
   searchFilter: '',

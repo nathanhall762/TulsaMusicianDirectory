@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { db, analytics } from '../firebase';
-import { Musician } from '../types';
+import { Musician } from '../global';
 import { logEvent } from 'firebase/analytics';
 import useBearStore from '../bearStore';
 import Header from './Header/Header';

@@ -1,7 +1,7 @@
 import MusicianCard from './MusicianCard';
 import useBearStore from '../../bearStore';
 import styled from 'styled-components';
-import { Musician } from '../../types';
+import { Musician } from '../../global';
 
 const CardContainer = () => {
   const musicians = useBearStore((state) => state.musicians);

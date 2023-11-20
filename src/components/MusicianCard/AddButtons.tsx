@@ -12,7 +12,7 @@ const AddButtons = () => {
   return (
     <AddButtonContainer>
       {/* show button link to MusicianApprovePage if user is admin */}
-      {user.isAdmin ? (
+      {user?.isAdmin ? (
         <Link to='/approvemusician' aria-label='approve musician'>
           <AddButton
             $backgroundColor='var(--color-primary)'

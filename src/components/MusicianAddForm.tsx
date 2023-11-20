@@ -4,7 +4,6 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { doc, setDoc, collection } from 'firebase/firestore';
 import { db, analytics } from '../firebase';
 import { v4 } from 'uuid';
-// import { validateURLs } from '../utils';
 import styles from '../css/MusicianAddForm.module.css';
 import { useNavigate } from 'react-router-dom';
 import { logEvent } from 'firebase/analytics';
@@ -61,7 +60,7 @@ const MusicianForm = () => {
       e.preventDefault();
       const url = await uploadImage();
 
-      if (!user.userCredential) return;
+      if (!user?.userCredential) return;
       const targetCollection =
         user.isAdmin === true ? 'musicians' : 'pendingMusicians';
       const musicianRef = doc(collection(db, targetCollection));
@@ -141,7 +140,7 @@ const MusicianForm = () => {
     }
   }, [formData, imageUpload]);
 
-  if (!user.userCredential) {
+  if (!user?.userCredential) {
     return (
       <div>
         <Link to='/'>
