@@ -4,8 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --open",
-    "build": "tsc && vite build",
+    "dev": "NODE_ENV=development node server/server.js",
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "tsc && vite build --outDir dist/client --ssrManifest",
+    "build:server": "tsc && vite build --outDir dist/server --ssr src/entry.server.tsx",
+    "start": "NODE_ENV=production node server/server.js",
     "preview": "vite preview --open",
     "preview-build": "tsc && vite build && vite preview",
     "deploy": "firebase deploy --token \"$FIREBASE_TOKEN\" --only hosting",
@@ -15,6 +18,7 @@
   "dependencies": {
     "compression": "^1.7.4",
     "dotenv": "^16.3.1",
+    "express": "^4.18.2",
     "firebase": "^10.1.0",
     "firebase-admin": "^11.10.1",
     "react": "^18.2.0",

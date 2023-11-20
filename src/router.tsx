@@ -1,4 +1,4 @@
-import { RouteObject, createBrowserRouter } from 'react-router-dom';
+import { RouteObject } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import App from './components/App';
 const DiscoverPage = lazy(() => import('./components/DiscoverPage'));
@@ -86,6 +86,4 @@ const routes: RouteObject[] = [
   },
 ];
 
-const browserRouter = createBrowserRouter(routes);
-
-export { browserRouter, routes };
+export { routes };

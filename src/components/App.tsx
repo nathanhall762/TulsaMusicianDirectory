@@ -1,16 +1,16 @@
 import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { collection, onSnapshot } from 'firebase/firestore';
-import { db, analytics } from '../firebase';
+import { db } from '../firebase';
 import { Musician } from '../global';
-import { logEvent } from 'firebase/analytics';
+// import { logEvent } from 'firebase/analytics';
 import useBearStore from '../bearStore';
 import Header from './Header/Header';
 import { GlobalStyle } from './GlobalStyle';
 import styled from 'styled-components';
 
 // to test if analytics is working
-logEvent(analytics, 'test_event');
+// logEvent(analytics, 'test_event');
 
 function App() {
   const setMusicians = useBearStore((state) => state.setMusicians);
