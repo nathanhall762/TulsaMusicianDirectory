@@ -20,9 +20,9 @@ const Header = () => {
           <ShortTitle>TMD</ShortTitle>
         </ShortTitleWrapper>
         <TopHeader>
-          <Link to='/' aria-label='Homepage'>
+          <TitleLink to='/' aria-label='The Tulsa Musician Directory'>
             <Title>The Tulsa Musician Directory</Title>
-          </Link>
+          </TitleLink>
           <NavBar>
             <PageNavigation>
               <About $navSelected={location.pathname === '/about'}>
@@ -101,6 +101,12 @@ const Logo = styled.img`
   @media (max-width: 1000px) {
     box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
     margin-left: 0.5em;
+  }
+`;
+
+const TitleLink = styled(Link)`
+  @media (max-width: 800px) {
+    display: none;
   }
 `;
 
