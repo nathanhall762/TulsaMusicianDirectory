@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { RouteObject, createBrowserRouter } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import App from './components/App';
 const DiscoverPage = lazy(() => import('./components/DiscoverPage'));
@@ -16,7 +16,7 @@ const MusicianApprovePage = lazy(
   () => import('./components/MusicianApprovePage')
 );
 
-const browserRouter = createBrowserRouter([
+const routes: RouteObject[] = [
   {
     path: '/',
     element: <App />,
@@ -84,6 +84,8 @@ const browserRouter = createBrowserRouter([
       },
     ],
   },
-]);
+];
 
-export default browserRouter;
+const browserRouter = createBrowserRouter(routes);
+
+export { browserRouter, routes };
