@@ -16,7 +16,7 @@ const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
   return (
     <>
       <MusicianCardBody
-        backgroundImage={profileImage}
+        $backgroundImage={profileImage}
         onClick={() => navigate(urlName)}
       >
         <CardTitle>{name}</CardTitle>
@@ -71,7 +71,7 @@ export const Genres = styled.p`
   margin-top: 10px;
 `;
 
-const MusicianCardBody = styled.div<{ backgroundImage: string }>`
+const MusicianCardBody = styled.div<{ $backgroundImage: string }>`
   /* border: 1px solid var(--color-border); */
   padding: 0px 0px;
   border-radius: 20px;
@@ -105,7 +105,7 @@ const MusicianCardBody = styled.div<{ backgroundImage: string }>`
   }
 
   &::before {
-    background-image: url(${(props) => props.backgroundImage});
+    background-image: url(${(props) => props.$backgroundImage});
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
