@@ -25,7 +25,7 @@ const MusicianApprovePage = () => {
     return () => unsubscribe();
   }, []);
 
-  if (!user.isAdmin) {
+  if (!user?.isAdmin) {
     return (
       <div>
         <Login />
