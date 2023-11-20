@@ -53,6 +53,7 @@ const GenreFilters = () => {
         {filters.map((genre) => (
           <Genre
             onClick={handleGenreToggle}
+            key={genre}
             $genreSelected={
               genreFilter.includes(genre) || genre === searchFilter
             }

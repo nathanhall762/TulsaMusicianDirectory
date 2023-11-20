@@ -3,7 +3,7 @@ import Login from './Login';
 import { useState, useEffect } from 'react';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
-import { Musician } from '../types';
+import { Musician } from '../global';
 import useBearStore from '../bearStore';
 
 const MusicianApprovePage = () => {

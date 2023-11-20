@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { FirebaseError } from 'firebase/app';
 import { isAdmin } from '../cloudFunctions';
 import useBearStore from '../bearStore';
-import { UserData } from '../types';
 import styled from 'styled-components';
 
 interface LoginData {
@@ -112,10 +111,10 @@ const Login: React.FC<LoginProps> = ({ message }) => {
     const auth = getAuth(app);
 
     auth.signOut();
-    setUser({} as UserData);
+    setUser(null);
   };
 
-  if (user.userCredential) {
+  if (user?.userCredential) {
     return (
       <LoginForm>
         <LogoutContainer>
