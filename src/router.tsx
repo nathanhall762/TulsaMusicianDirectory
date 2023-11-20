@@ -16,7 +16,7 @@ const MusicianApprovePage = lazy(
   () => import('./components/MusicianApprovePage')
 );
 
-const router = createBrowserRouter([
+const browserRouter = createBrowserRouter([
   {
     path: '/',
     element: <App />,
@@ -86,4 +86,4 @@ const router = createBrowserRouter([
   },
 ]);
 
-export default router;
+export default browserRouter;
