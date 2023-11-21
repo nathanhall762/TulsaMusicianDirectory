@@ -61,8 +61,8 @@ app.use('*', async (req, res) => {
     res.set('Cache-Control', 'public, max-age=600, s-maxage=1200 ');
     return res.status(200).end(html);
   } catch (e) {
-    if (isProduction) {
-      // vite.ssrFixStacktrace(e);
+    if (!isProduction) {
+      vite.ssrFixStacktrace(e);
     }
     console.log(e.stack);
     res.status(500).end(e.stack);
