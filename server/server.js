@@ -3,7 +3,7 @@ import express from 'express';
 
 // Constants
 const isProduction = process.env.NODE_ENV === 'production';
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || (isProduction ? 4173 : 5173);
 const base = process.env.BASE || '/';
 
 console.log('isProduction?: ', isProduction);
