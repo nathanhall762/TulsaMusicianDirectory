@@ -17,6 +17,7 @@ const templateHtml = isProduction
 const app = express();
 let vite;
 
+let render;
 if (!isProduction) {
   // <--- DEV mode --->
   const { createServer } = await import('vite');
@@ -32,12 +33,12 @@ if (!isProduction) {
   const sirv = (await import('sirv')).default;
   app.use(compression());
   app.use(base, sirv('./dist/client', { extensions: [] }));
+  render = (await import('../dist/server/entry.server.js')).render;
 }
 
 app.use('*', async (req, res) => {
   try {
     let template;
-    let render;
 
     if (!isProduction) {
       const url = req.originalUrl.replace(base, '');
@@ -49,7 +50,6 @@ app.use('*', async (req, res) => {
         .ssrLoadModule('src/entry.server.tsx')
         .then((m) => m.render);
     } else {
-      render = (await import('../dist/server/entry.server.js')).render;
       template = templateHtml;
     }
 
