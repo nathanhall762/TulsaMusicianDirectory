@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import { collection, onSnapshot } from 'firebase/firestore';
-import { db } from '../firebase';
+// import { collection, onSnapshot } from 'firebase/firestore';
+import { app } from '../firebase';
 import { Musician } from '../global';
 // import { logEvent } from 'firebase/analytics';
 import useBearStore from '../bearStore';
@@ -16,6 +16,10 @@ function App() {
   const setMusicians = useBearStore((state) => state.setMusicians);
 
   const getMusicians = async () => {
+    const { getFirestore, collection, onSnapshot } = await import(
+      'firebase/firestore'
+    );
+    const db = getFirestore(app);
     onSnapshot(collection(db, 'musicians'), (snapshot) => {
       const fetchedMusicians = snapshot.docs.map((doc) => doc.data());
 

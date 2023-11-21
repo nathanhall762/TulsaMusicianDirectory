@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { storage } from '../firebase';
+import { storage, app } from '../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { doc, setDoc, collection } from 'firebase/firestore';
-import { db } from '../firebase';
 import { v4 } from 'uuid';
 import styles from '../css/MusicianAddForm.module.css';
 import { useNavigate } from 'react-router-dom';
@@ -56,6 +54,11 @@ const MusicianForm = () => {
   const navigate = useNavigate();
 
   const handleSubmitToFirestore = async (e: React.FormEvent) => {
+    const { getFirestore, doc, setDoc, collection } = await import(
+      'firebase/firestore'
+    );
+    const db = getFirestore(app);
+
     try {
       e.preventDefault();
       const url = await uploadImage();
