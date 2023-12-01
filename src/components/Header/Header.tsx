@@ -158,7 +158,7 @@ const TopHeader = styled.div`
   }
 `;
 
-const NavBar = styled.div`
+export const NavBar = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -169,7 +169,7 @@ const NavBar = styled.div`
   }
 `;
 
-const PageNavigation = styled.ul`
+export const PageNavigation = styled.ul`
   display: flex;
   align-items: center;
   background-color: var(--color-secondary);
@@ -185,7 +185,7 @@ const PageNavigation = styled.ul`
   }
 `;
 
-const Navigation = styled.li<{ $navSelected: boolean }>`
+export const Navigation = styled.li<{ $navSelected: boolean }>`
   padding: 0 1em;
   text-align: center;
   height: 100%;
@@ -202,12 +202,12 @@ const Navigation = styled.li<{ $navSelected: boolean }>`
   ${(props) => props.$navSelected && 'background-color: black;'}
 `;
 
-const About = styled(Navigation)`
+export const About = styled(Navigation)`
   border-top-left-radius: 25px;
   border-bottom-left-radius: 25px;
 `;
 
-const Discover = styled(Navigation)`
+export const Discover = styled(Navigation)`
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
 `;
