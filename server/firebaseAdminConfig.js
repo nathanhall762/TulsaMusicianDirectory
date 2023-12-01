@@ -1,4 +1,6 @@
 import admin from 'firebase-admin';
+import { initializeApp } from 'firebase-admin/app';
+import { getFirestore } from 'firebase-admin/firestore';
 import dotenv from 'dotenv';
 import process from 'process';
 
@@ -23,8 +25,9 @@ const serviceAccount = {
 };
 
 // Initialize the Firebase Admin SDK
-admin.initializeApp({
+const app = initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
 
-export const adminDb = admin.firestore();
+const adminDb = getFirestore(app);
+export { adminDb };

@@ -1,10 +1,11 @@
-import { adminDb } from './firebaseAdminConfig';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { adminDb } from './firebaseAdminConfig.js';
 
 export async function getMusicians() {
-  onSnapshot(collection(adminDb, 'musicians'), (snapshot) => {
-    const fetchedMusicians = snapshot.docs.map((doc) => doc.data());
+  // open and retrieve collection
+  const collection = adminDb.collection('musicians');
+  const snapshot = await collection.get();
 
-    return fetchedMusicians;
-  });
+  // pull out data from documents into array of muscian info
+  const musicians = snapshot.docs.map((doc) => doc.data());
+  return musicians;
 }

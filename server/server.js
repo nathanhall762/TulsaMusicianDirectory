@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import express from 'express';
-// import { getMusicians } from './firebase.js';
+import { getMusicians } from './firebase.js';
+console.log(await getMusicians());
 
 // Constants
 const isProduction = process.env.NODE_ENV === 'production';
