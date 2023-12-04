@@ -12,9 +12,9 @@ steps:
       - --keyring=TMD
       - --key=cloudbuild-env
 
-  # # install
-  # - name: 'gcr.io/cloud-builders/npm'
-  #   args: ['install']
+  # install
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['install']
 
   # runs tests
   - name: 'gcr.io/cloud-builders/npm'
