@@ -2,11 +2,18 @@ import CardContainer from './MusicianCard/CardContainer';
 import AddButtons from './MusicianCard/AddButtons';
 import GenreFilters from './GenreFilters';
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 
 const DirectoryPage = () => {
+  const [windowSize, setWindowSize] = useState<number | null>(null);
+
+  useEffect(() => {
+    setWindowSize(window.innerWidth);
+  }, []);
+
   return (
     <div>
-      {window.innerWidth >= 1000 && <GenreFilters />}
+      {windowSize !== null && windowSize >= 1000 && <GenreFilters />}
       <Spacer />
       <CardContainer />
       <AddButtons />

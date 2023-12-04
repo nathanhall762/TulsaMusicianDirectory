@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import GenreFilters from '../GenreFilters';
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
@@ -9,6 +9,11 @@ export default () => {
   const setSearchFilter = useBearStore((state) => state.setSearchFilter);
   const [searchText, setSearchtext] = useState<string>('');
   const location = useLocation();
+  const [windowSize, setWindowSize] = useState<number | null>(null);
+
+  useEffect(() => {
+    setWindowSize(window.innerWidth);
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -48,7 +53,7 @@ export default () => {
           <StyledButton onClick={handleSearch}>Search</StyledButton>
           <StyledButton onClick={handleClear}>Clear</StyledButton>
         </ButtonContainer>
-        {window.innerWidth < 1000 && <GenreFilters />}
+        {windowSize !== null && windowSize >= 1000 && <GenreFilters />}
       </SearchPanel>
     </>
   );
