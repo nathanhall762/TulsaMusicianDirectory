@@ -1,6 +1,6 @@
 import { RouteObject } from 'react-router-dom';
 // import { Suspense, lazy } from 'react';
-import App from './components/App';
+import App, { musicianDataLoader } from './components/App';
 import DiscoverPage from './components/DiscoverPage';
 import ErrorElement from './components/ErrorElement';
 import MusicianForm from './components/MusicianAddForm';
@@ -15,6 +15,7 @@ const routes: RouteObject[] = [
     path: '/',
     element: <App />,
     errorElement: <ErrorElement />,
+    loader: musicianDataLoader,
     children: [
       {
         index: true,
