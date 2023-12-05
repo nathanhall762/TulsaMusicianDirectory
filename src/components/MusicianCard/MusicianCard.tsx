@@ -3,6 +3,10 @@ import LinkContainer from './LinkContainer';
 import styled from 'styled-components';
 import { Musician } from '../../global';
 
+import TurntableArm from '../../assets/turntable-arm.png';
+
+import React, { useState, useEffect } from 'react';
+
 interface MusicianCardProps {
   musician: Musician;
 }
@@ -13,6 +17,34 @@ const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
 
   const urlName = name.replaceAll(' ', '_').toLowerCase();
 
+
+  // stuff for animating the image
+  const [isHovered, setIsHovered] = useState(false);
+const [rotation, setRotation] = useState(0);
+
+  useEffect(() => {
+    let animationFrameId;
+
+    if (isHovered) {
+      const startTime = performance.now();
+
+      const animate = (currentTime) => {
+        const elapsed = currentTime - startTime;
+        setRotation((elapsed / 5000) * 360); // 5000ms is the duration of one rotation
+        animationFrameId = requestAnimationFrame(animate);
+      };
+
+      animate(performance.now());
+    } else {
+      cancelAnimationFrame(animationFrameId);
+      setRotation(0); // Reset rotation to 0 when hover state is removed
+    }
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [isHovered]);
+
   return (
     <>
       <MusicianCardBody
@@ -21,8 +53,21 @@ const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
       >
         <CardTitle>{name}</CardTitle>
         <ImageContainer>
-          <CardImage src={profileImage} alt={name} loading='lazy' />
+        <CardImage
+          src={profileImage}
+          alt={name}
+          loading='lazy'
+          style={{
+            transform: `rotate(${rotation}deg)`,
+            transition: isHovered ? 'none' : 'transform 1s' // Add transition when hover state is removed
+          }}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        />
         </ImageContainer>
+        <NeedleArmContainer>
+          <NeedleArm />
+        </NeedleArmContainer>
         <Genres>Genre: {genre.length !== 0 ? genre.join(', ') : 'NA'}</Genres>
         <LinkContainer musician={musician} />
       </MusicianCardBody>
@@ -30,14 +75,13 @@ const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
   );
 };
 
-export const CardImage = styled.img`
+const CardImage = styled.img`
   width: 250px;
   height: 250px;
   border-radius: 50%;
   object-fit: cover;
   object-position: center;
   box-shadow: 0px 0px 0.5rem var(--color-primary);
-  transition: all var(--animation-speed-medium-slow) ease;
 `;
 
 const ImageContainer = styled.div`
@@ -71,10 +115,32 @@ export const Genres = styled.p`
   margin-top: 10px;
 `;
 
+// needle arm stuff, ignore
+const NeedleArmContainer = styled.div`
+  width: 75px;
+  height: 250px;
+  position: absolute;
+  top: 25%;
+  right: -3%;
+  transform: translateX(-50%);
+  pointer-events: none;
+`;
+
+const NeedleArm = styled.div`
+  background-image: url(${TurntableArm});
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+  transform-origin: top center;
+  transform: rotate(0deg);
+  transition: transform 1s;
+`;
+
 const MusicianCardBody = styled.div<{ $backgroundImage: string }>`
   /* border: 1px solid var(--color-border); */
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding-left: 4rem;
+  padding-right: 4rem;
   border-radius: 20px;
   width: 270px;
   display: flex;
@@ -84,7 +150,7 @@ const MusicianCardBody = styled.div<{ $backgroundImage: string }>`
   box-shadow: none;
   margin: 1.25rem;
   align-self: stretch;
-  height: 425px;
+  height: 450px;
   justify-content: space-around;
   background-color: var(--other-color);
   position: relative;
@@ -145,11 +211,8 @@ const MusicianCardBody = styled.div<{ $backgroundImage: string }>`
     z-index: 1;
   }
   &:hover ${CardImage} {
-    box-shadow: 0px 0px 10px var(--color-text-secondary);
-    transform: scale(1.2);
-    // rotate 360 degrees
-    transform: rotate(360deg);
-    margin-top: 5px;
+    scale: 1.1;
+    animation: rotate 10s linear infinite;
   }
   &:hover ${Genres} {
     color: #EBAD21;
@@ -161,6 +224,11 @@ const MusicianCardBody = styled.div<{ $backgroundImage: string }>`
     transform: scale(1.2);
     margin-top: 10px;
   }
+
+  &:hover ${NeedleArm} {
+    transform: rotate(15deg);
+  }
+
 `;
 
 export default MusicianCard;

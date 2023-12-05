@@ -41,6 +41,11 @@ const HeroTitle = styled.h1`
     margin: 0;
     text-shadow: 0 2px 20px #000;
     font-family: 'Lobster';
+
+    // on mobile, make font-size smaller
+    @media (max-width: 600px) {
+        font-size: 3rem;
+    }
 `;
 
 const HeroSubtitle = styled.h2`
@@ -52,6 +57,11 @@ const HeroSubtitle = styled.h2`
     // shift down a little
     transform: translateY(2rem);
     font-family: 'Lobster';
+
+    // on mobile, make font-size smaller
+    @media (max-width: 600px) {
+        font-size: 1.5rem;
+    }
 `;
 
 const ActionButton = styled.button`
@@ -74,6 +84,13 @@ const ActionButton = styled.button`
     }
 
     transition: background-color 1s, color 1s, transform 1s, box-shadow 1s;
+
+    // on mobile, make smaller
+    @media (max-width: 600px) {
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+    }
+
 `;
 
 export default Hero;

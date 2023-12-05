@@ -39,7 +39,7 @@ const CardContainerDiv = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   margin: 0 auto;
-  padding: 3rem;
+  padding: rem;
   text-align: center;
   width: 90%;
 `;
