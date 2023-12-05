@@ -37,7 +37,7 @@ export const CardImage = styled.img`
   object-fit: cover;
   object-position: center;
   box-shadow: 0px 0px 0.5rem var(--color-primary);
-  transition: all var(--animation-speed-medium) ease;
+  transition: all var(--animation-speed-medium-slow) ease;
 `;
 
 const ImageContainer = styled.div`
@@ -55,25 +55,26 @@ export const CardTitle = styled.h2`
   width: 100%;
   align-items: center;
   justify-content: center;
-  color: var(--color-primary);
+  color: beige;
   min-height: 72px;
-  transition: all var(--animation-speed-medium) ease;
+  transition: all var(--animation-speed-medium-slow) ease;
 `;
 
 export const Genres = styled.p`
-  transition: color var(--animation-speed-medium) ease;
+  transition: color var(--animation-speed-medium-slow) ease;
   height: 50px;
   box-sizing: border-box;
   padding: 0 10px;
   width: 100%;
-  color: var(--color-text-secondary);
-  transition: all var(--animation-speed-medium) ease;
+  color: beige;
+  transition: all var(--animation-speed-medium-slow) ease;
   margin-top: 10px;
 `;
 
 const MusicianCardBody = styled.div<{ $backgroundImage: string }>`
   /* border: 1px solid var(--color-border); */
-  padding: 0px 0px;
+  padding-left: 2rem;
+  padding-right: 2rem;
   border-radius: 20px;
   width: 270px;
   display: flex;
@@ -81,9 +82,9 @@ const MusicianCardBody = styled.div<{ $backgroundImage: string }>`
   flex-direction: column;
   transition: all var(--animation-speed-medium) ease;
   box-shadow: none;
-  margin: 0.3rem;
+  margin: 1.25rem;
   align-self: stretch;
-  height: 400px;
+  height: 425px;
   justify-content: space-around;
   background-color: var(--other-color);
   position: relative;
@@ -133,29 +134,31 @@ const MusicianCardBody = styled.div<{ $backgroundImage: string }>`
     border: none;
   }
   &:hover ${CardTitle} {
-    color: var(--color-accent);
+    color: #EBAD21;
     text-shadow:
       1px 1px 0 var(--color-background-alt),
       1px -1px 0 var(--color-background-alt),
       -1px 1px 0 var(--color-background-alt),
       -1px -1px 0 var(--color-background-alt);
-    transform: scale(1.05);
+    transform: scale(1.2);
     padding-top: 5px;
     z-index: 1;
   }
   &:hover ${CardImage} {
-    box-shadow: 0px 0px 10px var(--color-accent);
-    transform: scale(1.05);
+    box-shadow: 0px 0px 10px var(--color-text-secondary);
+    transform: scale(1.2);
+    // rotate 360 degrees
+    transform: rotate(360deg);
     margin-top: 5px;
   }
   &:hover ${Genres} {
-    color: var(--color-accent);
+    color: #EBAD21;
     text-shadow:
       1px 1px 0 var(--color-background-main),
       1px -1px 0 var(--color-background-main),
       -1px 1px 0 var(--color-background-main),
       -1px -1px 0 var(--color-background-main);
-    transform: scale(1.05);
+    transform: scale(1.2);
     margin-top: 10px;
   }
 `;

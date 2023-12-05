@@ -39,8 +39,9 @@ const CardContainerDiv = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 3rem;
   text-align: center;
+  width: 90%;
 `;
 
 export default CardContainer;

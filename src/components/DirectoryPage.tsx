@@ -3,11 +3,15 @@ import AddButtons from './MusicianCard/AddButtons';
 import GenreFilters from './GenreFilters';
 import styled from 'styled-components';
 
+// adding the hero section
+import Hero from './Hero';
+
 const DirectoryPage = () => {
   return (
     <div>
       {window.innerWidth >= 1000 && <GenreFilters />}
       <Spacer />
+      <Hero />
       <CardContainer />
       <AddButtons />
     </div>
