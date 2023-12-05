@@ -2,7 +2,7 @@ import { HttpsError, onCall } from 'firebase-functions/v2/https';
 import { log } from 'firebase-functions/logger';
 import { initializeApp } from 'firebase-admin/app';
 import axios from 'axios';
-import { response } from 'express';
+import * as functions from 'firebase-functions';
 
 initializeApp();
 import * as admin from 'firebase-admin';
@@ -24,32 +24,18 @@ export const isAdmin = onCall(async (request) => {
   return { isAdmin: isAdmin === true };
 });
 
-
-
-
-
-
-
-
-
-
-
-// This is where the schenanigans begin
-//===================================================================================================
-
-
-/**
- * Function called by the client to get the user's Spotify data.
- * Function recieves an array of song IDs from the client.
- */
-
 // const userID = "fn0rtrc63vt562leulqnw0kqf"; // hard coded for testing purposes
 
 
 let fetchType = ""; // will be either "artist", "album", or "playlist"
 let spotifyURL = "https://api.spotify.com/v1";
 
+
 // cheesing temp tokens....
+
+let token: string = '';
+let tokenTimestamp: number = 0;
+
 async function getSpotifyToken(): Promise<string> {
   try {
     const response = await axios.post(
@@ -61,31 +47,26 @@ async function getSpotifyToken(): Promise<string> {
         },
       }
     );
+    token = response.data.access_token;
 
-    const accessToken = response.data.access_token;
-    return accessToken;
   } catch (error) {
     console.error(`Error getting access token: ${error}`);
-    throw error;
+    token = "error getting token";
   }
+
+  return token;
 }
 
-//  const APIRequestResults: string[] = []; // result to be sent to be converted to metrics
-let data: JSON[] = []; // result to be sent to the client
-const idList: JSON[] = []; // list of song IDs to get metrics from spotify
-const metrics: JSON[] = []; // song metrics to be sent to the model
+export const getSpotifyData = functions.https.onRequest(async (request, response) => {
+  // recieve the body of the request (json object), and store it to a variable
+  const requestBody = JSON.parse(request.body);
 
-export const getSpotifyData = onCall(async (request) => {
-  /**
-   * we are gonna cheat a bit here. Im gonna generate an api token on call.
-   * this is not the best way to do this, but it will work for now.
-   */
-
-  // take in json object from client
-  const songIDs = request.data.songIDs; // will be an array of song IDs passed by the client.
-
-  const token = await getSpotifyToken();
-
+  // Generate a token if one doesn't exist or is expired
+  const currentTime = new Date().getTime();
+  if (!token || currentTime - tokenTimestamp > 3600000) {
+    token = await getSpotifyToken();
+    tokenTimestamp = currentTime;
+  }
 
   // Define headers
   const headers = {
@@ -93,80 +74,87 @@ export const getSpotifyData = onCall(async (request) => {
     'Content-Type': 'application/json',
   };
 
-
-  // const songIDs = request.data.songIDs; // will be an array of song IDs passed by the client.
-
-  if (!songIDs) {
-    // if songIDs is null or undefined, throw an error to the client with the message "songIDs is null or undefined"
-    throw new HttpsError("unauthenticated", "songIDs is null or undefined");
+  // cant work on an empty array! :)
+  if (!requestBody) {
+    throw new HttpsError('unauthenticated', 'requestBody is null or undefined');
   }
 
-  // iterate through all objects in songIDs
-  songIDs.forEach((songID: any) => {
+  let songIDs = []; // array to store the songIDs from the spotify response
 
-    // switch case to determine fetchType
-    switch (songID.idType) {
+  // iterate through all objects in requestBody
+  for (let i = 0; i < requestBody.length; i++) {
+    let idType = requestBody[i].idType;
+
+    // switch statement to determine what endpoint to hit based on the idType
+    switch (idType) {
       case "artist":
-        fetchType = "artists";
+        fetchType = `artists/${requestBody[i].objectID}/top-tracks?market=US`;
         break;
       case "album":
-        fetchType = "albums";
+        fetchType = `albums/${requestBody[i].objectID}/tracks`;
         break;
       case "playlist":
-        fetchType = "playlists";
+        fetchType = `playlists/${requestBody[i].objectID}/tracks`;
         break;
       default:
-        // default to error
-        throw new HttpsError("unauthenticated", "idType is not valid");
-        break;
+        throw new HttpsError('unauthenticated', 'idType is null or undefined or something else, idk man...');
     }
 
-    // make the request to the Spotify API
-    let requestURL = `${spotifyURL}/${fetchType}/${songID.id}`;
-    axios.get(requestURL, {
-      headers: headers,
-    })
-      .then(axiosResponse => {
-        // Success
-        console.log(axiosResponse);
+    // get the id from the requestBody
+    let requestURL = `${spotifyURL}/${fetchType}`;
 
-        // append response to result
-        data.push(axiosResponse.data);
-      })
-      .catch(error => {
-        // Error
-        console.log(error);
-      });
-  }); // end forEach loop
+    // make the request to spotify
+    const spotifyResponse = await axios.get(requestURL, { headers });
 
-  // For each item in jsonData, get the song ID and append it to idList
-  data.forEach((item: any) => {
-    idList.push(item.id);
+    // if the response is empty, throw an error
+    if (!spotifyResponse) {
+      throw new HttpsError('unauthenticated', 'spotifyResponse is null or undefined');
+    }
+
+    // change how we get the songIDs based on the idType
+    if (idType === "playlist") {
+      if (spotifyResponse.data.items) {
+        for (let j = 0; j < spotifyResponse.data.items.length; j++) {
+          songIDs.push(spotifyResponse.data.items[j].track.id);
+        }
+      }
+    } else {
+      if (spotifyResponse.data.tracks) {
+        for (let j = 0; j < spotifyResponse.data.tracks.length; j++) {
+          songIDs.push(spotifyResponse.data.tracks[j].id);
+        }
+      }
+    }
+
+  }; // end of for loop
+
+  // get song metrics from spotify for each songID
+let songMetrics: any = [];
+let promises = songIDs.map(songID => {
+  let songURL = `${spotifyURL}/audio-features/${songID}`;
+  return axios.get(songURL, { headers });
+});
+
+let responses = await Promise.all(promises);
+
+responses.forEach(songResponse => {
+  // only push the data we need to the songMetrics array:
+  songMetrics.push({
+    "danceability": songResponse.data.danceability,
+    "energy": songResponse.data.energy,
+    "key": songResponse.data.key,
+    "loudness": songResponse.data.loudness,
+    "mode": songResponse.data.mode,
+    "speechiness": songResponse.data.speechiness,
+    "acousticness": songResponse.data.acousticness,
+    "instrumentalness": songResponse.data.instrumentalness,
+    "liveness": songResponse.data.liveness,
+    "valence": songResponse.data.valence,
+    "tempo": songResponse.data.tempo
   });
+});
 
-  // For each item in idList, get the song metrics (from spotify api) and append it to metrics
-  idList.forEach(item => {
-      // make the request to the Spotify API
-      let requestURL = `${spotifyURL}/${fetchType}/${item}/audio-features`;
-      axios.get(requestURL, {
-          headers: headers,
-          })
-          .then(axiosResponse => {
-              // Success
-              console.log(axiosResponse);
+// send the songMetrics back to the client
+response.send(songMetrics);
 
-              // append response to result
-              metrics.push(axiosResponse.data);
-          })
-          .catch(error => {
-              // Error
-              console.log(error);
-          });
-  });
-
-
-  response.status(200).send({
-      statusCode: 200,
-      data: metrics, // Send the data received from the Spotify API
-  });
 });

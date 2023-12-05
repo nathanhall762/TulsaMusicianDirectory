@@ -8,7 +8,7 @@ const Hero = () => {
             <HeroTitle>Music In Tulsa</HeroTitle>
             <HeroSubtitle>Discover Tulsa's Music Scene</HeroSubtitle>
             <ActionButton onClick={() => {
-              scroll.scrollMore(window.innerHeight * 0.87, {
+              scroll.scrollMore(window.innerHeight * 0.55, {
               duration: 1000,
               smooth: 'quadInOut',
               });
@@ -20,7 +20,7 @@ const Hero = () => {
 }
 
 const HeroWrapper = styled.div`
-    height: 83vh;
+    height: 50vh;
     width: 90%;
     display: flex;
     flex-direction: column;
