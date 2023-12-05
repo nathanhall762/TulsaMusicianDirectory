@@ -72,7 +72,6 @@ export const Genres = styled.p`
 `;
 
 const MusicianCardBody = styled.div<{ $backgroundImage: string }>`
-  /* border: 1px solid var(--color-border); */
   padding: 0px 0px;
   border-radius: 20px;
   width: 270px;

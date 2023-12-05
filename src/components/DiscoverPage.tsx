@@ -105,9 +105,6 @@ export const PageNavigation = styled.ul`
   font-size: 15px;
   font-weight: bold;
   margin: 0 10px;
-  @media (max-width: 1000px) {
-    display: none;
-  }
 `;
 
 export const ModeSelectButton = styled.div`

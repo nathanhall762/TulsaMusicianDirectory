@@ -15,6 +15,9 @@ const MusicianApproveForm = lazy(
 const MusicianApprovePage = lazy(
   () => import('./components/MusicianApprovePage')
 );
+const EditPage = lazy(
+  () => import('./components/MusicianPage/EditPage')
+);
 
 const router = createBrowserRouter([
   {
@@ -55,6 +58,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense>
             <MusicianPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: '/edit/:musicianId',
+        element: (
+          <Suspense>
+            <EditPage />
           </Suspense>
         ),
       },

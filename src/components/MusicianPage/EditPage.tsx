@@ -13,7 +13,7 @@ import {
 import { AddButton, AddButtonContainer } from '../MusicianCard/AddButtons';
 import { useState } from 'react';
 
-const MusicianPage = () => {
+const EditPage = () => {
   const musicians = useBearStore((state) => state.musicians);
   const { musicianId } = useParams();
   const user = useBearStore((state) => state.user);
@@ -23,7 +23,17 @@ const MusicianPage = () => {
 
   // FIXME: in case of musicians never loading
   if (musicians.length === 0) {
-    return <p>...Loading</p>;
+    return (
+      <>
+        <Link to='/' aria-label='homepage'>
+          <BackButton>Go Back</BackButton>
+        </Link>
+        <LoadingMessage>
+          ...Finding Artist. (If this take more than a few seconds, we might be
+          having troubles on our end. Check back soon!)
+        </LoadingMessage>
+      </>
+    );
   }
 
   // match name in url to name in musicians array
@@ -59,9 +69,9 @@ const MusicianPage = () => {
         </MusicianPageContainerB>
       </MusicianPageBody>
       <AddButtonContainer>
-      {/* show button link to MusicianApprovePage if user is admin */}
-      {user?.isAdmin ? (
-        // <Link to='/approvemusician' aria-label='approve musician'>
+        {/* show button link to MusicianApprovePage if user is admin */}
+        {user?.isAdmin ? (
+          // <Link to='/approvemusician' aria-label='approve musician'>
           <AddButton
             $backgroundColor='var(--color-primary)'
             onMouseEnter={() => setIsApproveButtonHovered(true)}
@@ -74,21 +84,21 @@ const MusicianPage = () => {
               <i className='fa-solid fa-trash' aria-hidden='true' />
             )}
           </AddButton>
-        // </Link>
-      ) : null}
-      {/* show add musician button only if logged in */}
-      <Link to='/addmusician' aria-label='add musician to directory'>
-        <AddButton
-          $backgroundColor='var(--color-accent)'
-          onMouseEnter={() => setIsAddButtonHovered(true)}
-          onMouseLeave={() => setIsAddButtonHovered(false)}
-          aria-label='suggest edits'
-        >
-          <i className='fa-solid fa-edit' aria-hidden='true' />
-          <span>Suggest Edits</span>
-        </AddButton>
-      </Link>
-    </AddButtonContainer>
+        ) : // </Link>
+        null}
+        {/* show add musician button only if logged in */}
+        <Link to='/addmusician' aria-label='add musician to directory'>
+          <AddButton
+            $backgroundColor='var(--color-accent)'
+            onMouseEnter={() => setIsAddButtonHovered(true)}
+            onMouseLeave={() => setIsAddButtonHovered(false)}
+            aria-label='suggest edits'
+          >
+            <i className='fa-solid fa-edit' aria-hidden='true' />
+            <span>Suggest Edits</span>
+          </AddButton>
+        </Link>
+      </AddButtonContainer>
     </>
   );
 };
@@ -216,4 +226,13 @@ const CardTitle = styled(CardTitleBase)`
   padding: 1rem;
 `;
 
-export default MusicianPage;
+const LoadingMessage = styled.h3`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 90vw;
+  margin: 5rem;
+  text-align: center;
+`;
+
+export default EditPage;

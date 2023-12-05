@@ -42,7 +42,7 @@ const Header = () => {
               </Discover>
             </PageNavigation>
             <Search className='fa-solid fa-magnifying-glass' />
-            <Hamburger className='fa-solid fa-bars' />
+            <Hamburger className='fa-solid fa-check' />
           </NavBar>
         </TopHeader>
       </HeaderWrapper>
