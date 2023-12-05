@@ -63,12 +63,12 @@ const LinkContainer: React.FC<MusicianCardProps> = ({ musician }) => {
         />
         <LinkItem
           url={tiktok}
-          iconClassName='fa fa-tiktok'
+          iconClassName='fa-brands fa-tiktok'
           styleClassName='tiktok'
         />
         <LinkItem
           url={threads}
-          iconClassName='fa fa-threads'
+          iconClassName='fa-brands fa-threads'
           styleClassName='threads'
         />
         <LinkItem
