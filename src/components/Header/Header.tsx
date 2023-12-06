@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import logo from '../../assets/TMD-logo.png';
+import logo from '../../assets/TMD-logo.webp';
 import Hamburger from './Hamburger';
 import Search from './Search';
 import { Link, useLocation } from 'react-router-dom';
