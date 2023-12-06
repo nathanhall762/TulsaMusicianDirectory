@@ -2,7 +2,7 @@ import { HttpsError, onCall } from 'firebase-functions/v2/https';
 import { log } from 'firebase-functions/logger';
 import { initializeApp } from 'firebase-admin/app';
 import axios from 'axios';
-import * as functions from 'firebase-functions';
+import * as functions from 'firebase-functions/v2';
 
 initializeApp();
 import * as admin from 'firebase-admin';
