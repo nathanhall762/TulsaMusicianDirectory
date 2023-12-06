@@ -6,6 +6,7 @@ initializeApp();
 import * as admin from 'firebase-admin';
 
 const auth = admin.auth();
+// const db = admin.firestore();
 
 export const isAdmin = onCall(async (request) => {
   const uid = request.data.uid;
@@ -20,4 +21,8 @@ export const isAdmin = onCall(async (request) => {
   const isAdmin = user.customClaims?.admin;
 
   return { isAdmin: isAdmin === true };
+});
+
+export const getMusicians = onCall(async (request) => {
+  return { some: 'info' };
 });
