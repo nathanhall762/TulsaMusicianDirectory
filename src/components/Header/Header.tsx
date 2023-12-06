@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import logo from '../../assets/TMD-logo.png';
+import logo from '../../assets/TMD-logo.webp';
 import Hamburger from './Hamburger';
 import Search from './Search';
 import { Link, useLocation } from 'react-router-dom';
@@ -12,14 +12,14 @@ const Header = () => {
 
   return (
     <>
-      <HeaderWrapper>
+      <HeaderWrapper className='header-wrapper'>
         <Link to='/' aria-label='Homepage'>
-          <Logo src={logo} alt='TMD logo' />
+          <Logo className='logo' src={logo} alt='TMD logo' />
         </Link>
         <ShortTitleWrapper>
-          <ShortTitle>TMD</ShortTitle>
+          <ShortTitle className='short-title'>TMD</ShortTitle>
         </ShortTitleWrapper>
-        <TopHeader>
+        <TopHeader className='top-header'>
           <TitleLink to='/' aria-label='The Tulsa Musician Directory'>
             <Title>The Tulsa Musician Directory</Title>
           </TitleLink>

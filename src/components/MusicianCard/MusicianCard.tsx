@@ -48,6 +48,7 @@ const [rotation, setRotation] = useState(0);
   return (
     <>
       <MusicianCardBody
+        className='card-body'
         $backgroundImage={profileImage}
         onClick={() => navigate(urlName)}
       >
