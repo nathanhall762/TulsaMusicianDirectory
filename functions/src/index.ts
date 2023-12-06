@@ -155,6 +155,7 @@ responses.forEach(songResponse => {
 });
 
 // send the songMetrics back to the client
+console.log(`List of Song Metrics: ${songMetrics}`)
 response.send(songMetrics);
 
 });

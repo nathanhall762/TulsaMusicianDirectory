@@ -23,12 +23,12 @@ const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
 const [rotation, setRotation] = useState(0);
 
   useEffect(() => {
-    let animationFrameId;
+    let animationFrameId: any;
 
     if (isHovered) {
       const startTime = performance.now();
 
-      const animate = (currentTime) => {
+      const animate = (currentTime: any) => {
         const elapsed = currentTime - startTime;
         setRotation((elapsed / 5000) * 360); // 5000ms is the duration of one rotation
         animationFrameId = requestAnimationFrame(animate);
@@ -75,7 +75,7 @@ const [rotation, setRotation] = useState(0);
   );
 };
 
-const CardImage = styled.img`
+export const CardImage = styled.img`
   width: 250px;
   height: 250px;
   border-radius: 50%;
