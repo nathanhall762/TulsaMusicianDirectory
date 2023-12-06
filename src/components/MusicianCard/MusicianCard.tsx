@@ -16,6 +16,7 @@ const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
   return (
     <>
       <MusicianCardBody
+        className='card-body'
         $backgroundImage={profileImage}
         onClick={() => navigate(urlName)}
       >
