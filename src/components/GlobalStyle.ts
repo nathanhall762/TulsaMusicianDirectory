@@ -11,10 +11,10 @@ export const GlobalStyle = createGlobalStyle`
     --color-background-alt: hsl(249, 11%, 15%);
     --color-primary: #ecb028;
     --color-secondary: #1d324f;
-    --color-accent: #c82735;
+    --color-accent: #C6202E;
 
-    --color-text-primary: #e9f1f7;
-    --color-text-secondary: #c9d1d9;
+    --color-text-primary: #EBAD21;
+    --color-text-secondary: #162B49;
     --color-text-inverse: #fff;
 
     --color-success: #2ea44f;
