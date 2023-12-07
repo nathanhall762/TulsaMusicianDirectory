@@ -88,6 +88,13 @@ iframe {
   opacity: 0.8;
 }
 
+.spacer {
+  height: 12vh;
+  @media (max-width: 1000px) {
+    height: 8vh;
+  }
+}
+
 .header-wrapper {
   position: fixed;
   width: 100vw;
