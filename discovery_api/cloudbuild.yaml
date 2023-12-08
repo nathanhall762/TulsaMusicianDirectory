@@ -1,0 +1,27 @@
+# cloud build config for flask-app
+
+steps:
+  # build flask-app
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      ['build', '-t', 'gcr.io/$PROJECT_ID/$_SERVICE_NAME', './discovery_api']
+
+  # docker push
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/$_SERVICE_NAME']
+
+  # Deploy image to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args:
+      [
+        'run',
+        'deploy',
+        '$_SERVICE_NAME',
+        '--image',
+        'gcr.io/$PROJECT_ID/$_SERVICE_NAME',
+        '--region',
+        '$_DEPLOY_REGION',
+      ]
+    entrypoint: gcloud
+images:
+  - 'gcr.io/$PROJECT_ID/$_SERVICE_NAME'
