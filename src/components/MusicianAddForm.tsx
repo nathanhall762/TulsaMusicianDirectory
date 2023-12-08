@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { storage } from '../firebase';
+import { storage, app } from '../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { doc, setDoc, collection } from 'firebase/firestore';
-import { db, analytics } from '../firebase';
 import { v4 } from 'uuid';
 import styles from '../css/MusicianAddForm.module.css';
 import { useNavigate } from 'react-router-dom';
-import { logEvent } from 'firebase/analytics';
+// import { logEvent } from 'firebase/analytics';
 import useBearStore from '../bearStore';
 import Login from './Login';
 import { Link } from 'react-router-dom';
@@ -56,6 +54,11 @@ const MusicianForm = () => {
   const navigate = useNavigate();
 
   const handleSubmitToFirestore = async (e: React.FormEvent) => {
+    const { getFirestore, doc, setDoc, collection } = await import(
+      'firebase/firestore'
+    );
+    const db = getFirestore(app);
+
     try {
       e.preventDefault();
       const url = await uploadImage();
@@ -70,10 +73,10 @@ const MusicianForm = () => {
       });
       if (targetCollection === 'pendingMusicians') {
         alert('musician profile uploaded for approval');
-        logEvent(analytics, 'musician_added_pending');
+        // logEvent(analytics, 'musician_added_pending');
       } else {
         alert('musician profile uploaded');
-        logEvent(analytics, 'musician_added');
+        // logEvent(analytics, 'musician_added');
       }
       navigate(-1);
     } catch (err) {

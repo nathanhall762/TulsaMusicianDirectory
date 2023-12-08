@@ -1,14 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { storage } from '../firebase';
+import { storage, app } from '../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import {
-  doc,
-  setDoc,
-  collection,
-  getDocs,
-  deleteDoc,
-} from 'firebase/firestore';
-import { db } from '../firebase';
 import { v4 } from 'uuid';
 import { validateURLs } from '../utils';
 import { useParams } from 'react-router-dom';
@@ -67,6 +59,9 @@ const MusicianApproveForm = () => {
   console.log(musicianName); // output: good
 
   const handleSubmit = async (e: React.FormEvent) => {
+    const { doc, setDoc, collection, getDocs, deleteDoc, getFirestore } =
+      await import('firebase/firestore');
+    const db = getFirestore(app);
     try {
       e.preventDefault();
 
@@ -149,6 +144,10 @@ const MusicianApproveForm = () => {
   // if fields in formData.music and formData.social is not empty, set disabled to false
   useEffect(() => {
     const fetchMusician = async () => {
+      const { collection, getDocs, getFirestore } = await import(
+        'firebase/firestore'
+      );
+      const db = getFirestore(app);
       if (!isFetched) {
         const musiciansCol = collection(db, 'pendingMusicians');
         const musicianSnapshot = await getDocs(musiciansCol);

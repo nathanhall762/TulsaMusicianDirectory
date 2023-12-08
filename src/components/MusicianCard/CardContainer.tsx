@@ -26,7 +26,7 @@ const CardContainer = () => {
   );
 
   return (
-    <CardContainerDiv>
+    <CardContainerDiv className='card-container'>
       {sortedMusicians.map((musician) => (
         <MusicianCard key={musician.name} musician={musician} />
       ))}
