@@ -51,3 +51,8 @@ export const approveMusician = httpsCallable<ApproveReq, ApproveRes>(
   functions,
   'approveMusician'
 );
+
+export const getOnePending = httpsCallable<
+  { name: string },
+  { docData: Musician }
+>(functions, 'getOnePending');

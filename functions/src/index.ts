@@ -69,3 +69,20 @@ export const approveMusician = onCall(async (request) => {
 
   return { success: true, id: docRef.id };
 });
+
+export const getOnePending = onCall(async (request) => {
+  const name = request.data.name;
+  const snapshot = await db.collection('pendingMusicians').get();
+
+  const doc = snapshot.docs.find(
+    (doc) => doc.data().name.toLowerCase() === name
+  );
+
+  if (!doc) {
+    return { docData: doc };
+  }
+
+  const docData = doc?.data();
+
+  return { docData };
+});
