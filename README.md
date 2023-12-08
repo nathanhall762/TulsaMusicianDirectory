@@ -39,4 +39,4 @@ Our upcoming discovery page is designed to enable local music exploration. Simpl
 - [Ethan Wakeford](https://github.com/EthanWakeford)
 - [Nathan Hall](https://github.com/nathanhall762/)
 - [Aaron Manuel](https://github.com/AaronManuel15)
-- Brayden Vernon
+- [Brayden Vernon](https://github.com/Vernon-444)
