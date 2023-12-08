@@ -1,4 +1,6 @@
-# The Tulsa Musician Directory
+# Music In Tulsa
+
+## The Tulsa Muscian Directory
 
 https://musicintulsa.com/
 
