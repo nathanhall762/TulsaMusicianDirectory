@@ -17,3 +17,14 @@ export const isAdmin = httpsCallable<ReqInterface, ResInterface>(
   functions,
   'isAdmin'
 );
+
+interface MusiciansReqInterface {}
+
+interface MusiciansResInterface {
+  some: string;
+}
+
+export const getMusicians = httpsCallable<
+  MusiciansReqInterface,
+  MusiciansResInterface
+>(functions, 'getMusicians');

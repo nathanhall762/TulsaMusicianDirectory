@@ -6,6 +6,7 @@ import Header from './Header/Header';
 import { GlobalStyle } from './GlobalStyle';
 import styled from 'styled-components';
 import { Musician } from '../global';
+import { getMusicians } from '../cloudFunctions';
 
 // to test if analytics is working
 // logEvent(analytics, 'test_event');
@@ -13,6 +14,13 @@ import { Musician } from '../global';
 function App() {
   const setMusicians = useBearStore((state) => state.setMusicians);
   const musicianData = useLoaderData() as Musician[];
+
+  const clickFunction = async () => {
+    const response = await getMusicians({
+      stuff: 'this is some stuff I sent to myself',
+    });
+    console.log(response);
+  };
 
   setMusicians(musicianData);
 
@@ -22,6 +30,9 @@ function App() {
       <Header />
       <Spacer />
       <Outlet />
+      <button onClick={clickFunction}>
+        click me rihght herer lasdhflaskdflksajf
+      </button>
     </>
   );
 }
