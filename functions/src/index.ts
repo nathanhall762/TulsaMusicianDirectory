@@ -36,6 +36,6 @@ export const addMusicianPending = onCall(async (request) => {
 
   const collection = db.collection('pendingMusicians');
   const docRef = await collection.add({ ...formData, profileImage });
-
-  return { success: true, docRef };
+  log('add successful: ', docRef);
+  return { success: true, id: docRef.id };
 });

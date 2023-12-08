@@ -5,7 +5,7 @@ import Header from './Header/Header';
 import { GlobalStyle } from './GlobalStyle';
 import styled from 'styled-components';
 import { Musician } from '../global';
-import { getMusicians } from '../cloudFunctions';
+import { getMusicians, addMusicianPending } from '../cloudFunctions';
 
 // to test if analytics is working
 // logEvent(analytics, 'test_event');
@@ -15,8 +15,15 @@ function App() {
   const musicianData = useLoaderData() as Musician[];
 
   const clickFunction = async () => {
-    const response = await getMusicians({});
-    console.log(response);
+    try {
+      const response = await addMusicianPending({
+        formData: { testing: 'true' },
+        profileImage: 'asdfja',
+      });
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   setMusicians(musicianData);
