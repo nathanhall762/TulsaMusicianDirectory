@@ -8,6 +8,7 @@ initializeApp();
 import * as admin from 'firebase-admin';
 
 const auth = admin.auth();
+// const db = admin.firestore();
 
 export const isAdmin = onCall(async (request) => {
   const uid = request.data.uid;
@@ -260,4 +261,8 @@ let returnData = [
 console.log("Hardcoded value returned");
 // send hardcoded data back to the client
 response.send(returnData);
+});
+
+export const getMusicians = onCall(async (request) => {
+  return { some: 'info' };
 });

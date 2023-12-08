@@ -20,7 +20,7 @@ function App() {
     <>
       <GlobalStyle />
       <Header />
-      <Spacer />
+      <Spacer className='spacer' />
       <Outlet />
     </>
   );

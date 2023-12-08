@@ -58,7 +58,7 @@ app.use('*', async (req, res) => {
     res.setHeader('Content-Type', 'text/html');
 
     // caching????
-    res.set('Cache-Control', 'public, max-age=600, s-maxage=1200 ');
+    res.set('Cache-Control', 'public, max-age=6000, s-maxage=12000');
     return res.status(200).end(html);
   } catch (e) {
     if (!isProduction) {

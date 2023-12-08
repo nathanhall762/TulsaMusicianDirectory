@@ -10,7 +10,7 @@ const AddButtons = () => {
   const [isApproveButtonHovered, setIsApproveButtonHovered] = useState(false);
 
   return (
-    <AddButtonContainer>
+    <AddButtonContainer className='add-button'>
       {/* show button link to MusicianApprovePage if user is admin */}
       {user?.isAdmin ? (
         <Link to='/approvemusician' aria-label='approve musician'>

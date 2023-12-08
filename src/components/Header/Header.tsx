@@ -16,14 +16,14 @@ const Header = () => {
         <Link to='/' aria-label='Homepage'>
           <Logo className='logo' src={logo} alt='TMD logo' />
         </Link>
-        <ShortTitleWrapper>
+        <ShortTitleWrapper className='short-title-wrapper'>
           <ShortTitle className='short-title'>TMD</ShortTitle>
         </ShortTitleWrapper>
         <TopHeader className='top-header'>
           <TitleLink to='/' aria-label='The Tulsa Musician Directory'>
-            <Title>The Tulsa Musician Directory</Title>
+            <Title className='title'>The Tulsa Musician Directory</Title>
           </TitleLink>
-          <NavBar>
+          <NavBar className='navbar'>
             <PageNavigation>
               <About $navSelected={location.pathname === '/about'}>
                 <StyledLink to='/about' aria-label='About Page'>
