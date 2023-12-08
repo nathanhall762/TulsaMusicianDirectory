@@ -30,3 +30,19 @@ export const addMusicianPending = httpsCallable<
   MusicianPendingReq,
   MusicianPendingRes
 >(functions, 'addMusicianPending');
+
+interface ApproveReq {
+  formData: object;
+  profileImage: string;
+  musicianName: string;
+}
+
+interface ApproveRes {
+  success: boolean;
+  id: string;
+}
+
+export const approveMusician = httpsCallable<ApproveReq, ApproveRes>(
+  functions,
+  'approveMusician'
+);

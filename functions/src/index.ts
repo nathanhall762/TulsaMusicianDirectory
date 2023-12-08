@@ -39,3 +39,26 @@ export const addMusicianPending = onCall(async (request) => {
   log('add successful: ', docRef);
   return { success: true, id: docRef.id };
 });
+
+export const approveMusician = onCall(async (request) => {
+  const formData = request.data.formData;
+  const profileImage = request.data.profileImage;
+  const musicianName = request.data.musicianName;
+
+  const collection = db.collection('musicians');
+  const docRef = await collection.add({ ...formData, profileImage });
+  log('add successful: ', docRef);
+
+  // delete document from pending
+  const pendingCollection = db.collection('pendingMusicians');
+  const pendingSnapshot = await pendingCollection.get();
+  const pendingMusicianDoc = pendingSnapshot.docs.find(
+    (doc) => doc.data().name.toLowerCase() === musicianName
+  );
+
+  if (pendingMusicianDoc) {
+    await pendingCollection.doc(pendingMusicianDoc.id).delete();
+  }
+
+  return { success: true, id: docRef.id };
+});

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { storage, app } from '../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { approveMusician } from '../cloudFunctions';
 import { v4 } from 'uuid';
 import { validateURLs } from '../utils';
 import { useParams } from 'react-router-dom';
@@ -59,10 +60,10 @@ const MusicianApproveForm = () => {
   console.log(musicianName); // output: good
 
   const handleSubmit = async (e: React.FormEvent) => {
-    const { doc, setDoc, collection, getDocs, deleteDoc, getFirestore } =
-      await import('firebase/firestore');
-    const db = getFirestore(app);
     try {
+      if (!musicianName) {
+        return;
+      }
       e.preventDefault();
 
       if (!user?.userCredential) {
@@ -79,25 +80,17 @@ const MusicianApproveForm = () => {
       // Add image to firebase storage
       const url = await uploadImage();
 
-      // Add musician to 'musicians' collection in firestore
-      const musicianRef = doc(collection(db, 'musicians'));
-      await setDoc(musicianRef, {
-        ...formData,
+      const response = await approveMusician({
+        musicianName: musicianName.toLowerCase(),
+        formData,
         profileImage: url,
       });
-      alert('Musician profile approved and uploaded.');
 
-      // After adding to the 'musicians' collection, always delete from 'pendingMusicians'
-      const pendingMusiciansCol = collection(db, 'pendingMusicians');
-      const pendingMusicianSnapshot = await getDocs(pendingMusiciansCol);
-      const pendingMusicianDoc = pendingMusicianSnapshot.docs.find(
-        (doc) => doc.data().name.toLowerCase() === musicianName?.toLowerCase()
-      );
-
-      if (pendingMusicianDoc) {
-        await deleteDoc(pendingMusicianDoc.ref);
+      if (response.data.success) {
+        alert('Musician profile approved and uploaded.');
+      } else {
+        alert('Error approving musician profile.');
       }
-
       // Go back to homepage using React router
       window.location.href = '/';
     } catch (err) {
