@@ -6,7 +6,7 @@ initializeApp();
 import * as admin from 'firebase-admin';
 
 const auth = admin.auth();
-const db = admin.firestore();
+// const db = admin.firestore();
 
 export const isAdmin = onCall(async (request) => {
   const uid = request.data.uid;
@@ -24,14 +24,5 @@ export const isAdmin = onCall(async (request) => {
 });
 
 export const getMusicians = onCall(async (request) => {
-  try {
-    const receivedData = request.data.stuff;
-
-    const snapshot = await db.collection('musicians').get();
-    const musicianData = snapshot.docs.map((doc) => doc.data());
-
-    return { some: 'info', receivedData, musicianData };
-  } catch {
-    throw new HttpsError('internal', 'Unable to retrieve data from Firestore');
-  }
+  return { some: 'info' };
 });

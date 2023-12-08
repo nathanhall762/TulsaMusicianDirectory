@@ -26,7 +26,7 @@ function App() {
     <>
       <GlobalStyle />
       <Header />
-      <Spacer />
+      <Spacer className='spacer' />
       <Outlet />
       <button onClick={clickFunction}>
         click me rihght herer lasdhflaskdflksajf
