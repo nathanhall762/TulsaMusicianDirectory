@@ -116,7 +116,6 @@ export const Genres = styled.p`
   margin-top: 10px;
 `;
 
-// needle arm stuff, ignore
 const NeedleArmContainer = styled.div`
   width: 75px;
   height: 250px;
@@ -125,6 +124,10 @@ const NeedleArmContainer = styled.div`
   right: -3%;
   transform: translateX(-50%);
   pointer-events: none;
+
+  @media (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 const NeedleArm = styled.div`

@@ -62,6 +62,10 @@ const HeroSubtitle = styled.h2`
     @media (max-width: 600px) {
         font-size: 1.5rem;
     }
+    // on mobile shorter screens, reduce margin-top
+    @media (max-height: 700px) {
+        margin-top: 5rem;
+    }
 `;
 
 const ActionButton = styled.button`
