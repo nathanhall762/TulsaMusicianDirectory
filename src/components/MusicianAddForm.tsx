@@ -135,10 +135,10 @@ const MusicianForm = () => {
   if (!user?.userCredential) {
     return (
       <div>
+        <Login message={'You Must Login to Add a Musician'} />
         <Link to='/'>
           <BackButton>Go Back</BackButton>
         </Link>
-        <Login message={'You Must Login to Add a Musician'} />
       </div>
     );
   }
