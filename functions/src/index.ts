@@ -29,3 +29,13 @@ export const getMusicians = onCall(async (request) => {
 
   return { musicianData };
 });
+
+export const addMusicianPending = onCall(async (request) => {
+  const formData = request.data.formData;
+  const profileImage = request.data.profileImage;
+
+  const collection = db.collection('pendingMusicians');
+  const docRef = await collection.add({ ...formData, profileImage });
+
+  return { success: true, docRef };
+});
