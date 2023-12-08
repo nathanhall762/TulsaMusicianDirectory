@@ -16,9 +16,7 @@ function App() {
   const musicianData = useLoaderData() as Musician[];
 
   const clickFunction = async () => {
-    const response = await getMusicians({
-      stuff: 'this is some stuff I sent to myself',
-    });
+    const response = await getMusicians({});
     console.log(response);
   };
 

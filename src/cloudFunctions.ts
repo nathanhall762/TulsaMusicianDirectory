@@ -1,30 +1,17 @@
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import { app } from './firebase';
+import { Musician } from './global';
 
 const functions = getFunctions(app);
 // const helloWorld = httpsCallable(functions, 'helloWorld');
 // const setAdmin = httpsCallable(functions, 'setAdmin');
 
-interface ReqInterface {
-  uid: string;
-}
-
-interface ResInterface {
-  isAdmin: boolean;
-}
-
-export const isAdmin = httpsCallable<ReqInterface, ResInterface>(
+export const isAdmin = httpsCallable<{ uid: string }, { isAdmin: boolean }>(
   functions,
   'isAdmin'
 );
 
-interface MusiciansReqInterface {}
-
-interface MusiciansResInterface {
-  some: string;
-}
-
-export const getMusicians = httpsCallable<
-  MusiciansReqInterface,
-  MusiciansResInterface
->(functions, 'getMusicians');
+export const getMusicians = httpsCallable<{}, { musicianData: Musician[] }>(
+  functions,
+  'getMusicians'
+);
