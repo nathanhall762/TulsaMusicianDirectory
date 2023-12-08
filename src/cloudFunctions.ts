@@ -16,6 +16,11 @@ export const getMusicians = httpsCallable<{}, { musicianData: Musician[] }>(
   'getMusicians'
 );
 
+export const getPendingMusicians = httpsCallable<
+  {},
+  { musicianData: Musician[] }
+>(functions, 'getPendingMusicians');
+
 interface MusicianPendingReq {
   formData: object;
   profileImage: string;

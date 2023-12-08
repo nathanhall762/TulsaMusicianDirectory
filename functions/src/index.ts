@@ -30,6 +30,13 @@ export const getMusicians = onCall(async (request) => {
   return { musicianData };
 });
 
+export const getPendingMusicians = onCall(async (request) => {
+  const snapshot = await db.collection('pendingMusicians').get();
+  const pendingMusicians = snapshot.docs.map((doc) => doc.data());
+
+  return { musicianData: pendingMusicians };
+});
+
 export const addMusicianPending = onCall(async (request) => {
   const formData = request.data.formData;
   const profileImage = request.data.profileImage;

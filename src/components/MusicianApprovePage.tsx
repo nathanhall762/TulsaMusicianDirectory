@@ -1,7 +1,7 @@
 import MusicianCard from './MusicianCard/MusicianCard';
 import Login from './Login';
 import { useState, useEffect } from 'react';
-import { app } from '../firebase';
+import { getPendingMusicians } from '../cloudFunctions';
 import { Musician } from '../global';
 import useBearStore from '../bearStore';
 
@@ -10,23 +10,11 @@ const MusicianApprovePage = () => {
   const user = useBearStore((state) => state.user);
 
   const getPendingCollection = async () => {
-    const { collection, onSnapshot, getFirestore } = await import(
-      'firebase/firestore'
-    );
-    const db = getFirestore(app);
+    const response = await getPendingMusicians();
+    const pendingMusicians = response.data.musicianData;
+    console.log('got musicians');
 
-    const pendingMusiciansCol = collection(db, 'pendingMusicians');
-
-    // Subscribe to real-time updates
-    const unsubscribe = onSnapshot(pendingMusiciansCol, (snapshot) => {
-      const fetchedMusicians = snapshot.docs.map(
-        (doc) => doc.data() as Musician
-      );
-      setPendingMusicians(fetchedMusicians);
-    });
-
-    // Unsubscribe from updates when the component unmounts
-    return () => unsubscribe();
+    setPendingMusicians(pendingMusicians);
   };
 
   useEffect(() => {
@@ -44,6 +32,9 @@ const MusicianApprovePage = () => {
     return (
       <div>
         <Login />
+        <button onClick={getPendingCollection}>
+          click here to update pending musicians
+        </button>
         <div className='cardContainer'>
           {musicians.map((musician) => (
             <MusicianCard key={musician.name} musician={musician} />
