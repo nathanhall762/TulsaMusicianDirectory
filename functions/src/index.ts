@@ -24,10 +24,8 @@ export const isAdmin = onCall(async (request) => {
 });
 
 export const getMusicians = onCall(async (request) => {
-  const receivedData = request.data.stuff;
-
   const snapshot = await db.collection('musicians').get();
   const musicianData = snapshot.docs.map((doc) => doc.data());
 
-  return { some: 'info', receivedData, musicianData };
+  return { musicianData };
 });
