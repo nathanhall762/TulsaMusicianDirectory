@@ -33,6 +33,7 @@ const HeroWrapper = styled.div`
     margin-top: 2rem;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 2rem;
 `;
 
 const HeroTitle = styled.h1`
