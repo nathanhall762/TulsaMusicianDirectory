@@ -76,6 +76,7 @@ const ActionButton = styled.button`
     border-radius: 2rem;
     font-size: 1.5rem;
     margin-top: 2rem;
+    margin-bottom: 2rem;
     cursor: pointer;
     transform: translateY(2rem);
 
