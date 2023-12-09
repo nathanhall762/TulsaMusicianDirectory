@@ -8,6 +8,8 @@ const CardContainer = () => {
   const genreFilter = useBearStore((state) => state.genreFilter);
   const searchFilter = useBearStore((state) => state.searchFilter);
 
+  console.log(musicians);
+
   const filterMusicians = (musician: Musician) => {
     if (!searchFilter) return genreFilter.includes(musician.genre[0]);
     return (

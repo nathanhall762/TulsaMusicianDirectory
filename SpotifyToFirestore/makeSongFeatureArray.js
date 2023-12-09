@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-class makeSongFeatureArray {
+export default class makeSongFeatureArray {
   constructor(credentials) {
     this.clientId = credentials.clientId;
     this.clientSecret = credentials.clientSecret;

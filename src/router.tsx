@@ -50,6 +50,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: '/callback',
+        element: (
+          <Suspense>
+            <DiscoverPage />
+          </Suspense>
+        ),
+      },
+      {
         path: '/404',
         element: <ErrorElement />,
       },
