@@ -42,9 +42,18 @@ const HeroTitle = styled.h1`
     margin: 0;
     text-shadow: 0 2px 20px #000;
     font-family: 'Lobster';
+    text-align: center;
 
     // on mobile, make font-size smaller
     @media (max-width: 600px) {
+        font-size: 3rem;
+    }
+
+    @media (max-height: 1000px) {
+        font-size: 4rem;
+    }
+
+    @media (max-height: 800px) {
         font-size: 3rem;
     }
 `;
@@ -60,12 +69,13 @@ const HeroSubtitle = styled.h2`
     font-family: 'Lobster';
 
     // on mobile, make font-size smaller
-    @media (max-width: 600px) {
+    @media (max-width: 600px or max-height: 1000px) {
         font-size: 1.5rem;
     }
     // on mobile shorter screens, reduce margin-top
-    @media (max-height: 700px) {
+    @media (max-height: 1000px) {
         margin-top: 5rem;
+        font-size: 1.5rem;
     }
 `;
 
