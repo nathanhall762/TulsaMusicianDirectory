@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "NODE_ENV=development vite",
+    "dev": "NODE_ENV=development node server/server.js",
     "build": "npm run build:client && npm run build:server",
     "build:client": "tsc && vite build --outDir dist/client --ssrManifest",
     "build:server": "tsc && vite build --outDir dist/server --ssr src/entry.server.tsx",
