@@ -30,3 +30,8 @@ firebase.json
 SpotifyToFirestore/.env
 
 stats.html
+
+# python stuff
+build
+*.egg-info
+__pycache__
