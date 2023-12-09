@@ -24,11 +24,11 @@ steps:
   - name: 'gcr.io/cloud-builders/npm'
     args: ['run', 'build']
 
-  # # deploy
-  # - name: 'gcr.io/$PROJECT_ID/firebase'
-  #   args:
-  #     - deploy
-  #     - --only=hosting
+  # deploy
+  - name: 'gcr.io/$PROJECT_ID/firebase'
+    args:
+      - deploy
+      - --only=hosting
 
   # build docker container
   - name: 'gcr.io/cloud-builders/docker'
