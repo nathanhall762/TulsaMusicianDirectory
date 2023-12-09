@@ -4,6 +4,9 @@ import GenreFilters from './GenreFilters';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 
+// adding the hero section
+import Hero from './Hero';
+
 const DirectoryPage = () => {
   const [windowSize, setWindowSize] = useState<number | null>(null);
 
@@ -15,6 +18,7 @@ const DirectoryPage = () => {
     <div>
       {windowSize !== null && windowSize >= 1000 && <GenreFilters />}
       <Spacer />
+      <Hero />
       <CardContainer />
       <AddButtons />
     </div>
