@@ -32,7 +32,16 @@ if (!isProduction) {
   const compression = (await import('compression')).default;
   const sirv = (await import('sirv')).default;
   app.use(compression());
-  app.use(base, sirv('./dist/client', { extensions: [] }));
+  app.use(
+    base,
+    sirv('./dist/client', {
+      setHeaders: (res, path) => {
+        if (path.endsWith('.js')) {
+          res.setHeader('Content-Type', 'application/javascript');
+        }
+      },
+    })
+  );
   render = (await import('../dist/server/entry.server.js')).render;
 }
 
@@ -55,7 +64,7 @@ app.use('*', async (req, res) => {
 
     const appHtml = await render(req);
     const html = template.replace('<!--app-html-->', appHtml);
-    res.setHeader('Content-Type', 'text/html');
+    // res.setHeader('Content-Type', 'text/html');
 
     // caching????
     res.set('Cache-Control', 'public, max-age=6000, s-maxage=12000');
