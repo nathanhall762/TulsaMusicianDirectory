@@ -1,11 +1,11 @@
 import { Outlet, useLoaderData } from 'react-router-dom';
-import { app } from '../firebase';
 // import { logEvent } from 'firebase/analytics';
 import useBearStore from '../bearStore';
 import Header from './Header/Header';
 import { GlobalStyle } from './GlobalStyle';
 import styled from 'styled-components';
 import { Musician } from '../global';
+import { getMusicians } from '../cloudFunctions';
 
 // to test if analytics is working
 // logEvent(analytics, 'test_event');
@@ -32,14 +32,8 @@ const Spacer = styled.div`
 `;
 
 export async function musicianDataLoader() {
-  const { getFirestore, collection, getDocs } = await import(
-    'firebase/firestore'
-  );
-  const db = getFirestore(app);
-  const musicianCollection = collection(db, 'musicians');
-  const musicianSnapshot = await getDocs(musicianCollection);
-
-  const musicianData = musicianSnapshot.docs.map((doc) => doc.data());
+  const response = await getMusicians({});
+  const musicianData = response.data.musicianData;
 
   return musicianData;
 }
