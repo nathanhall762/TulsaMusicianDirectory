@@ -17,10 +17,9 @@ const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
 
   const urlName = name.replaceAll(' ', '_').toLowerCase();
 
-
   // stuff for animating the image
   const [isHovered, setIsHovered] = useState(false);
-const [rotation, setRotation] = useState(0);
+  const [rotation, setRotation] = useState(0);
 
   useEffect(() => {
     let animationFrameId: any;
@@ -54,17 +53,17 @@ const [rotation, setRotation] = useState(0);
       >
         <CardTitle>{name}</CardTitle>
         <ImageContainer>
-        <CardImage
-          src={profileImage}
-          alt={name}
-          loading='lazy'
-          style={{
-            transform: `rotate(${rotation}deg)`,
-            transition: isHovered ? 'none' : 'transform 1s' // Add transition when hover state is removed
-          }}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        />
+          <CardImage
+            src={profileImage}
+            alt={name}
+            loading='lazy'
+            style={{
+              transform: `rotate(${rotation}deg)`,
+              transition: isHovered ? 'none' : 'transform 1s', // Add transition when hover state is removed
+            }}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          />
         </ImageContainer>
         <NeedleArmContainer>
           <NeedleArm />
@@ -201,10 +200,13 @@ const MusicianCardBody = styled.div<{ $backgroundImage: string }>`
     box-shadow: 0px 0px 10px var(--color-accent);
     cursor: pointer;
     overflow: visible;
+    @media (max-width: 450px) {
+      overflow: hidden;
+    }
     border: none;
   }
   &:hover ${CardTitle} {
-    color: #EBAD21;
+    color: #ebad21;
     text-shadow:
       1px 1px 0 var(--color-background-alt),
       1px -1px 0 var(--color-background-alt),
@@ -219,7 +221,7 @@ const MusicianCardBody = styled.div<{ $backgroundImage: string }>`
     animation: rotate 10s linear infinite;
   }
   &:hover ${Genres} {
-    color: #EBAD21;
+    color: #ebad21;
     text-shadow:
       1px 1px 0 var(--color-background-main),
       1px -1px 0 var(--color-background-main),
@@ -232,7 +234,6 @@ const MusicianCardBody = styled.div<{ $backgroundImage: string }>`
   &:hover ${NeedleArm} {
     transform: rotate(15deg);
   }
-
 `;
 
 export default MusicianCard;
