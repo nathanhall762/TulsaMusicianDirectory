@@ -5,16 +5,16 @@ export const GlobalStyle = createGlobalStyle`
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
-  
+
     --color-background-main: hsl(249, 11%, 12%);
     --color-background-main-trans: hsla(249, 11%, 12%, 0.8);
     --color-background-alt: hsl(249, 11%, 15%);
     --color-primary: #ecb028;
     --color-secondary: #1d324f;
-    --color-accent: #c82735;
+    --color-accent: #C6202E;
 
-    --color-text-primary: #e9f1f7;
-    --color-text-secondary: #c9d1d9;
+    --color-text-primary: #EBAD21;
+    --color-text-secondary: #162B49;
     --color-text-inverse: #fff;
 
     --color-success: #2ea44f;
@@ -23,7 +23,7 @@ export const GlobalStyle = createGlobalStyle`
 
     --color-shadow: rgba(0, 0, 0, 0.1);
     --color-border: var(--color-background-alt);
-  
+
     --bandcamp-color: #1da1f2;
     --spotify-color: #1db954;
     --youtube-color: #ff0000;
@@ -42,14 +42,15 @@ export const GlobalStyle = createGlobalStyle`
       #fd1d1d,
       #f56040
     );
-  
+
     color: var(--color-text-primary);
     background-color: var(--color-background-main);
 
     --animation-speed-slow: 2s;
+    --animation-speed-medium-slow: 1s;
     --animation-speed-medium: 0.5s;
     --animation-speed-fast: 0.1s;
-  
+
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;

@@ -1,5 +1,5 @@
 import { app } from '../firebase';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FirebaseError } from 'firebase/app';
 import { isAdmin } from '../cloudFunctions';
 import useBearStore from '../bearStore';
@@ -17,12 +17,15 @@ interface LoginProps {
 const Login: React.FC<LoginProps> = ({ message }) => {
   const user = useBearStore((state) => state.user);
   const setUser = useBearStore((state) => state.setUser);
+  const [signingIn, setSigningIn] = useState(false);
+  const [dots, setDots] = useState('');
   const [loginData, setLoginData] = useState<LoginData>({
     email: '',
     password: '',
   });
 
   async function signUp() {
+    setSigningIn(true);
     const { createUserWithEmailAndPassword, getAuth } = await import(
       'firebase/auth'
     );
@@ -33,6 +36,7 @@ const Login: React.FC<LoginProps> = ({ message }) => {
       loginData.email,
       loginData.password
     ).catch((err) => {
+      setSigningIn(false);
       if (err.constructor !== FirebaseError) {
         alert('fix this');
         throw new Error('this is broke in a special way');
@@ -51,7 +55,6 @@ const Login: React.FC<LoginProps> = ({ message }) => {
     console.log(userData);
 
     if (!userData) {
-      alert('Error Creating User');
       return;
     }
 
@@ -62,6 +65,7 @@ const Login: React.FC<LoginProps> = ({ message }) => {
   }
 
   async function signIn() {
+    setSigningIn(true);
     const { signInWithEmailAndPassword, getAuth } = await import(
       'firebase/auth'
     );
@@ -72,6 +76,7 @@ const Login: React.FC<LoginProps> = ({ message }) => {
       loginData.email,
       loginData.password
     ).catch((err) => {
+      setSigningIn(false);
       if (err.constructor !== FirebaseError) {
         alert('fix this');
         throw new Error('this is broke in a special way');
@@ -88,7 +93,6 @@ const Login: React.FC<LoginProps> = ({ message }) => {
     });
 
     if (!user?.user.uid) {
-      alert('error creating creating user');
       return;
     }
     const isAdminBool = await isAdmin({ uid: user.user?.uid }).then(
@@ -114,6 +118,17 @@ const Login: React.FC<LoginProps> = ({ message }) => {
     setUser(null);
   };
 
+  useEffect(() => {
+    if (signingIn) {
+      const intervalId = setInterval(() => {
+        setDots((prevDots) => (prevDots.length >= 3 ? '' : prevDots + '.'));
+      }, 500);
+
+      // Clear the interval when the component unmounts
+      return () => clearInterval(intervalId);
+    }
+  });
+
   if (user?.userCredential) {
     return (
       <LoginForm>
@@ -124,6 +139,12 @@ const Login: React.FC<LoginProps> = ({ message }) => {
           </button>
         </LogoutContainer>
       </LoginForm>
+    );
+  } else if (signingIn) {
+    return (
+      <WaitWrapper>
+        <SigningInText>Signing You In{dots}</SigningInText>
+      </WaitWrapper>
     );
   } else {
     return (
@@ -162,6 +183,15 @@ export const LoginForm = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
 `;
+
+const WaitWrapper = styled.div`
+  display: flex;
+  height: 400px;
+  justify-content: center;
+  align-items: center;
+`;
+
+const SigningInText = styled.h2``;
 
 const LoginMessage = styled.h3`
   // sexy looking message
