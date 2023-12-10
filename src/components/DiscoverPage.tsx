@@ -106,7 +106,7 @@ const DiscoverPage = () => {
                 'Finding your most listened to artists on Spotify...'
               );
               // Get User's Top Items
-              fetch('https://api.spotify.com/v1/me/top/artists', {
+              fetch('https://api.spotify.com/v1/me/top/artists?limit=5', {
                 headers: {
                   Authorization: `Bearer ${token}`,
                 },
@@ -124,7 +124,7 @@ const DiscoverPage = () => {
                 .then(() => {
                   setLoadingMessage('Loading your playlist data...');
                   // Get User's Playlists
-                  fetch('https://api.spotify.com/v1/me/playlists?limit=50', {
+                  fetch('https://api.spotify.com/v1/me/playlists?limit=5', {
                     headers: {
                       Authorization: `Bearer ${token}`,
                     },
@@ -135,16 +135,16 @@ const DiscoverPage = () => {
                       setLoadingMessage(
                         'Select from your Spotify playlists to include in your recommendations.'
                       );
-                      const initialPlaylistPayload = data.items.map(
-                        (playlist: { id: string }) => ({
-                          idType: 'playlist',
-                          objectID: playlist.id,
-                        })
-                      );
-                      setSpotifyPayload((currentPayload) => [
-                        ...currentPayload,
-                        ...initialPlaylistPayload,
-                      ]);
+                      // const initialPlaylistPayload = data.items.map(
+                      //   (playlist: { id: string }) => ({
+                      //     idType: 'playlist',
+                      //     objectID: playlist.id,
+                      //   })
+                      // );
+                      // setSpotifyPayload((currentPayload) => [
+                      //   ...currentPayload,
+                      //   ...initialPlaylistPayload,
+                      // ]);
                     })
                     .catch((error) =>
                       console.error('Error fetching user playlists', error)
