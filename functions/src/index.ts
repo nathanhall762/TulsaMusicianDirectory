@@ -115,7 +115,7 @@ export const getSpotifyData = functions.https.onRequest((request, response) => {
   if(artistIDs.length > 0) {
     // for each artist id, get their top tracks' song ids and push them to the songIDs array
     for (let i = 0; i < artistIDs.length; i++) {
-      const artistTopTracksResponse = await axios.get(`${spotifyURL}/artists/${artistIDs[i]}/top-tracks?country=US`, { headers });
+      const artistTopTracksResponse = await axios.get(`${spotifyURL}/artists/${artistIDs[i]}/top-tracks?market=US`, { headers });
 
       // increment the request counter
       requestCounter++;
@@ -145,11 +145,12 @@ export const getSpotifyData = functions.https.onRequest((request, response) => {
   if(playlistIDs.length > 0) {
     // for each playlist id, get the playlist's tracks' song ids and push them to the songIDs array
     for (let i = 0; i < playlistIDs.length; i++) {
-      const playlistTracksResponse = await axios.get(`${spotifyURL}/playlists/${playlistIDs[i]}/tracks`, { headers });
+      const playlistTracksResponse = await axios.get(`${spotifyURL}/playlists/${playlistIDs[i]}/tracks?fields=items.track.id&limit=100`, { headers });
 
       // increment the request counter
       requestCounter++;
 
+      // for each track in the items, push the track id to the songIDs array
       playlistTracksResponse.data.items.forEach((item: any) => {
         songIDs.push(item.track.id);
       });
@@ -184,7 +185,7 @@ fullSongMetrics.data.audio_features.forEach((song: any) => {
 
 // send the songMetrics back to the client
 console.log(`List of Song Metrics: ${songMetrics}`)
-response.send(songMetrics);
+// response.send(songMetrics);
 
 // hard code some return data for testing purposes
 let hardCodedData = [
