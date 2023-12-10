@@ -161,10 +161,8 @@ const DiscoverPage = () => {
 
   const handleSubmit = () => {
     console.log('Spotify Payload:', spotifyPayload);
-    // stringify the payload
-    const payload = JSON.stringify(spotifyPayload);
     // call the recommendationRequest function
-    recommendationRequest(payload);
+    recommendationRequest(spotifyPayload);
     setRecommendationReturned(true);
   };
 
