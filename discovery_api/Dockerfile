@@ -5,8 +5,9 @@ ENV PORT=${PORT}
 
 WORKDIR /app
 
-RUN pip3 install flask
-RUN pip3 install flask_cors
+COPY setup.py .
+
+RUN pip3 install .
 
 COPY . .
 
