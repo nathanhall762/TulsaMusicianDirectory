@@ -44,4 +44,4 @@ def cosine_rec(dataFromUser: dict) -> list:
 
     sorted_dict = sorted(cosineDict.items(), key=lambda item: item[1], reverse=True)
 
-    return sorted_dict
+    return sorted_dict[:5]
