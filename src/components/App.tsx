@@ -13,7 +13,7 @@ import { getMusicians } from '../cloudFunctions';
 function App() {
   const setMusicians = useBearStore((state) => state.setMusicians);
   const musicianData = useLoaderData() as Musician[];
-
+  console.log(import.meta.env.IS_LIVE);
   setMusicians(musicianData);
 
   return (
