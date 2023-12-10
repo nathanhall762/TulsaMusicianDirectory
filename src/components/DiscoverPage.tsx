@@ -172,6 +172,7 @@ const DiscoverPage = () => {
     // call the recommendationRequest function
     recommendationRequest(spotifyPayload).then((response) => {
       // set the musicianIds to the response
+      console.log(`Response: ${response}`);
       setMusicianIds(response);
       // timer to wait for the recommendationRequest function to finish
       setTimeout(() => {
