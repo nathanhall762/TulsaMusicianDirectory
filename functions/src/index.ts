@@ -1,11 +1,17 @@
 import { HttpsError, onCall } from 'firebase-functions/v2/https';
-import { log } from 'firebase-functions/logger';
+import { log, debug } from 'firebase-functions/logger';
 import { initializeApp } from 'firebase-admin/app';
 import axios from 'axios';
 import * as functions from 'firebase-functions/v2';
 import * as cors from 'cors';
 
-const corsHandler = cors({origin: ['http://localhost:5173', 'http://musicintulsa.com', 'http://tulsamusiciandirectory.com']});
+const corsHandler = cors({
+  origin: [
+    'http://localhost:5173',
+    'http://musicintulsa.com',
+    'http://tulsamusiciandirectory.com',
+  ],
+});
 
 initializeApp();
 import * as admin from 'firebase-admin';
@@ -30,8 +36,7 @@ export const isAdmin = onCall(async (request) => {
 
 // const userID = "fn0rtrc63vt562leulqnw0kqf"; // hard coded for testing purposes
 
-let spotifyURL = "https://api.spotify.com/v1";
-
+let spotifyURL = 'https://api.spotify.com/v1';
 
 // cheesing temp tokens....
 
@@ -50,161 +55,187 @@ async function getSpotifyToken(): Promise<string> {
       }
     );
     token = response.data.access_token;
-
   } catch (error) {
     console.error(`Error getting access token: ${error}`);
-    token = "error getting token";
+    token = 'error getting token';
   }
 
   return token;
 }
 
 export const getSpotifyData = functions.https.onRequest((request, response) => {
+  debug('req body: ', request.body);
   corsHandler(request, response, async () => {
-  // recieve the body of the request (json object), and store it to a variable
-  const requestBody = JSON.parse(request.body);
+    // recieve the body of the request (json object), and store it to a variable
+    const requestBody = JSON.parse(request.body);
 
-  // counter for the number of requests made to spotify
-  let requestCounter = 0;
+    // counter for the number of requests made to spotify
+    let requestCounter = 0;
 
-  // Generate a token if one doesn't exist or is expired
-  const currentTime = new Date().getTime();
-  if (!token || currentTime - tokenTimestamp > 3600000) {
-    token = await getSpotifyToken();
-    tokenTimestamp = currentTime;
-  }
-
-  // Define headers
-  const headers = {
-    'Authorization': `Bearer ${token}`,
-    'Content-Type': 'application/json',
-  };
-
-  // cant work on an empty array! :)
-  if (!requestBody) {
-    throw new HttpsError('unauthenticated', 'requestBody is null or undefined');
-  }
-
-  let songIDs: any = []; // array to store the songIDs from the spotify response
-
-  let artistIDs = [];
-  let albumIDs = [];
-  let playlistIDs = [];
-
-  // iterate through all objects in requestBody
-  for (let i = 0; i < requestBody.length; i++) {
-    let idType = requestBody[i].idType;
-
-    // switch statement to sort the IDs into their respective arrays
-    switch (idType) {
-      case "artist":
-        artistIDs.push(requestBody[i].objectID);
-        break;
-      case "album":
-        albumIDs.push(requestBody[i].objectID);
-        break;
-      case "playlist":
-        playlistIDs.push(requestBody[i].objectID);
-        break;
-      default:
-        throw new HttpsError('unauthenticated', 'idType is null or undefined or something else, idk man...');
+    // Generate a token if one doesn't exist or is expired
+    const currentTime = new Date().getTime();
+    if (!token || currentTime - tokenTimestamp > 3600000) {
+      token = await getSpotifyToken();
+      tokenTimestamp = currentTime;
     }
-  }; // end of for loop
 
-  // handle the artistIDs if there are any
-  if(artistIDs.length > 0) {
-    // for each artist id, get their top tracks' song ids and push them to the songIDs array
-    for (let i = 0; i < artistIDs.length; i++) {
-      const artistTopTracksResponse = await axios.get(`${spotifyURL}/artists/${artistIDs[i]}/top-tracks?market=US`, { headers });
+    // Define headers
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    };
 
-      // increment the request counter
-      requestCounter++;
+    // cant work on an empty array! :)
+    if (!requestBody) {
+      throw new HttpsError(
+        'unauthenticated',
+        'requestBody is null or undefined'
+      );
+    }
+    debug('did the token stuff');
+    let songIDs: any = []; // array to store the songIDs from the spotify response
 
-      artistTopTracksResponse.data.tracks.forEach((track: any) => {
-        songIDs.push(track.id);
+    let artistIDs = [];
+    let albumIDs = [];
+    let playlistIDs = [];
+
+    // iterate through all objects in requestBody
+    for (let i = 0; i < requestBody.length; i++) {
+      let idType = requestBody[i].idType;
+
+      // switch statement to sort the IDs into their respective arrays
+      switch (idType) {
+        case 'artist':
+          artistIDs.push(requestBody[i].objectID);
+          break;
+        case 'album':
+          albumIDs.push(requestBody[i].objectID);
+          break;
+        case 'playlist':
+          playlistIDs.push(requestBody[i].objectID);
+          break;
+        default:
+          throw new HttpsError(
+            'unauthenticated',
+            'idType is null or undefined or something else, idk man...'
+          );
+      }
+    } // end of for loop
+
+    debug('artist ids', artistIDs);
+    debug('album ids', albumIDs);
+    debug('playlist ids', playlistIDs);
+
+    // handle the artistIDs if there are any
+    if (artistIDs.length > 0) {
+      // for each artist id, get their top tracks' song ids and push them to the songIDs array
+      for (let i = 0; i < artistIDs.length; i++) {
+        const artistTopTracksResponse = await axios.get(
+          `${spotifyURL}/artists/${artistIDs[i]}/top-tracks?market=US`,
+          { headers }
+        );
+
+        // increment the request counter
+        requestCounter++;
+
+        artistTopTracksResponse.data.tracks.forEach((track: any) => {
+          songIDs.push(track.id);
+        });
+      }
+    }
+
+    // handle the albumIDs
+    if (albumIDs.length > 0) {
+      // for each album id, get the album's tracks' song ids and push them to the songIDs array
+      for (let i = 0; i < albumIDs.length; i++) {
+        const albumTracksResponse = await axios.get(
+          `${spotifyURL}/albums/${albumIDs[i]}/tracks`,
+          { headers }
+        );
+
+        // increment the request counter
+        requestCounter++;
+
+        albumTracksResponse.data.items.forEach((item: any) => {
+          songIDs.push(item.id);
+        });
+      }
+    }
+
+    // handle the playlistIDs
+    if (playlistIDs.length > 0) {
+      // for each playlist id, get the playlist's tracks' song ids and push them to the songIDs array
+      for (let i = 0; i < playlistIDs.length; i++) {
+        const playlistTracksResponse = await axios.get(
+          `${spotifyURL}/playlists/${playlistIDs[i]}/tracks?fields=items.track.id&limit=100`,
+          { headers }
+        );
+
+        // increment the request counter
+        requestCounter++;
+
+        // for each track in the items, push the track id to the songIDs array
+        playlistTracksResponse.data.items.forEach((item: any) => {
+          songIDs.push(item.track.id);
+        });
+      }
+    }
+
+    debug('these be me song ids', songIDs);
+
+    // get song metrics from spotify for each songID
+    let songMetrics: any = [];
+
+    // get song metrics from spotify in batch of 100
+    let fullSongMetrics: any = [];
+
+    // make sure all ids in songIDs are unique
+    songIDs = [...new Set(songIDs)];
+
+    fullSongMetrics = await axios.get(
+      `${spotifyURL}/audio-features?ids=${songIDs}`,
+      { headers }
+    );
+    requestCounter++;
+
+    // only push data we need to songMetrics array
+    fullSongMetrics.data.audio_features.forEach((song: any) => {
+      songMetrics.push({
+        danceability: song.danceability,
+        energy: song.energy,
+        loudness: song.loudness,
+        mode: song.mode,
+        acousticness: song.acousticness,
+        instrumentalness: song.instrumentalness,
+        liveness: song.liveness,
+        valence: song.valence,
       });
-    }
-  }
+    });
 
-  // handle the albumIDs
-  if(albumIDs.length > 0) {
-    // for each album id, get the album's tracks' song ids and push them to the songIDs array
-    for (let i = 0; i < albumIDs.length; i++) {
-      const albumTracksResponse = await axios.get(`${spotifyURL}/albums/${albumIDs[i]}/tracks`, { headers });
+    // send the songMetrics back to the client
+    console.log(`List of Song Metrics: ${songMetrics}`);
+    debug(`List of Song Metrics: ${songMetrics}`);
+    // response.send(songMetrics);
 
-      // increment the request counter
-      requestCounter++;
+    // hard code some return data for testing purposes
+    let hardCodedData = [
+      '0J7CpIAISgYMRE2U5srb',
+      '2mGYEbLOtcSebv2Ufwiz',
+      '2pHruAGajA52930AmpFJ',
+      '3hYfK9hngUq6ib4MXSBq',
+      '3yKi215ZuU1ROWSWe8qc',
+    ];
 
-      albumTracksResponse.data.items.forEach((item: any) => {
-        songIDs.push(item.id);
-      });
-    }
-  }
+    // turn responsecounter into a string and log it
+    let requestCounterString = requestCounter.toString();
+    console.log(`Number of requests made to Spotify: ${requestCounterString}`);
+    debug(`Number of requests made to Spotify: ${requestCounterString}`);
 
-  // handle the playlistIDs
-  if(playlistIDs.length > 0) {
-    // for each playlist id, get the playlist's tracks' song ids and push them to the songIDs array
-    for (let i = 0; i < playlistIDs.length; i++) {
-      const playlistTracksResponse = await axios.get(`${spotifyURL}/playlists/${playlistIDs[i]}/tracks?fields=items.track.id&limit=100`, { headers });
+    // response.send(requestCounterString);
 
-      // increment the request counter
-      requestCounter++;
-
-      // for each track in the items, push the track id to the songIDs array
-      playlistTracksResponse.data.items.forEach((item: any) => {
-        songIDs.push(item.track.id);
-      });
-    }
-  }
-
-  // get song metrics from spotify for each songID
-let songMetrics: any = [];
-
-// get song metrics from spotify in batch of 100
-let fullSongMetrics: any = [];
-
-// make sure all ids in songIDs are unique
-songIDs = [...new Set(songIDs)];
-
-fullSongMetrics = await axios.get(`${spotifyURL}/audio-features?ids=${songIDs}`, { headers });
-requestCounter++;
-
-// only push data we need to songMetrics array
-fullSongMetrics.data.audio_features.forEach((song: any) => {
-  songMetrics.push({
-    "danceability": song.danceability,
-    "energy": song.energy,
-    "loudness": song.loudness,
-    "mode": song.mode,
-    "acousticness": song.acousticness,
-    "instrumentalness": song.instrumentalness,
-    "liveness": song.liveness,
-    "valence": song.valence
-  });
-});
-
-// send the songMetrics back to the client
-console.log(`List of Song Metrics: ${songMetrics}`)
-// response.send(songMetrics);
-
-// hard code some return data for testing purposes
-let hardCodedData = [
-  "0J7CpIAISgYMRE2U5srb",
-  "2mGYEbLOtcSebv2Ufwiz",
-  "2pHruAGajA52930AmpFJ",
-  "3hYfK9hngUq6ib4MXSBq",
-  "3yKi215ZuU1ROWSWe8qc"
-];
-
-// turn responsecounter into a string and log it
-let requestCounterString = requestCounter.toString();
-console.log(`Number of requests made to Spotify: ${requestCounterString}`);
-
-// response.send(requestCounterString);
-
-console.log("Hardcoded value returned");
-// send hardcoded data back to the client
-response.send(hardCodedData);
+    console.log('Hardcoded value returned');
+    // send hardcoded data back to the client
+    response.send(hardCodedData);
   });
 });
 
