@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
+import recommendationRequest from './DiscoverTool/recommendationRequest';
 
 const DiscoverPage = () => {
   const [selectedMode, setSelectedMode] = useState('Spotify');
@@ -10,6 +11,7 @@ const DiscoverPage = () => {
   const [spotifyPayload, setSpotifyPayload] = useState<
     { idType: string; objectID: string }[]
   >([]);
+  const [recommendationReturned, setRecommendationReturned] = useState(false);
   const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
   const CLIENT_ID = '38f1ee602dbe4bffbb05672320a597f1';
   const REDIRECT_URI = 'http://localhost:5173/callback';
@@ -155,6 +157,15 @@ const DiscoverPage = () => {
     }
   }, []);
 
+  const handleSubmit = () => {
+    console.log('Spotify Payload:', spotifyPayload);
+    // stringify the payload
+    const payload = JSON.stringify(spotifyPayload);
+    // call the recommendationRequest function
+    recommendationRequest(payload);
+    setRecommendationReturned(true);
+  };
+
   useEffect(() => {
     console.log(spotifyPayload); // This will log the updated state
   }, [spotifyPayload]); // Dependency array ensures this runs when artistIds changes
@@ -194,6 +205,7 @@ const DiscoverPage = () => {
                 <ProfileImage src={profileImageUrl} />
                 <LoadingMessage>{loadingMessage}</LoadingMessage>
                 {/* for each object in playlistData display playlist name and image url */}
+                <SubmitButton onClick={handleSubmit}>Submit</SubmitButton>
                 <PlaylistSelect>
                   {playlistData.map((playlist: any) => (
                     <PlaylistRow
@@ -431,6 +443,21 @@ const SpotifyButton = styled.button`
     background-color: var(--color-background-main) !important;
   }
 `;
+
+const SubmitButton = styled.button`
+  // Add your styles here
+  padding: 10px;
+  margin-top: 15px;
+  background-color: #1db954;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
+    background-color: #1ed760;
+  }
+`;
+
 
 const ManualInput = styled(SpotifyLogin)``;
 
