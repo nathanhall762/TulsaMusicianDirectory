@@ -15,12 +15,13 @@ const recommendationRequest = async (input: JSON) => {
   const endpoint = 'https://getspotifydata-7hkc33yowq-uc.a.run.app';
 
   const headers = {
-    'Content-Type': 'application/json',
+    'Content-Type': 'text/plain',
+    'Access-Control-Allow-Origin': '*',
+    'Accept': 'application/json',
+    'Response-Type': 'application/json',
   };
 
-  const body = {
-      input,
-  };
+  const body = input;
 
   const response = await axios.post(
       endpoint,
