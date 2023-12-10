@@ -47,7 +47,7 @@ const CardContainer = ({ musicianIds }: CardContainerProps) => {
   );
 
   return (
-    <CardContainerDiv>
+    <CardContainerDiv className='card-container'>
       {sortedMusicians.map((musician) => (
         <MusicianCard key={musician.name} musician={musician} />
       ))}
@@ -60,8 +60,9 @@ const CardContainerDiv = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   margin: 0 auto;
-  padding: 2rem;
+  padding: rem;
   text-align: center;
+  width: 90%;
 `;
 
 export default CardContainer;

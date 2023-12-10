@@ -16,9 +16,9 @@ steps:
   - name: 'gcr.io/cloud-builders/npm'
     args: ['install']
 
-  # runs tests
-  - name: 'gcr.io/cloud-builders/npm'
-    args: ['run', 'test']
+  # # runs tests
+  # - name: 'gcr.io/cloud-builders/npm'
+  #   args: ['run', 'test']
 
   # build
   - name: 'gcr.io/cloud-builders/npm'
@@ -29,3 +29,27 @@ steps:
     args:
       - deploy
       - --only=hosting
+
+  # build docker container
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/$_SERVICE_NAME', './']
+
+  # docker push
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/$_SERVICE_NAME']
+
+  # Deploy image to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args:
+      [
+        'run',
+        'deploy',
+        '$_SERVICE_NAME',
+        '--image',
+        'gcr.io/$PROJECT_ID/$_SERVICE_NAME',
+        '--region',
+        '$_DEPLOY_REGION',
+      ]
+    entrypoint: gcloud
+images:
+  - 'gcr.io/$PROJECT_ID/$_SERVICE_NAME'

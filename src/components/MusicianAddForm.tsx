@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { storage } from '../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { doc, setDoc, collection } from 'firebase/firestore';
-import { db, analytics } from '../firebase';
+import { addMusicianPending } from '../cloudFunctions';
 import { v4 } from 'uuid';
 import styles from '../css/MusicianAddForm.module.css';
 import { useNavigate } from 'react-router-dom';
-import { logEvent } from 'firebase/analytics';
+// import { logEvent } from 'firebase/analytics';
 import useBearStore from '../bearStore';
 import Login from './Login';
 import { Link } from 'react-router-dom';
@@ -57,25 +56,18 @@ const MusicianForm = () => {
 
   const handleSubmitToFirestore = async (e: React.FormEvent) => {
     try {
-      e.preventDefault();
-      const url = await uploadImage();
-
       if (!user?.userCredential) return;
-      const targetCollection =
-        user.isAdmin === true ? 'musicians' : 'pendingMusicians';
-      const musicianRef = doc(collection(db, targetCollection));
-      await setDoc(musicianRef, {
-        ...formData,
-        profileImage: url,
-      });
-      if (targetCollection === 'pendingMusicians') {
-        alert('musician profile uploaded for approval');
-        logEvent(analytics, 'musician_added_pending');
-      } else {
+      e.preventDefault();
+      const profileImage = await uploadImage();
+
+      const response = await addMusicianPending({ formData, profileImage });
+
+      if (response.data.success) {
         alert('musician profile uploaded');
-        logEvent(analytics, 'musician_added');
+        navigate(-1);
+      } else {
+        alert('error uploading musician profile');
       }
-      navigate(-1);
     } catch (err) {
       console.log(err);
       alert('error uploading musician profile');
@@ -143,10 +135,10 @@ const MusicianForm = () => {
   if (!user?.userCredential) {
     return (
       <div>
+        <Login message={'You Must Login to Add a Musician'} />
         <Link to='/'>
           <BackButton>Go Back</BackButton>
         </Link>
-        <Login message={'You Must Login to Add a Musician'} />
       </div>
     );
   }

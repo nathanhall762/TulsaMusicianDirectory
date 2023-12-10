@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { storage } from '../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import {
-  doc,
-  setDoc,
-  collection,
-  getDocs,
-  deleteDoc,
-} from 'firebase/firestore';
-import { db } from '../firebase';
+import { approveMusician } from '../cloudFunctions';
 import { v4 } from 'uuid';
 import { validateURLs } from '../utils';
 import { useParams } from 'react-router-dom';
 import styles from '../css/MusicianAddForm.module.css';
 import Login from './Login';
 import { useNavigate } from 'react-router-dom';
+import { getOnePending } from '../cloudFunctions';
 import useBearStore from '../bearStore';
 
 type MusicianFormData = {
@@ -68,6 +62,9 @@ const MusicianApproveForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     try {
+      if (!musicianName) {
+        return;
+      }
       e.preventDefault();
 
       if (!user?.userCredential) {
@@ -84,25 +81,17 @@ const MusicianApproveForm = () => {
       // Add image to firebase storage
       const url = await uploadImage();
 
-      // Add musician to 'musicians' collection in firestore
-      const musicianRef = doc(collection(db, 'musicians'));
-      await setDoc(musicianRef, {
-        ...formData,
+      const response = await approveMusician({
+        musicianName: musicianName.toLowerCase(),
+        formData,
         profileImage: url,
       });
-      alert('Musician profile approved and uploaded.');
 
-      // After adding to the 'musicians' collection, always delete from 'pendingMusicians'
-      const pendingMusiciansCol = collection(db, 'pendingMusicians');
-      const pendingMusicianSnapshot = await getDocs(pendingMusiciansCol);
-      const pendingMusicianDoc = pendingMusicianSnapshot.docs.find(
-        (doc) => doc.data().name.toLowerCase() === musicianName?.toLowerCase()
-      );
-
-      if (pendingMusicianDoc) {
-        await deleteDoc(pendingMusicianDoc.ref);
+      if (response.data.success) {
+        alert('Musician profile approved and uploaded.');
+      } else {
+        alert('Error approving musician profile.');
       }
-
       // Go back to homepage using React router
       window.location.href = '/';
     } catch (err) {
@@ -155,43 +144,43 @@ const MusicianApproveForm = () => {
     }
   };
 
-  // if fields in formData.music and formData.social is not empty, set disabled to false
-  useEffect(() => {
-    const fetchMusician = async () => {
-      if (!isFetched) {
-        const musiciansCol = collection(db, 'pendingMusicians');
-        const musicianSnapshot = await getDocs(musiciansCol);
-        const musicianDoc = musicianSnapshot.docs.find(
-          (doc) => doc.data().name.toLowerCase() === musicianName?.toLowerCase()
-        );
+  const effectCallback = async () => {
+    if (!musicianName) {
+      return;
+    }
+    if (!isFetched) {
+      const response = await getOnePending({
+        name: musicianName?.toLowerCase(),
+      });
 
-        if (musicianDoc) {
-          setProfileImageUrl(musicianDoc.data().profileImage);
-          // Set the fetched data to formData
-          setFormData({
-            name: musicianDoc.data().name,
-            music: {
-              bandcamp: musicianDoc.data().music.bandcamp,
-              spotify: musicianDoc.data().music.spotify,
-              youtube: musicianDoc.data().music.youtube,
-              soundcloud: musicianDoc.data().music.soundcloud,
-              twitch: musicianDoc.data().music.twitch,
-            },
-            social: {
-              facebook: musicianDoc.data().social.facebook,
-              instagram: musicianDoc.data().social.instagram,
-              tiktok: musicianDoc.data().social.tiktok,
-              threads: musicianDoc.data().social.threads,
-            },
-            genre: musicianDoc.data().genre,
-            profileImage: musicianDoc.data().profileImage,
-          });
-          setIsFetched(true);
-        }
+      const musicianDoc = response.data.docData;
+
+      if (musicianDoc) {
+        setProfileImageUrl(musicianDoc.profileImage);
+        // Set the fetched data to formData
+        setFormData({
+          name: musicianDoc.name,
+          music: {
+            bandcamp: musicianDoc.music.bandcamp,
+            spotify: musicianDoc.music.spotify,
+            youtube: musicianDoc.music.youtube,
+            soundcloud: musicianDoc.music.soundcloud,
+            twitch: musicianDoc.music.twitch,
+          },
+          social: {
+            facebook: musicianDoc.social.facebook,
+            instagram: musicianDoc.social.instagram,
+            tiktok: musicianDoc.social.tiktok,
+            threads: musicianDoc.social.threads,
+          },
+          genre: musicianDoc.genre,
+          profileImage: musicianDoc.profileImage,
+        });
+        setIsFetched(true);
       }
-    };
+    }
 
-    fetchMusician();
+    // fetchMusician();
 
     if (
       formData.name !== '' &&
@@ -203,6 +192,11 @@ const MusicianApproveForm = () => {
     } else {
       setSubmitActive(false);
     }
+  };
+
+  // if fields in formData.music and formData.social is not empty, set disabled to false
+  useEffect(() => {
+    effectCallback();
   }, [formData, imageUpload, musicianName, isFetched]);
 
   if (!user?.userCredential) {

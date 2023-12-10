@@ -1,61 +1,37 @@
-import { createBrowserRouter } from 'react-router-dom';
-import { Suspense, lazy } from 'react';
-import App from './components/App';
-const DiscoverPage = lazy(() => import('./components/DiscoverPage'));
-const ErrorElement = lazy(() => import('./components/ErrorElement'));
-const MusicianForm = lazy(() => import('./components/MusicianAddForm'));
-const About = lazy(() => import('./components/About'));
-const DirectoryPage = lazy(() => import('./components/DirectoryPage'));
-const MusicianPage = lazy(
-  () => import('./components/MusicianPage/MusicianPage')
-);
-const MusicianApproveForm = lazy(
-  () => import('./components/MusicianApproveForm')
-);
-const MusicianApprovePage = lazy(
-  () => import('./components/MusicianApprovePage')
-);
-const EditPage = lazy(
-  () => import('./components/MusicianPage/EditPage')
-);
+import { RouteObject } from 'react-router-dom';
+// import { Suspense, lazy } from 'react';
+import App, { musicianDataLoader } from './components/App';
+import DiscoverPage from './components/DiscoverPage';
+import ErrorElement from './components/ErrorElement';
+import MusicianForm from './components/MusicianAddForm';
+import About from './components/About';
+import DirectoryPage from './components/DirectoryPage';
+import MusicianPage from './components/MusicianPage/MusicianPage';
+import MusicianApprovePage from './components/MusicianApprovePage';
+import MusicianApproveForm from './components/MusicianApproveForm';
 
-const router = createBrowserRouter([
+const routes: RouteObject[] = [
   {
     path: '/',
     element: <App />,
     errorElement: <ErrorElement />,
+    loader: musicianDataLoader,
     children: [
       {
         index: true,
-        element: (
-          <Suspense>
-            <DirectoryPage />
-          </Suspense>
-        ),
+        element: <DirectoryPage />,
       },
       {
         path: '/about',
-        element: (
-          <Suspense>
-            <About />
-          </Suspense>
-        ),
+        element: <About />,
       },
       {
         path: '/discover',
-        element: (
-          <Suspense>
-            <DiscoverPage />
-          </Suspense>
-        ),
+        element: <DiscoverPage />,
       },
       {
         path: '/callback',
-        element: (
-          <Suspense>
-            <DiscoverPage />
-          </Suspense>
-        ),
+        element: <DiscoverPage />,
       },
       {
         path: '/404',
@@ -63,46 +39,22 @@ const router = createBrowserRouter([
       },
       {
         path: '/:musicianId',
-        element: (
-          <Suspense>
-            <MusicianPage />
-          </Suspense>
-        ),
-      },
-      {
-        path: '/edit/:musicianId',
-        element: (
-          <Suspense>
-            <EditPage />
-          </Suspense>
-        ),
+        element: <MusicianPage />,
       },
       {
         path: '/addmusician',
-        element: (
-          <Suspense>
-            <MusicianForm />
-          </Suspense>
-        ),
+        element: <MusicianForm />,
       },
       {
         path: '/approvemusician',
-        element: (
-          <Suspense>
-            <MusicianApprovePage />
-          </Suspense>
-        ),
+        element: <MusicianApprovePage />,
       },
       {
         path: '/approvemusician/:musicianId',
-        element: (
-          <Suspense>
-            <MusicianApproveForm />
-          </Suspense>
-        ),
+        element: <MusicianApproveForm />,
       },
     ],
   },
-]);
+];
 
-export default router;
+export { routes };

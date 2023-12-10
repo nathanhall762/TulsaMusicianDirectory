@@ -1,42 +1,26 @@
-import { useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
-import { collection, onSnapshot } from 'firebase/firestore';
-import { db, analytics } from '../firebase';
-import { Musician } from '../global';
-import { logEvent } from 'firebase/analytics';
+import { Outlet, useLoaderData } from 'react-router-dom';
+// import { logEvent } from 'firebase/analytics';
 import useBearStore from '../bearStore';
 import Header from './Header/Header';
 import { GlobalStyle } from './GlobalStyle';
 import styled from 'styled-components';
+import { Musician } from '../global';
+import { getMusicians } from '../cloudFunctions';
 
 // to test if analytics is working
-logEvent(analytics, 'test_event');
+// logEvent(analytics, 'test_event');
 
 function App() {
   const setMusicians = useBearStore((state) => state.setMusicians);
+  const musicianData = useLoaderData() as Musician[];
 
-  const getMusicians = async () => {
-    onSnapshot(collection(db, 'musicians'), (snapshot) => {
-      const fetchedMusicians = snapshot.docs.map((doc) => {
-      // Combine document data with its ID
-      return {
-        id: doc.id, // Add the document ID
-        ...doc.data(), // Spread the rest of the document data
-      };
-    });
-      setMusicians(fetchedMusicians as Musician[]);
-    });
-  };
-
-  useEffect(() => {
-    getMusicians();
-  }, []);
+  setMusicians(musicianData);
 
   return (
     <>
       <GlobalStyle />
       <Header />
-      <Spacer />
+      <Spacer className='spacer' />
       <Outlet />
     </>
   );
@@ -46,5 +30,12 @@ const Spacer = styled.div`
   height: 8vh;
   z-index: 98;
 `;
+
+export async function musicianDataLoader() {
+  const response = await getMusicians({});
+  const musicianData = response.data.musicianData;
+
+  return musicianData;
+}
 
 export default App;
