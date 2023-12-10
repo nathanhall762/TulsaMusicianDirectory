@@ -1,8 +1,17 @@
 import { HttpsError, onCall } from 'firebase-functions/v2/https';
-import { log } from 'firebase-functions/logger';
+import { log, debug } from 'firebase-functions/logger';
 import { initializeApp } from 'firebase-admin/app';
 import axios from 'axios';
 import * as functions from 'firebase-functions/v2';
+import * as cors from 'cors';
+
+const corsHandler = cors({
+  origin: [
+    'http://localhost:5173',
+    'http://musicintulsa.com',
+    'http://tulsamusiciandirectory.com',
+  ],
+});
 
 initializeApp();
 import * as admin from 'firebase-admin';
@@ -27,10 +36,7 @@ export const isAdmin = onCall(async (request) => {
 
 // const userID = "fn0rtrc63vt562leulqnw0kqf"; // hard coded for testing purposes
 
-
-let fetchType = ""; // will be either "artist", "album", or "playlist"
-let spotifyURL = "https://api.spotify.com/v1";
-
+let spotifyURL = 'https://api.spotify.com/v1';
 
 // cheesing temp tokens....
 
@@ -49,223 +55,246 @@ async function getSpotifyToken(): Promise<string> {
       }
     );
     token = response.data.access_token;
-
   } catch (error) {
     console.error(`Error getting access token: ${error}`);
-    token = "error getting token";
+    token = 'error getting token';
   }
 
   return token;
 }
 
-export const getSpotifyData = functions.https.onRequest(async (request, response) => {
-  // recieve the body of the request (json object), and store it to a variable
-  const requestBody = JSON.parse(request.body);
+export const getSpotifyData = functions.https.onRequest((request, response) => {
+  debug('this is the body', request.body);
+  corsHandler(request, response, async () => {
+    // recieve the body of the request (json object), and store it to a variable
+    const requestBody = JSON.parse(request.body);
 
-  // Generate a token if one doesn't exist or is expired
-  const currentTime = new Date().getTime();
-  if (!token || currentTime - tokenTimestamp > 3600000) {
-    token = await getSpotifyToken();
-    tokenTimestamp = currentTime;
-  }
+    // counter for the number of requests made to spotify
+    let requestCounter = 0;
 
-  // Define headers
-  const headers = {
-    'Authorization': `Bearer ${token}`,
-    'Content-Type': 'application/json',
-  };
-
-  // cant work on an empty array! :)
-  if (!requestBody) {
-    throw new HttpsError('unauthenticated', 'requestBody is null or undefined');
-  }
-
-  let songIDs = []; // array to store the songIDs from the spotify response
-
-  // iterate through all objects in requestBody
-  for (let i = 0; i < requestBody.length; i++) {
-    let idType = requestBody[i].idType;
-
-    // switch statement to determine what endpoint to hit based on the idType
-    switch (idType) {
-      case "artist":
-        fetchType = `artists/${requestBody[i].objectID}/top-tracks?market=US`;
-        break;
-      case "album":
-        fetchType = `albums/${requestBody[i].objectID}/tracks`;
-        break;
-      case "playlist":
-        fetchType = `playlists/${requestBody[i].objectID}/tracks`;
-        break;
-      default:
-        throw new HttpsError('unauthenticated', 'idType is null or undefined or something else, idk man...');
+    // Generate a token if one doesn't exist or is expired
+    const currentTime = new Date().getTime();
+    if (!token || currentTime - tokenTimestamp > 3600000) {
+      token = await getSpotifyToken();
+      tokenTimestamp = currentTime;
     }
 
-    // get the id from the requestBody
-    let requestURL = `${spotifyURL}/${fetchType}`;
+    // Define headers
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    };
 
-    // make the request to spotify
-    const spotifyResponse = await axios.get(requestURL, { headers });
-
-    // if the response is empty, throw an error
-    if (!spotifyResponse) {
-      throw new HttpsError('unauthenticated', 'spotifyResponse is null or undefined');
+    // cant work on an empty array! :)
+    if (!requestBody) {
+      throw new HttpsError(
+        'unauthenticated',
+        'requestBody is null or undefined'
+      );
     }
 
-    // change how we get the songIDs based on the idType
-    if (idType === "playlist") {
-      if (spotifyResponse.data.items) {
-        for (let j = 0; j < spotifyResponse.data.items.length; j++) {
-          songIDs.push(spotifyResponse.data.items[j].track.id);
-        }
+    debug('if youre reading this the token stuff worked');
+
+    let songIDs: any = []; // array to store the songIDs from the spotify response
+
+    let artistIDs = [];
+    let albumIDs = [];
+    let playlistIDs = [];
+
+    // iterate through all objects in requestBody
+    for (let i = 0; i < requestBody.length; i++) {
+      let idType = requestBody[i].idType;
+
+      // switch statement to sort the IDs into their respective arrays
+      switch (idType) {
+        case 'artist':
+          artistIDs.push(requestBody[i].objectID);
+          break;
+        case 'album':
+          albumIDs.push(requestBody[i].objectID);
+          break;
+        case 'playlist':
+          playlistIDs.push(requestBody[i].objectID);
+          break;
+        default:
+          throw new HttpsError(
+            'unauthenticated',
+            'idType is null or undefined or something else, idk man...'
+          );
+      }
+    } // end of for loop
+
+    debug('artist ids', artistIDs);
+    debug('albumIDs', albumIDs);
+    debug('playlist ids', playlistIDs);
+
+    // handle the artistIDs if there are any
+    if (artistIDs.length > 0) {
+      // for each artist id, get their top tracks' song ids and push them to the songIDs array
+      for (let i = 0; i < artistIDs.length; i++) {
+        const artistTopTracksResponse = await axios.get(
+          `${spotifyURL}/artists/${artistIDs[i]}/top-tracks?market=US`,
+          { headers }
+        );
+
+        // increment the request counter
+        requestCounter++;
+
+        artistTopTracksResponse.data.tracks.forEach((track: any) => {
+          // make sure it exists before pushing it to the songIDs array
+          if (track) {
+            songIDs.push(track.id);
+          }
+          // if track id doesn't exist, log it
+          else {
+            debug('Artist track id doesnt exist', track);
+          }
+        });
+      }
+    }
+
+    // handle the albumIDs
+    if (albumIDs.length > 0) {
+      // for each album id, get the album's tracks' song ids and push them to the songIDs array
+      for (let i = 0; i < albumIDs.length; i++) {
+        const albumTracksResponse = await axios.get(
+          `${spotifyURL}/albums/${albumIDs[i]}/tracks`,
+          { headers }
+        );
+
+        // increment the request counter
+        requestCounter++;
+
+        albumTracksResponse.data.items.forEach((item: any) => {
+          // make sure it exists before pushing it to the songIDs array
+          if (item) {
+            songIDs.push(item.id);
+          }
+          // if track id doesn't exist, log it
+          else {
+            debug('Album track id doesnt exist', item);
+          }
+        });
+      }
+    }
+
+    // handle the playlistIDs
+    if (playlistIDs.length > 0) {
+      // for each playlist id, get the playlist's tracks' song ids and push them to the songIDs array
+      for (let i = 0; i < playlistIDs.length; i++) {
+        const playlistTracksResponse = await axios.get(
+          `${spotifyURL}/playlists/${playlistIDs[i]}/tracks?fields=items.track.id&limit=100`,
+          { headers }
+        );
+
+        // increment the request counter
+        requestCounter++;
+
+        // for each track in the items, push the track id to the songIDs array
+        playlistTracksResponse.data.items.forEach((item: any) => {
+          // make sure it exists before pushing it to the songIDs array
+          if (item.track) {
+            songIDs.push(item.track.id);
+          }
+          // if track id doesn't exist, log it
+          else {
+            debug('Playlist track id doesnt exist', item);
+          }
+        });
+      }
+    }
+
+    debug('these be me songids', songIDs);
+
+    // get song metrics from spotify for each songID
+    let songMetrics: any = [];
+
+    // get song metrics from spotify in batch of 100
+    let fullSongMetrics: any = [];
+
+    // make sure all ids in songIDs are unique
+    songIDs = [...new Set(songIDs)];
+
+    // if songIDs is longer than 100, send in batches of up to 100
+    if (songIDs.length > 100) {
+      for (let i = 0; i < songIDs.length; i += 100) {
+        let songIDsBatch = songIDs.slice(i, i + 100);
+        fullSongMetrics = await axios.get(
+          `${spotifyURL}/audio-features?ids=${songIDsBatch}`,
+          { headers }
+        );
+        requestCounter++;
+
+        // only push data we need to songMetrics array
+        fullSongMetrics.data.audio_features.forEach((song: any) => {
+          songMetrics.push({
+            danceability: song.danceability,
+            energy: song.energy,
+            loudness: song.loudness,
+            mode: song.mode,
+            acousticness: song.acousticness,
+            instrumentalness: song.instrumentalness,
+            liveness: song.liveness,
+            valence: song.valence,
+          });
+        });
       }
     } else {
-      if (spotifyResponse.data.tracks) {
-        for (let j = 0; j < spotifyResponse.data.tracks.length; j++) {
-          songIDs.push(spotifyResponse.data.tracks[j].id);
-        }
-      }
+      fullSongMetrics = await axios.get(
+        `${spotifyURL}/audio-features?ids=${songIDs}`,
+        { headers }
+      );
+      requestCounter++;
     }
 
-  }; // end of for loop
+    debug('we got metrics');
 
-  // get song metrics from spotify for each songID
-let songMetrics: any = [];
-let promises = songIDs.map(songID => {
-  let songURL = `${spotifyURL}/audio-features/${songID}`;
-  return axios.get(songURL, { headers });
-});
+    // only push data we need to songMetrics array
+    fullSongMetrics.data.audio_features.forEach((song: any) => {
+      songMetrics.push({
+        danceability: song.danceability,
+        energy: song.energy,
+        loudness: song.loudness,
+        mode: song.mode,
+        acousticness: song.acousticness,
+        instrumentalness: song.instrumentalness,
+        liveness: song.liveness,
+        valence: song.valence,
+      });
+    });
 
-let responses = await Promise.all(promises);
+    // send the songMetrics back to the client
+    console.log(`List of Song Metrics: ${songMetrics}`);
+    debug('my full song metrics', songMetrics);
+    // response.send(songMetrics);
 
-responses.forEach(songResponse => {
-  // only push the data we need to the songMetrics array:
-  songMetrics.push({
-    "danceability": songResponse.data.danceability,
-    "energy": songResponse.data.energy,
-    "key": songResponse.data.key,
-    "loudness": songResponse.data.loudness,
-    "mode": songResponse.data.mode,
-    "speechiness": songResponse.data.speechiness,
-    "acousticness": songResponse.data.acousticness,
-    "instrumentalness": songResponse.data.instrumentalness,
-    "liveness": songResponse.data.liveness,
-    "valence": songResponse.data.valence,
-    "tempo": songResponse.data.tempo
+    // hard code some return data for testing purposes
+    let hardCodedData = [
+      '0J7CpIAISgYMRE2U5srb',
+      '2mGYEbLOtcSebv2Ufwiz',
+      '2pHruAGajA52930AmpFJ',
+      '3hYfK9hngUq6ib4MXSBq',
+      '3yKi215ZuU1ROWSWe8qc',
+    ];
+
+    // turn responsecounter into a string and log it
+    let requestCounterString = requestCounter.toString();
+    console.log(`Number of requests made to Spotify: ${requestCounterString}`);
+    debug('number of requests', requestCounter);
+
+    // response.send(requestCounterString);
+
+    console.log('Hardcoded value returned');
+    // send hardcoded data back to the client
+    response.send(hardCodedData);
   });
-});
-
-// send the songMetrics back to the client
-console.log(`List of Song Metrics: ${songMetrics}`)
-// response.send(songMetrics);
-
-// hard code some return data for testing purposes
-let returnData = [
-  {
-    "name": "Heartwerk",
-    "genre": ["Electronic"],
-    "profileImage": "https://firebasestorage.googleapis.com/v0/b/tulsamusiciandirectory.appspot.com/o/images%2Fwebp%2FHeartwerk4612d57e-a4ad-4101-b199-4dbdb3707152_300x300?alt=media",
-    "music": {
-      "spotify": "https://open.spotify.com/artist/6EMckwNYOHjvVrG4XfUjP6"
-    },
-    "social": {
-      "instagram": "https://www.instagram.com/heartwerkdj/",
-      "facebook": "https://www.facebook.com/heartwerkDJ/"
-    }
-  },
-  {
-    "name": "MR. BURNS aka Earl Hazard",
-    "genre": ["Hip-Hop/Rap"],
-    "profileImage": "https://firebasestorage.googleapis.com/v0/b/tulsamusiciandirectory.appspot.com/o/images%2Fwebp%2FMR.%20BURNS%20aka%20Earl%20Hazard5a09f695-c77f-44ab-a534-6c398fcdbf80_300x300?alt=media",
-    "music": {
-      "spotify": "https://open.spotify.com/artist/5TjSLDEdLdGrrG4I7yyAVl"
-    },
-    "social": {
-      "instagram": "https://www.instagram.com/318me918/",
-      "facebook": "https://www.facebook.com/318me918/"
-    }
-  },
-  {
-    "name": "Sami",
-    "genre": ["EDM"],
-    "profileImage": "https://firebasestorage.googleapis.com/v0/b/tulsamusiciandirectory.appspot.com/o/images%2Fwebp%2FSami4c7c249b-3e0c-4f2c-8dc8-fe87ff9ab60a_300x300?alt=media",
-    "music": {
-      "spotify": "https://open.spotify.com/artist/3tPK5Zq40UzieZqF70is3r"
-    },
-    "social": {
-      "instagram": "https://instagram.com/iamsami_official",
-      "facebook": "https://www.facebook.com/iamsamiofficialmusic"
-    }
-  },
-  {
-    "name": "Jsung",
-    "genre": ["Electronic"],
-    "profileImage": "https://firebasestorage.googleapis.com/v0/b/tulsamusiciandirectory.appspot.com/o/images%2Fwebp%2FJsunga8cdaf9c-ce53-4cfe-8b31-62510e4c3f08_300x300?alt=media",
-    "music": {
-      "spotify": "https://open.spotify.com/artist/0HtF4dROQ1PBsuPQkGsSsy"
-    },
-    "social": {
-      "instagram": "https://instagram.com/jsung_______"
-    }
-  },
-  {
-    "name": "Madame Zeroni",
-    "genre": ["R&B"],
-    "profileImage": "https://firebasestorage.googleapis.com/v0/b/tulsamusiciandirectory.appspot.com/o/images%2Fwebp%2FMadame%20Zeronie6ad2959-2a26-4940-9dd0-7fcd657a125c_300x300?alt=media",
-    "music": {
-      "spotify": "https://open.spotify.com/artist/7ygFiWl5xP7rBqq7WyO8ro"
-    },
-    "social": {
-      "instagram": "https://www.instagram.com/mad.zero.ni/",
-      "facebook": "https://www.facebook.com/InvisibleFM/",
-      "tiktok": "https://www.tiktok.com/@zeroni_if_only?lang=en"
-    }
-  },
-  {
-    "name": "dj noname.",
-    "genre": ["Hip-Hop/Rap"],
-    "profileImage": "https://firebasestorage.googleapis.com/v0/b/tulsamusiciandirectory.appspot.com/o/images%2Fwebp%2Fdj%20noname.ff84be32-4f8e-44a6-83f8-1715f9fa90a4_300x300?alt=media",
-    "music": {
-      "spotify": "https://open.spotify.com/artist/0Hrsf2DzWUdrSWgdIZ4kd4"
-    },
-    "social": {
-      "facebook": "",
-      "instagram": ""
-    }
-  },
-  {
-    "name": "Fatso and the Spacewhistle",
-    "genre": ["Electronic"],
-    "profileImage": "https://firebasestorage.googleapis.com/v0/b/tulsamusiciandirectory.appspot.com/o/images%2Fwebp%2FFatso%20and%20the%20Spacewhistle27746a9f-2e3c-4c7e-86f0-13a6832d6152_300x300?alt=media",
-    "music": {
-      "spotify": "https://open.spotify.com/artist/1twfgTow5e4NKPiteBBToL"
-    },
-    "social": {
-      "instagram": "https://www.instagram.com/fatsoband/?hl=en"
-    }
-  },
-  {
-    "name": "Petty Fox",
-    "genre": ["Electronic"],
-    "profileImage": "https://firebasestorage.googleapis.com/v0/b/tulsamusiciandirectory.appspot.com/o/images%2Fwebp%2FPetty%20Fox8aa91853-7090-4c78-a9f5-93ab5391cb40_300x300?alt=media",
-    "music": {
-      "spotify": "https://open.spotify.com/artist/40E0Ed3SRgeOxwXXWjQlPU"
-    },
-    "social": {
-      "instagram": "https://www.instagram.com/pettyfoxloop/",
-      "facebook": "https://m.facebook.com/profile.php/?id=100063576729623"
-    }
-  }
-];
-
-console.log("Hardcoded value returned");
-// send hardcoded data back to the client
-response.send(returnData);
 });
 
 export const getMusicians = onCall(async (request) => {
   const snapshot = await db.collection('musicians').get();
-  const musicianData = snapshot.docs.map((doc) => doc.data());
+  const musicianData = snapshot.docs.map((doc) => {
+    return { ...doc.data(), id: doc.id };
+  });
 
   return { musicianData };
 });
