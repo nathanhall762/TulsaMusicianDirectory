@@ -17,8 +17,13 @@ function App() {
 
   const getMusicians = async () => {
     onSnapshot(collection(db, 'musicians'), (snapshot) => {
-      const fetchedMusicians = snapshot.docs.map((doc) => doc.data());
-
+      const fetchedMusicians = snapshot.docs.map((doc) => {
+      // Combine document data with its ID
+      return {
+        id: doc.id, // Add the document ID
+        ...doc.data(), // Spread the rest of the document data
+      };
+    });
       setMusicians(fetchedMusicians as Musician[]);
     });
   };

@@ -1,6 +1,7 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { useState, useEffect } from 'react';
 import recommendationRequest from './DiscoverTool/recommendationRequest';
+import CardContainer from './MusicianCard/CardContainer';
 
 const DiscoverPage = () => {
   const [selectedMode, setSelectedMode] = useState('Spotify');
@@ -12,6 +13,8 @@ const DiscoverPage = () => {
     { idType: string; objectID: string }[]
   >([]);
   const [recommendationReturned, setRecommendationReturned] = useState(false);
+  const [recommendationLoading, setRecommendationLoading] = useState(false);
+  const [musicianIds, setMusicianIds] = useState<string[]>([]); // Optional array of musician IDs
   const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
   const CLIENT_ID = '38f1ee602dbe4bffbb05672320a597f1';
   const REDIRECT_URI = 'http://localhost:5173/callback';
@@ -161,9 +164,25 @@ const DiscoverPage = () => {
 
   const handleSubmit = () => {
     console.log('Spotify Payload:', spotifyPayload);
-    // call the recommendationRequest function
-    recommendationRequest(spotifyPayload);
+    // set loading message
+    // set recommendation returned to true
     setRecommendationReturned(true);
+    // set loading to true
+    setRecommendationLoading(true);
+    setLoadingMessage('Loading your recommendations...');
+    // call the recommendationRequest function
+    recommendationRequest(spotifyPayload).then((response) => {
+      // set the musicianIds to the response
+      setMusicianIds(response);
+      // timer to wait for the recommendationRequest function to finish
+      setTimeout(() => {
+        setRecommendationLoading(false);
+      }, 5000);
+    }).catch((error) => {
+      console.error('Error fetching recommendations', error);
+      setLoadingMessage('Error fetching recommendations. Please try again.');
+      setRecommendationLoading(false);
+    });
   };
 
   useEffect(() => {
@@ -193,7 +212,7 @@ const DiscoverPage = () => {
           </ModeSelectButton>
         </PageNavigation>
       </DiscoverPageLanding>
-      {selectedMode === 'Spotify' && (
+      {selectedMode === 'Spotify' && !recommendationReturned && (
         <SpotifyLogin>
           <ButtonBox>
             <h2>
@@ -256,6 +275,19 @@ const DiscoverPage = () => {
         </SpotifyLogin>
       )}
 
+      {selectedMode === 'Spotify' &&
+        recommendationReturned &&
+        recommendationLoading && (
+          <ButtonBox>
+            <LoadingMessage>{loadingMessage}</LoadingMessage>
+            <Loader />
+          </ButtonBox>
+        )}
+
+      {selectedMode === 'Spotify' &&
+        recommendationReturned &&
+        !recommendationLoading && <CardContainer musicianIds={musicianIds} />}
+
       {selectedMode === 'Manual' && (
         <ManualInput>
           <ButtonBox>
@@ -266,7 +298,6 @@ const DiscoverPage = () => {
     </>
   );
 };
-
 
 const Checkbox = styled.input.attrs({ type: 'checkbox' })`
   display: block;
@@ -307,6 +338,7 @@ const PlaylistRow = styled.div<{ checked: boolean }>`
   width: 100%;
   border-radius: 25px;
   transition: all var(--animation-speed-fast) ease-in-out;
+  opacity: ${(props) => (props.checked ? '1' : '0.5')};
   background-color: ${(props) =>
     props.checked ? 'var(--color-primary)' : 'var(--color-background-main)'};
   &:hover {
@@ -447,7 +479,7 @@ const SpotifyButton = styled.button`
 const SubmitButton = styled.button`
   // Add your styles here
   padding: 10px;
-  margin-top: 15px;
+  margin: 15px;
   background-color: #1db954;
   color: white;
   border: none;
@@ -458,6 +490,20 @@ const SubmitButton = styled.button`
   }
 `;
 
+const rotate = keyframes`
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+`;
+
+const Loader = styled.div`
+  border: 5px solid var(--color-background-main); /* Light grey */
+  border-top: 5px solid var(--color-accent); /* Blue */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: ${rotate} 2s linear infinite;
+  margin: 20px auto;
+`;
 
 const ManualInput = styled(SpotifyLogin)``;
 
