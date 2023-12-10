@@ -181,7 +181,9 @@ const DiscoverPage = () => {
     }).catch((error) => {
       console.error('Error fetching recommendations', error);
       setLoadingMessage('Error fetching recommendations. Please try again.');
-      setRecommendationLoading(false);
+      setTimeout(() => {
+        setRecommendationLoading(false);
+      }, 5000);
     });
   };
 
