@@ -292,7 +292,9 @@ export const getSpotifyData = functions.https.onRequest((request, response) => {
 
 export const getMusicians = onCall(async (request) => {
   const snapshot = await db.collection('musicians').get();
-  const musicianData = snapshot.docs.map((doc) => doc.data());
+  const musicianData = snapshot.docs.map((doc) => {
+    return { ...doc.data(), id: doc.id };
+  });
 
   return { musicianData };
 });
