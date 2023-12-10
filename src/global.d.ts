@@ -1,6 +1,7 @@
 import { UserCredential } from 'firebase/auth';
 
 export type Musician = {
+  id: string;
   name: string;
   music: {
     bandcamp: string;

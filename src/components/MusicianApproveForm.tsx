@@ -123,7 +123,16 @@ const MusicianApproveForm = () => {
       // New image is uploaded
       const storageRef = ref(storage, `images/${formData.name + v4()}`);
       await uploadBytes(storageRef, imageUpload);
-      return await getDownloadURL(storageRef);
+      const url = await getDownloadURL(storageRef);
+
+      // dont know how to do this wthout hardcoding it idk
+      // get the new url after the automatic image resizing
+      const newUrl = url
+        .replace('images%2F', 'images%2Fwebp%2F')
+        .replace('?alt=media', '_300x300?alt=media')
+        .replace(/&token=(.*)/, '');
+
+      return newUrl;
     } else {
       // No new image uploaded, use existing image URL from formData
       if (formData.profileImage) {

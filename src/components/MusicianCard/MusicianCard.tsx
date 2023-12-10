@@ -15,7 +15,7 @@ const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
   const { name, genre, profileImage } = musician;
   const navigate = useNavigate();
 
-  const urlName = name.replaceAll(' ', '_').toLowerCase();
+  const urlName = '/' + name.replaceAll(' ', '_').toLowerCase();
 
   // stuff for animating the image
   const [isHovered, setIsHovered] = useState(false);

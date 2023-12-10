@@ -234,26 +234,6 @@ export const InputContainer = styled.div`
   input::placeholder {
     color: var(--color-text-alt);
   }
-  /* input[type='password'] {
-    margin-bottom: 1rem;
-  }
-  input[type='email'] {
-    margin-bottom: 1rem;
-  }
-  input[type='submit'] {
-    background-color: var(--color-accent);
-    color: var(--color-text-inverse);
-    font-size: 1rem;
-    font-weight: 700;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    border: none;
-    transition: all var(--animation-speed-fast) ease;
-    &:hover {
-      cursor: pointer;
-      background-color: var(--color-accent-alt);
-    }
-  } */
 `;
 
 const ButtonBox = styled.div`
@@ -279,7 +259,6 @@ const ButtonBox = styled.div`
 `;
 
 const LogoutContainer = styled.div`
-  // Add styles that you had for .logoutContainer in Login.module.css
 `;
 
 export default Login;

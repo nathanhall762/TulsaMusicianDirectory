@@ -30,6 +30,10 @@ const routes: RouteObject[] = [
         element: <DiscoverPage />,
       },
       {
+        path: '/callback',
+        element: <DiscoverPage />,
+      },
+      {
         path: '/404',
         element: <ErrorElement />,
       },

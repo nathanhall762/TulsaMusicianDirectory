@@ -3,23 +3,44 @@ import useBearStore from '../../bearStore';
 import styled from 'styled-components';
 import { Musician } from '../../global';
 
-const CardContainer = () => {
+interface CardContainerProps {
+  musicianIds?: string[]; // Optional array of musician IDs
+}
+
+const CardContainer = ({ musicianIds }: CardContainerProps) => {
   const musicians = useBearStore((state) => state.musicians);
   const genreFilter = useBearStore((state) => state.genreFilter);
   const searchFilter = useBearStore((state) => state.searchFilter);
 
-  const filterMusicians = (musician: Musician) => {
-    if (!searchFilter) return genreFilter.includes(musician.genre[0]);
-    return (
-      genreFilter.includes(musician.genre[0]) ||
-      musician.name.toLowerCase().includes(searchFilter.toLowerCase())
-    );
-  };
+  // console.log(musicians);
 
-  const filteredMusicians =
-    genreFilter.length || searchFilter
-      ? musicians.filter(filterMusicians)
-      : musicians;
+  if (musicianIds) {
+    // console.log(`Musician IDs: ${musicianIds}`);
+    // const filteredMusicians = musicians.filter((musician) =>
+    //   musicianIds.includes(musician.id)
+    // );
+  }
+
+  const filterMusicians = (musician: Musician) => {
+    // Prioritize filtering by musicianIds if provided and not empty
+    if (musicianIds && musicianIds.length > 0) {
+      return musicianIds.includes(musician.id);
+    }
+  
+    // Then check for genre and search filters
+    const genreMatch = genreFilter.length === 0 || genreFilter.includes(musician.genre[0]);
+    const searchMatch = !searchFilter || musician.name.toLowerCase().includes(searchFilter.toLowerCase());
+    
+    return genreMatch && searchMatch;
+  };
+  
+  const filteredMusicians = musicians.filter(filterMusicians);
+  
+
+  // const filteredMusicians =
+  //   genreFilter.length || searchFilter || musicianIds
+  //     ? musicians.filter(filterMusicians)
+  //     : musicians;
 
   const sortedMusicians = [...filteredMusicians].sort((a, b) =>
     a.name.localeCompare(b.name)
