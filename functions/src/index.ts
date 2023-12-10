@@ -3,6 +3,9 @@ import { log } from 'firebase-functions/logger';
 import { initializeApp } from 'firebase-admin/app';
 import axios from 'axios';
 import * as functions from 'firebase-functions/v2';
+import * as cors from 'cors';
+
+const corsHandler = cors({origin: ['http://localhost:5173', 'http://musicintulsa.com', 'http://tulsamusiciandirectory.com']});
 
 initializeApp();
 import * as admin from 'firebase-admin';
@@ -59,6 +62,7 @@ async function getSpotifyToken(): Promise<string> {
 }
 
 export const getSpotifyData = functions.https.onRequest(async (request, response) => {
+  corsHandler(request, response, async () => {
   // recieve the body of the request (json object), and store it to a variable
   const requestBody = JSON.parse(request.body);
 
@@ -171,6 +175,7 @@ let returnData = [
 console.log("Hardcoded value returned");
 // send hardcoded data back to the client
 response.send(returnData);
+  });
 });
 
 export const getMusicians = onCall(async (request) => {
