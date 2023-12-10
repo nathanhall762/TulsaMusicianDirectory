@@ -7,30 +7,25 @@
 
 import axios from 'axios';
 
-const recommendationRequest = async (input: JSON) => {
-
+const recommendationRequest = async (
+  input: { idType: string; objectID: string }[]
+) => {
   // convert the input string to json
-
 
   const endpoint = 'https://getspotifydata-7hkc33yowq-uc.a.run.app';
 
   const headers = {
     'Content-Type': 'text/plain',
     'Access-Control-Allow-Origin': '*',
-    'Accept': 'application/json',
+    Accept: 'application/json',
     'Response-Type': 'application/json',
   };
 
   const body = input;
 
-  const response = await axios.post(
-      endpoint,
-      body,
-      { headers },
-  );
+  const response = await axios.post(endpoint, body, { headers });
 
-    return response.data;
-
+  return response.data;
 };
 
 export default recommendationRequest;

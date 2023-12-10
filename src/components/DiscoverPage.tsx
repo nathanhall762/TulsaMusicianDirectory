@@ -18,10 +18,7 @@ const DiscoverPage = () => {
   const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
   const CLIENT_ID = '38f1ee602dbe4bffbb05672320a597f1';
   const REDIRECT_URI = 'http://localhost:5173/callback';
-  const SCOPES = [
-    'user-top-read',
-    'playlist-read-private'
-  ];
+  const SCOPES = ['user-top-read', 'playlist-read-private'];
   const REACT_APP_CLIENT_SECRET = 'f0341666a7764b2dbe5dee8f8259812f';
 
   const handleSpotifyLogin = () => {
@@ -75,7 +72,7 @@ const DiscoverPage = () => {
             }
           );
           const data = await response.json();
-          console.log(`Token: ${data.access_token}`)
+          console.log(`Token: ${data.access_token}`);
           return data.access_token;
         } catch (error) {
           console.error('Error fetching token', error);
@@ -170,21 +167,23 @@ const DiscoverPage = () => {
     setRecommendationLoading(true);
     setLoadingMessage('Loading your recommendations...');
     // call the recommendationRequest function
-    recommendationRequest(spotifyPayload).then((response) => {
-      // set the musicianIds to the response
-      console.log(`Response: ${response}`);
-      setMusicianIds(response);
-      // timer to wait for the recommendationRequest function to finish
-      setTimeout(() => {
-        setRecommendationLoading(false);
-      }, 5000);
-    }).catch((error) => {
-      console.error('Error fetching recommendations', error);
-      setLoadingMessage('Error fetching recommendations. Please try again.');
-      setTimeout(() => {
-        setRecommendationLoading(false);
-      }, 5000);
-    });
+    recommendationRequest(spotifyPayload)
+      .then((response) => {
+        // set the musicianIds to the response
+        console.log(`Response: ${response}`);
+        setMusicianIds(response);
+        // timer to wait for the recommendationRequest function to finish
+        setTimeout(() => {
+          setRecommendationLoading(false);
+        }, 5000);
+      })
+      .catch((error) => {
+        console.error('Error fetching recommendations', error);
+        setLoadingMessage('Error fetching recommendations. Please try again.');
+        setTimeout(() => {
+          setRecommendationLoading(false);
+        }, 5000);
+      });
   };
 
   useEffect(() => {
