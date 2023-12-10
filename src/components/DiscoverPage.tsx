@@ -92,8 +92,10 @@ const DiscoverPage = () => {
             .then((response) => response.json())
             .then((data) => {
               console.log(data); // data contains the user's profile
-              const profileImageUrl = data.images[0].url;
-              setProfileImageUrl(profileImageUrl);
+              if (data.images[0]) {
+                const profileImageUrl = data.images[0].url;
+                setProfileImageUrl(profileImageUrl);
+              }
               // Handle user profile data
             })
             .then(() => {
