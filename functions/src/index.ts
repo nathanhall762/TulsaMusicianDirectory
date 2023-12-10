@@ -161,101 +161,11 @@ console.log(`List of Song Metrics: ${songMetrics}`)
 
 // hard code some return data for testing purposes
 let returnData = [
-  {
-    "name": "Heartwerk",
-    "genre": ["Electronic"],
-    "profileImage": "https://firebasestorage.googleapis.com/v0/b/tulsamusiciandirectory.appspot.com/o/images%2Fwebp%2FHeartwerk4612d57e-a4ad-4101-b199-4dbdb3707152_300x300?alt=media",
-    "music": {
-      "spotify": "https://open.spotify.com/artist/6EMckwNYOHjvVrG4XfUjP6"
-    },
-    "social": {
-      "instagram": "https://www.instagram.com/heartwerkdj/",
-      "facebook": "https://www.facebook.com/heartwerkDJ/"
-    }
-  },
-  {
-    "name": "MR. BURNS aka Earl Hazard",
-    "genre": ["Hip-Hop/Rap"],
-    "profileImage": "https://firebasestorage.googleapis.com/v0/b/tulsamusiciandirectory.appspot.com/o/images%2Fwebp%2FMR.%20BURNS%20aka%20Earl%20Hazard5a09f695-c77f-44ab-a534-6c398fcdbf80_300x300?alt=media",
-    "music": {
-      "spotify": "https://open.spotify.com/artist/5TjSLDEdLdGrrG4I7yyAVl"
-    },
-    "social": {
-      "instagram": "https://www.instagram.com/318me918/",
-      "facebook": "https://www.facebook.com/318me918/"
-    }
-  },
-  {
-    "name": "Sami",
-    "genre": ["EDM"],
-    "profileImage": "https://firebasestorage.googleapis.com/v0/b/tulsamusiciandirectory.appspot.com/o/images%2Fwebp%2FSami4c7c249b-3e0c-4f2c-8dc8-fe87ff9ab60a_300x300?alt=media",
-    "music": {
-      "spotify": "https://open.spotify.com/artist/3tPK5Zq40UzieZqF70is3r"
-    },
-    "social": {
-      "instagram": "https://instagram.com/iamsami_official",
-      "facebook": "https://www.facebook.com/iamsamiofficialmusic"
-    }
-  },
-  {
-    "name": "Jsung",
-    "genre": ["Electronic"],
-    "profileImage": "https://firebasestorage.googleapis.com/v0/b/tulsamusiciandirectory.appspot.com/o/images%2Fwebp%2FJsunga8cdaf9c-ce53-4cfe-8b31-62510e4c3f08_300x300?alt=media",
-    "music": {
-      "spotify": "https://open.spotify.com/artist/0HtF4dROQ1PBsuPQkGsSsy"
-    },
-    "social": {
-      "instagram": "https://instagram.com/jsung_______"
-    }
-  },
-  {
-    "name": "Madame Zeroni",
-    "genre": ["R&B"],
-    "profileImage": "https://firebasestorage.googleapis.com/v0/b/tulsamusiciandirectory.appspot.com/o/images%2Fwebp%2FMadame%20Zeronie6ad2959-2a26-4940-9dd0-7fcd657a125c_300x300?alt=media",
-    "music": {
-      "spotify": "https://open.spotify.com/artist/7ygFiWl5xP7rBqq7WyO8ro"
-    },
-    "social": {
-      "instagram": "https://www.instagram.com/mad.zero.ni/",
-      "facebook": "https://www.facebook.com/InvisibleFM/",
-      "tiktok": "https://www.tiktok.com/@zeroni_if_only?lang=en"
-    }
-  },
-  {
-    "name": "dj noname.",
-    "genre": ["Hip-Hop/Rap"],
-    "profileImage": "https://firebasestorage.googleapis.com/v0/b/tulsamusiciandirectory.appspot.com/o/images%2Fwebp%2Fdj%20noname.ff84be32-4f8e-44a6-83f8-1715f9fa90a4_300x300?alt=media",
-    "music": {
-      "spotify": "https://open.spotify.com/artist/0Hrsf2DzWUdrSWgdIZ4kd4"
-    },
-    "social": {
-      "facebook": "",
-      "instagram": ""
-    }
-  },
-  {
-    "name": "Fatso and the Spacewhistle",
-    "genre": ["Electronic"],
-    "profileImage": "https://firebasestorage.googleapis.com/v0/b/tulsamusiciandirectory.appspot.com/o/images%2Fwebp%2FFatso%20and%20the%20Spacewhistle27746a9f-2e3c-4c7e-86f0-13a6832d6152_300x300?alt=media",
-    "music": {
-      "spotify": "https://open.spotify.com/artist/1twfgTow5e4NKPiteBBToL"
-    },
-    "social": {
-      "instagram": "https://www.instagram.com/fatsoband/?hl=en"
-    }
-  },
-  {
-    "name": "Petty Fox",
-    "genre": ["Electronic"],
-    "profileImage": "https://firebasestorage.googleapis.com/v0/b/tulsamusiciandirectory.appspot.com/o/images%2Fwebp%2FPetty%20Fox8aa91853-7090-4c78-a9f5-93ab5391cb40_300x300?alt=media",
-    "music": {
-      "spotify": "https://open.spotify.com/artist/40E0Ed3SRgeOxwXXWjQlPU"
-    },
-    "social": {
-      "instagram": "https://www.instagram.com/pettyfoxloop/",
-      "facebook": "https://m.facebook.com/profile.php/?id=100063576729623"
-    }
-  }
+  "0J7CpIAISgYMRE2U5srb",
+  "2mGYEbLOtcSebv2Ufwiz",
+  "2pHruAGajA52930AmpFJ",
+  "3hYfK9hngUq6ib4MXSBq",
+  "3yKi215ZuU1ROWSWe8qc"
 ];
 
 console.log("Hardcoded value returned");
