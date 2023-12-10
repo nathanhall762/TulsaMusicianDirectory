@@ -173,21 +173,18 @@ fullSongMetrics.data.audio_features.forEach((song: any) => {
   songMetrics.push({
     "danceability": song.danceability,
     "energy": song.energy,
-    "key": song.key,
     "loudness": song.loudness,
     "mode": song.mode,
-    "speechiness": song.speechiness,
     "acousticness": song.acousticness,
     "instrumentalness": song.instrumentalness,
     "liveness": song.liveness,
-    "valence": song.valence,
-    "tempo": song.tempo
+    "valence": song.valence
   });
 });
 
 // send the songMetrics back to the client
 console.log(`List of Song Metrics: ${songMetrics}`)
-// response.send(songMetrics);
+response.send(songMetrics);
 
 // hard code some return data for testing purposes
 let hardCodedData = [
