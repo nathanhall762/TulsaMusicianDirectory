@@ -17,9 +17,19 @@ const DiscoverPage = () => {
   const [musicianIds, setMusicianIds] = useState<string[]>([]); // Optional array of musician IDs
   const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
   const CLIENT_ID = '38f1ee602dbe4bffbb05672320a597f1';
-  const REDIRECT_URI = 'http://localhost:5173/callback';
   const SCOPES = ['user-top-read', 'playlist-read-private'];
   const REACT_APP_CLIENT_SECRET = 'f0341666a7764b2dbe5dee8f8259812f';
+
+  if (
+    import.meta.env.MODE === 'production' &&
+    import.meta.env.IS_LIVE === 'true'
+  ) {
+    var REDIRECT_URI = 'https://musicintulsa.com/callback';
+  } else if (import.meta.env.MODE === 'production') {
+    var REDIRECT_URI = 'http://localhost:4173/callback';
+  } else {
+    var REDIRECT_URI = 'http://localhost:5173/callback';
+  }
 
   const handleSpotifyLogin = () => {
     const authUrl = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(
