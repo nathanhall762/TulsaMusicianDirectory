@@ -142,7 +142,7 @@ export const getSpotifyData = functions.https.onRequest((request, response) => {
 
         artistTopTracksResponse.data.tracks.forEach((track: any) => {
           // make sure it exists before pushing it to the songIDs array
-          if (track.id) {
+          if (track) {
             songIDs.push(track.id);
           }
           // if track id doesn't exist, log it
@@ -167,7 +167,7 @@ export const getSpotifyData = functions.https.onRequest((request, response) => {
 
         albumTracksResponse.data.items.forEach((item: any) => {
           // make sure it exists before pushing it to the songIDs array
-          if (item.id) {
+          if (item) {
             songIDs.push(item.id);
           }
           // if track id doesn't exist, log it
@@ -193,7 +193,7 @@ export const getSpotifyData = functions.https.onRequest((request, response) => {
         // for each track in the items, push the track id to the songIDs array
         playlistTracksResponse.data.items.forEach((item: any) => {
           // make sure it exists before pushing it to the songIDs array
-          if (item.track.id) {
+          if (item.track) {
             songIDs.push(item.track.id);
           }
           // if track id doesn't exist, log it
