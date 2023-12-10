@@ -20,9 +20,7 @@ const DiscoverPage = () => {
   const REDIRECT_URI = 'http://localhost:5173/callback';
   const SCOPES = [
     'user-top-read',
-    'user-read-recently-played',
-    'user-read-currently-playing',
-    'user-read-playback-state',
+    'playlist-read-private'
   ];
   const REACT_APP_CLIENT_SECRET = 'f0341666a7764b2dbe5dee8f8259812f';
 
@@ -77,6 +75,7 @@ const DiscoverPage = () => {
             }
           );
           const data = await response.json();
+          console.log(`Token: ${data.access_token}`)
           return data.access_token;
         } catch (error) {
           console.error('Error fetching token', error);
