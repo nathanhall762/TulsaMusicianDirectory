@@ -251,11 +251,11 @@ const DesktopSearch = styled(Search)`
   }
 `;
 
-const MobileSearch = styled(Search)`
-  display: block;
-  @media (max-width: 1000px) {
-    display: none;
-  }
-`;
+// const MobileSearch = styled(Search)`
+//   display: block;
+//   @media (max-width: 1000px) {
+//     display: none;
+//   }
+// `;
 
 export default Header;
