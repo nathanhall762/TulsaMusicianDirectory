@@ -14,14 +14,16 @@ def test():
 
 @app.route('/', methods=['POST'])
 def api():
+    print('I got hit')
     return handle_data(request)
 
 
 def handle_data(request):
     data = request.json
+    print('preloaded data', data)
     track_features = json.loads(data)
     recommendations = cosine_sim.cosine_rec(track_features)
-
+    print('my recommendations', recommendations)
     return jsonify(recommendations)
 
 
