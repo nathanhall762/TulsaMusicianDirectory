@@ -16,7 +16,6 @@ const recommendationRequest = async (
 
   const headers = {
     'Content-Type': 'text/plain',
-    'Access-Control-Allow-Origin': '*',
     Accept: 'application/json',
     'Response-Type': 'application/json',
   };
