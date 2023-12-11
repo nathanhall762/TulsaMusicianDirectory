@@ -7,7 +7,7 @@ track_features = [{"danceability": 0.352, "energy": 0.911, "loudness": -5.23, "s
 json_data = json.dumps(track_features)
 
 
-url = 'http://localhost:5000'
+url = 'https://discoveryapi-7hkc33yowq-uc.a.run.app'
 r = requests.post(url, json=json_data)
 
 print(r.json())

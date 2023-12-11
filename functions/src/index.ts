@@ -257,7 +257,7 @@ export const getSpotifyData = functions.https.onRequest((request, response) => {
         danceability: song.danceability,
         energy: song.energy,
         loudness: song.loudness,
-        mode: song.mode,
+        // mode: song.mode,
         acousticness: song.acousticness,
         instrumentalness: song.instrumentalness,
         liveness: song.liveness,
@@ -271,13 +271,13 @@ export const getSpotifyData = functions.https.onRequest((request, response) => {
     // response.send(songMetrics);
 
     // hard code some return data for testing purposes
-    let hardCodedData = [
-      '0J7CpIAISgYMRE2U5srb',
-      '2mGYEbLOtcSebv2Ufwiz',
-      '2pHruAGajA52930AmpFJ',
-      '3hYfK9hngUq6ib4MXSBq',
-      '3yKi215ZuU1ROWSWe8qc',
-    ];
+    // let hardCodedData = [
+    //   '0J7CpIAISgYMRE2U5srb',
+    //   '2mGYEbLOtcSebv2Ufwiz',
+    //   '2pHruAGajA52930AmpFJ',
+    //   '3hYfK9hngUq6ib4MXSBq',
+    //   '3yKi215ZuU1ROWSWe8qc',
+    // ];
 
     // turn responsecounter into a string and log it
     let requestCounterString = requestCounter.toString();
@@ -288,7 +288,14 @@ export const getSpotifyData = functions.https.onRequest((request, response) => {
 
     console.log('Hardcoded value returned');
     // send hardcoded data back to the client
-    response.send(hardCodedData);
+
+    const jsonData = JSON.stringify(songMetrics);
+    const discoveryUrl = 'https://discoveryapi-7hkc33yowq-uc.a.run.app';
+    const discoveryData = await axios.post(discoveryUrl, jsonData);
+
+    debug('this is the response of the discovery api', discoveryData);
+
+    response.send(discoveryData);
   });
 });
 

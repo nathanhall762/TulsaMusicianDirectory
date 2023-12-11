@@ -23,7 +23,7 @@ const recommendationRequest = async (
   const body = input;
 
   const response = await axios.post(endpoint, body, { headers });
-
+  console.log(response.data);
   return response.data;
 };
 
