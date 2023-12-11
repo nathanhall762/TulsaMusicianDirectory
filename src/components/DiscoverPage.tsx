@@ -2,8 +2,10 @@ import styled, { keyframes } from 'styled-components';
 import { useState, useEffect } from 'react';
 import recommendationRequest from './DiscoverTool/recommendationRequest';
 import CardContainer from './MusicianCard/CardContainer';
+import useBearStore from '../bearStore';
 
 const DiscoverPage = () => {
+  const musicians = useBearStore((state) => state.musicians);
   const [selectedMode, setSelectedMode] = useState('Spotify');
   const [authCode, setAuthCode] = useState('');
   const [profileImageUrl, setProfileImageUrl] = useState('');
@@ -179,9 +181,22 @@ const DiscoverPage = () => {
     // call the recommendationRequest function
     recommendationRequest(spotifyPayload)
       .then((response) => {
+        // this is an array of [spotify IDs, match value]
+        console.log(`Response Recs: `, response);
+
+        // match spotify IDs to firestore IDs
+        // from musicians global state
+        // this code is attrocious
+        // pls help
+        const musicRecs: [string] = response.map((artist: [string, string]) => {
+          const correctMusician = musicians.find((musician) =>
+            musician.music.spotify.includes(artist[0])
+          );
+          return correctMusician?.id;
+        });
+
         // set the musicianIds to the response
-        console.log(`Response: ${response}`);
-        setMusicianIds(response);
+        setMusicianIds(musicRecs);
         // timer to wait for the recommendationRequest function to finish
         setTimeout(() => {
           setRecommendationLoading(false);

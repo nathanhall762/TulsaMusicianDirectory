@@ -16,7 +16,6 @@ const recommendationRequest = async (
 
   const headers = {
     'Content-Type': 'text/plain',
-    'Access-Control-Allow-Origin': '*',
     Accept: 'application/json',
     'Response-Type': 'application/json',
   };
@@ -24,7 +23,7 @@ const recommendationRequest = async (
   const body = input;
 
   const response = await axios.post(endpoint, body, { headers });
-
+  console.log('black box response', response.data);
   return response.data;
 };
 

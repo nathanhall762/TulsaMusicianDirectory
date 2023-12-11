@@ -7,6 +7,7 @@ from pkg_resources import resource_string
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.preprocessing import MinMaxScaler
 
+
 def cosine_rec(dataFromUser: dict) -> list:
     """
     Returns the cosine similarity between two vectors formed from the user's
@@ -32,7 +33,7 @@ def cosine_rec(dataFromUser: dict) -> list:
 
     userDF = pd.DataFrame.from_dict(dataFromUser, orient='columns')
     userDF.sort_index(axis=1, inplace=True)
-    userDF.drop(columns=['speechiness'], inplace=True)
+    # userDF.drop(columns=['speechiness'], inplace=True)
     userDFnorm = pd.DataFrame(scaler.fit_transform(userDF),
                               columns=userDF.columns,
                               index=userDF.index)
@@ -40,8 +41,10 @@ def cosine_rec(dataFromUser: dict) -> list:
 
     cosineDict = {}
     for artist_id, features in TMDAnorm.items():
-        cosineDict[artist_id] = cosine_similarity(userValues.reshape(1, -1), features.values.reshape(1, -1))[0][0]
+        cosineDict[artist_id] = cosine_similarity(
+            userValues.reshape(1, -1), features.values.reshape(1, -1))[0][0]
 
-    sorted_dict = sorted(cosineDict.items(), key=lambda item: item[1], reverse=True)
+    sorted_dict = sorted(cosineDict.items(),
+                         key=lambda item: item[1], reverse=True)
 
     return sorted_dict[:5]
