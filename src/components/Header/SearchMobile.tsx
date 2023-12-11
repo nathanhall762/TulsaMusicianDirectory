@@ -73,7 +73,7 @@ const CloseButton = styled.i`
 const SearchPanel = styled.div<{ $genrePresent: boolean }>`
   background-color: var(--color-background-alt);
   width: 100%;
-  display: flex;
+  display: none;
   align-items: center;
   gap: 10px;
   justify-content: center;
@@ -87,7 +87,7 @@ const SearchPanel = styled.div<{ $genrePresent: boolean }>`
     margin-top: 0;
     padding-bottom: 0.5rem;
     height: auto;
-    display: none;
+    display: flex;
   }
 `;
 

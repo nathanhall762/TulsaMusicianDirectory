@@ -81,7 +81,7 @@ const BottomHeader = styled.div`
   padding: 0 0 0 11vw;
   @media (max-width: 1000px) {
     position: sticky;
-    padding: 0;
+    padding: 0 0 0 24vw;
   }
 `;
 
@@ -92,10 +92,10 @@ const GenreList = styled.ul`
   font-size: 15px;
   width: auto;
   justify-content: start;
-  margin: 0.5rem;
-  @media (max-width: 1000px) {
+  margin: 0.5rem 0;
+  /* @media (max-width: 1000px) {
     margin: 0 5%;
-  }
+  } */
 `;
 
 const GenreBase = styled.li<{ $genreSelected: boolean }>`
@@ -112,11 +112,15 @@ const GenreBase = styled.li<{ $genreSelected: boolean }>`
     cursor: pointer;
     transform: scale(0.95);
   }
+  @media (max-width: 1000px) {
+    display: none;
+  }
   ${(props) => props.$genreSelected && 'background-color: var(--color-accent);'}
 `;
 
 const Genre = styled(GenreBase)<{ $order: number }>`
   order: ${(props) => (props.$order === -1 ? 5 : props.$order)};
+  display: block;
 `;
 
 export default GenreFilters;

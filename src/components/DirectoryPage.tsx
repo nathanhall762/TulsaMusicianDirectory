@@ -18,7 +18,8 @@ const DirectoryPage = () => {
     <div>
       {/* <Spacer /> */}
       <Hero />
-      {windowSize !== null && windowSize >= 1000 && <GenreFilters />}
+      {/* {windowSize !== null && windowSize >= 1000 && <GenreFilters />} */}
+      <GenreFilters />
       <CardContainer />
       <AddButtons />
     </div>

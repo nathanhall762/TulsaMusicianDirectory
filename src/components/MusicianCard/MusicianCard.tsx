@@ -154,7 +154,6 @@ const MusicianCardBody = styled.div<{ $backgroundImage: string }>`
   align-self: stretch;
   height: 450px;
   justify-content: space-around;
-  background-color: var(--other-color);
   position: relative;
   overflow: hidden;
 
@@ -233,6 +232,11 @@ const MusicianCardBody = styled.div<{ $backgroundImage: string }>`
 
   &:hover ${NeedleArm} {
     transform: rotate(15deg);
+  }
+  @media (max-width: 1000px) {
+    padding: 0;
+    width: 100%;
+    margin: 0.5rem 0;
   }
 `;
 

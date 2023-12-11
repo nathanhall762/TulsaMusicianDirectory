@@ -226,10 +226,10 @@ const DiscoverPage = () => {
       {selectedMode === 'Spotify' && !recommendationReturned && (
         <SpotifyLogin>
           <ButtonBox>
-            <h2>
+            <SpotifyInstructionMessage>
               Get recommended Tulsa artists using your Spotify listening
               history.
-            </h2>
+            </SpotifyInstructionMessage>
             {authCode ? (
               <div>
                 <ProfileImage src={profileImageUrl} />
@@ -309,6 +309,10 @@ const DiscoverPage = () => {
     </>
   );
 };
+
+const SpotifyInstructionMessage = styled.h2`
+  color: var(--color-text-primary);
+`;
 
 const Checkbox = styled.input.attrs({ type: 'checkbox' })`
   display: block;

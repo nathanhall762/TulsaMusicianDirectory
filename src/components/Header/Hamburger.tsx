@@ -52,7 +52,13 @@ const NavList = styled.ul`
 `;
 
 const NavItem = styled.li`
-  width: 50%;
+  width: 100%;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  background-color: var(--color-background-main);
+  margin-bottom: 0.1rem;
+  border-radius: 15px;
 `;
 
 const StyledLink = styled(Link)`

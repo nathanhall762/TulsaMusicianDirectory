@@ -4,6 +4,7 @@ import Hamburger from './Hamburger';
 import Search from './Search';
 import { Link, useLocation } from 'react-router-dom';
 import useBearStore from '../../bearStore';
+import SearchMobile from './SearchMobile';
 
 const Header = () => {
   const openNav = useBearStore((state) => state.openNav);
@@ -24,7 +25,8 @@ const Header = () => {
             <Title className='title'>The Tulsa Musician Directory</Title>
           </TitleLink>
           <NavBar className='navbar'>
-          {location.pathname === '/' && (
+            {openNav === 'search' &&  <DesktopSearch />}
+            {location.pathname === '/' && (
               <SearchIcon
                 className='fa-solid fa-magnifying-glass'
                 onClick={() => {
@@ -54,7 +56,7 @@ const Header = () => {
                 </StyledLink>
               </Discover>
             </PageNavigation>
-            
+
             <HamburgerIcon
               className='fa-solid fa-bars'
               onClick={() => {
@@ -63,8 +65,8 @@ const Header = () => {
             />
           </NavBar>
         </TopHeader>
-        {openNav === 'search' && <Search />}
         {openNav === 'hamburger' && <Hamburger />}
+        {openNav === 'search' && <SearchMobile />}
       </HeaderWrapper>
     </>
   );
@@ -239,6 +241,20 @@ const HamburgerIcon = styled.i`
   }
   @media (max-width: 1000px) {
     display: block;
+  }
+`;
+
+const DesktopSearch = styled(Search)`
+  display: none;
+  @media (max-width: 1000px) {
+    display: block;
+  }
+`;
+
+const MobileSearch = styled(Search)`
+  display: block;
+  @media (max-width: 1000px) {
+    display: none;
   }
 `;
 

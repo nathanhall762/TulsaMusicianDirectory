@@ -46,7 +46,7 @@ const HeroWrapper = styled.div`
 
 const HeroTitle = styled.h1`
   font-size: 7rem;
-  color: beige;
+  color: var(--color-text-primary);
   margin: 0;
   text-shadow: 0 2px 20px #000;
   font-family: 'Lobster';
@@ -69,7 +69,7 @@ const HeroTitle = styled.h1`
 
 const HeroSubtitle = styled.h2`
   font-size: 3.5rem;
-  color: beige;
+  color: var(--color-text-primary);
   margin: 0;
   margin-top: 10rem;
   text-shadow: 0 2px 20px #000;
@@ -89,7 +89,7 @@ const HeroSubtitle = styled.h2`
 `;
 
 const ActionButton = styled.button`
-  background-color: beige;
+  background-color: var(--color-text-primary);
   border: none;
   padding: 1rem 2rem;
   border-radius: 2rem;
@@ -102,7 +102,7 @@ const ActionButton = styled.button`
   // on hover, change background color to color-secondary
   &:hover {
     background-color: var(--color-secondary);
-    color: beige;
+    color: var(--color-text-primary);
     box-shadow: 0 0 20px 5px beige;
     transform: scale(1.05) translateY(2rem);
     transition:
