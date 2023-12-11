@@ -13,7 +13,7 @@ import { getMusicians } from '../cloudFunctions';
 function App() {
   const setMusicians = useBearStore((state) => state.setMusicians);
   const musicianData = useLoaderData() as Musician[];
-
+  console.log(import.meta.env.VITE_IS_LIVE, 'this should say true I think');
   setMusicians(musicianData);
 
   return (
