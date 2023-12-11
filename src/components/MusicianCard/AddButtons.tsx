@@ -6,7 +6,7 @@ import { useState } from 'react';
 const AddButtons = () => {
   const user = useBearStore((state) => state.user);
 
-  const [isAddButtonHovered, setIsAddButtonHovered] = useState(false);
+  // const [isAddButtonHovered, setIsAddButtonHovered] = useState(false);
   const [isApproveButtonHovered, setIsApproveButtonHovered] = useState(false);
 
   return (
@@ -32,21 +32,32 @@ const AddButtons = () => {
       <Link to='/addmusician' aria-label='add musician to directory'>
         <AddButton
           $backgroundColor='var(--color-accent)'
-          onMouseEnter={() => setIsAddButtonHovered(true)}
-          onMouseLeave={() => setIsAddButtonHovered(false)}
+          // onMouseEnter={() => setIsAddButtonHovered(true)}
+          // onMouseLeave={() => setIsAddButtonHovered(false)}
           aria-label='add musician to directory'
         >
-          {/* TODO: show text on button when in desktop */}
-          {isAddButtonHovered ? (
-            'Add Musician'
-          ) : (
+          <AddMusicianSpan>
             <i className='fa-solid fa-plus' aria-hidden='true' />
-          )}
+            <p>Add Musician</p>
+          </AddMusicianSpan>
         </AddButton>
       </Link>
     </AddButtonContainer>
   );
 };
+
+const AddMusicianSpan = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media (max-width: 768px) {
+    p {
+      display: none;
+    }
+    margin: 0;
+    padding: 0;
+  }
+`;
 
 export const AddButtonContainer = styled.div`
   display: flex;
@@ -86,15 +97,8 @@ export const AddButton = styled.button<{ $backgroundColor: string }>`
     border-radius: 100%;
     font-size: 2rem;
     padding: 0 1rem;
-    span {
-      display: none;
-    }
     i {
       margin-right: 0;
-    }
-    &:hover {
-    font-size: 1rem;
-
     }
   }
 `;

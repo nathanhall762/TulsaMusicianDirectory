@@ -89,7 +89,6 @@ const Logo = styled.img`
 `;
 
 const Title = styled.h1`
-  color: var(--color-primary);
   font-size: 25px;
   padding: 0 auto;
   @media (max-width: 800px) {
@@ -98,7 +97,6 @@ const Title = styled.h1`
 `;
 
 const ShortTitle = styled.h1`
-  color: var(--color-primary);
   padding: 0;
   margin: 0;
   text-align: center;
@@ -183,7 +181,6 @@ const Discover = styled(Navigation)`
 `;
 
 const Search = styled.i`
-  color: var(--color-primary);
   font-size: 1.5em;
   transition: all 0.2s ease-in-out;
   &:hover {

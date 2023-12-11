@@ -4,8 +4,9 @@ const Link = styled.a<{ $linkName: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40px;
-  height: 40px;
+  font-size: 1.5rem;
+  width: 3rem;
+  height: 3rem;
   transition: all var(--animation-speed-medium) ease;
   &:hover {
     transform: scale(1.5);

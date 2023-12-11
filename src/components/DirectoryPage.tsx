@@ -16,9 +16,9 @@ const DirectoryPage = () => {
 
   return (
     <div>
-      {windowSize !== null && windowSize >= 1000 && <GenreFilters />}
-      <Spacer />
+      {/* <Spacer /> */}
       <Hero />
+      {windowSize !== null && windowSize >= 1000 && <GenreFilters />}
       <CardContainer />
       <AddButtons />
     </div>

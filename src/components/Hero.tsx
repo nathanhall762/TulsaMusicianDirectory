@@ -26,7 +26,7 @@ const Hero = () => {
 
 const HeroWrapper = styled.div`
   height: 50vh;
-  width: 90%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,11 +34,14 @@ const HeroWrapper = styled.div`
   background-image: url(${heroImage});
   background-size: cover;
   background-position: center;
-  border-radius: 2rem;
-  margin-top: 2rem;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 2rem;
+  border-radius: 0px;
+  margin-top: 0;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+  @media (max-width: 1000px) {
+    text-align: center;
+  }
 `;
 
 const HeroTitle = styled.h1`
@@ -56,6 +59,7 @@ const HeroTitle = styled.h1`
 
   @media (max-height: 1000px) {
     font-size: 4rem;
+    margin-top: 1rem;
   }
 
   @media (max-height: 800px) {
@@ -79,7 +83,7 @@ const HeroSubtitle = styled.h2`
   }
   // on mobile shorter screens, reduce margin-top
   @media (max-height: 1000px) {
-    margin-top: 5rem;
+    margin-top: 2rem;
     font-size: 1.5rem;
   }
 `;
@@ -118,6 +122,7 @@ const ActionButton = styled.button`
   @media (max-width: 600px) {
     font-size: 1rem;
     padding: 0.5rem 1rem;
+    margin-top: 1rem;
   }
 `;
 

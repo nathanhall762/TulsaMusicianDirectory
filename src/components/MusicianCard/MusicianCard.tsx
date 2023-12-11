@@ -59,7 +59,7 @@ const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
             loading='lazy'
             style={{
               transform: `rotate(${rotation}deg)`,
-              transition: isHovered ? 'none' : 'transform 1s', // Add transition when hover state is removed
+              transition: isHovered ? 'none' : 'all 1s', // Add transition when hover state is removed
             }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
@@ -82,6 +82,7 @@ export const CardImage = styled.img`
   object-fit: cover;
   object-position: center;
   box-shadow: 0px 0px 0.5rem var(--color-primary);
+  transition: all var(--animation-speed-medium-slow) ease;
 `;
 
 const ImageContainer = styled.div`
@@ -99,18 +100,16 @@ export const CardTitle = styled.h2`
   width: 100%;
   align-items: center;
   justify-content: center;
-  color: beige;
   min-height: 72px;
   transition: all var(--animation-speed-medium-slow) ease;
 `;
 
 export const Genres = styled.p`
   transition: color var(--animation-speed-medium-slow) ease;
-  height: 50px;
   box-sizing: border-box;
   padding: 0 10px;
   width: 100%;
-  color: beige;
+  color: var(--color-text-primary);
   transition: all var(--animation-speed-medium-slow) ease;
   margin-top: 10px;
 `;
@@ -206,22 +205,23 @@ const MusicianCardBody = styled.div<{ $backgroundImage: string }>`
     border: none;
   }
   &:hover ${CardTitle} {
-    color: #ebad21;
+    color: var(--color-primary);
     text-shadow:
       1px 1px 0 var(--color-background-alt),
       1px -1px 0 var(--color-background-alt),
       -1px 1px 0 var(--color-background-alt),
       -1px -1px 0 var(--color-background-alt);
-    transform: scale(1.2);
+    transform: scale(1.1);
     padding-top: 5px;
     z-index: 1;
   }
   &:hover ${CardImage} {
     scale: 1.1;
     animation: rotate 10s linear infinite;
+    transition: all var(--animation-speed-medium-slow) ease;
   }
   &:hover ${Genres} {
-    color: #ebad21;
+    color: var(--color-primary);
     text-shadow:
       1px 1px 0 var(--color-background-main),
       1px -1px 0 var(--color-background-main),

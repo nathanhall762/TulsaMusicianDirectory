@@ -9,12 +9,18 @@ export const GlobalStyle = createGlobalStyle`
     --color-background-main: hsl(249, 11%, 12%);
     --color-background-main-trans: hsla(249, 11%, 12%, 0.8);
     --color-background-alt: hsl(249, 11%, 15%);
-    --color-primary: #ecb028;
-    --color-secondary: #1d324f;
-    --color-accent: #C6202E;
 
-    --color-text-primary: #EBAD21;
-    --color-text-secondary: #162B49;
+    --mustard: #EBAD21;
+    --national-flag-blue: #162B49;
+    --bone: #F8F1E0;
+    --bright-red: #C6202E;
+
+    --color-primary: var(--mustard);
+    --color-secondary: var(--national-flag-blue);
+    --color-accent: var(--bright-red);
+
+    --color-text-primary: var(--bone);
+    --color-text-secondary: var(--mustard);
     --color-text-inverse: #fff;
 
     --color-success: #2ea44f;
@@ -77,6 +83,11 @@ min-height: 100vh;
 
 p {
 margin: 0;
+color: var(--color-text-primary);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-text-secondary);
 }
 
 h1 {

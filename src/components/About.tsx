@@ -53,12 +53,10 @@ const Wrapper = styled.div`
 
 const Title = styled.h2`
   text-align: center;
-  color: var(--color-primary);
 `;
 
 const SmallTitle = styled.h3`
   text-align: center;
-  color: var(--color-primary);
 `;
 
 const Paragraph = styled.p`

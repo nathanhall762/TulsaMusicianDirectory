@@ -24,6 +24,14 @@ const Header = () => {
             <Title className='title'>The Tulsa Musician Directory</Title>
           </TitleLink>
           <NavBar className='navbar'>
+          {location.pathname === '/' && (
+              <SearchIcon
+                className='fa-solid fa-magnifying-glass'
+                onClick={() => {
+                  setOpenNav(openNav === 'search' ? '' : 'search');
+                }}
+              />
+            )}
             <PageNavigation>
               <About $navSelected={location.pathname === '/about'}>
                 <StyledLink to='/about' aria-label='About Page'>
@@ -46,14 +54,7 @@ const Header = () => {
                 </StyledLink>
               </Discover>
             </PageNavigation>
-            {location.pathname === '/' && (
-              <SearchIcon
-                className='fa-solid fa-magnifying-glass'
-                onClick={() => {
-                  setOpenNav(openNav === 'search' ? '' : 'search');
-                }}
-              />
-            )}
+            
             <HamburgerIcon
               className='fa-solid fa-bars'
               onClick={() => {
@@ -129,7 +130,6 @@ const ShortTitleWrapper = styled.div`
 `;
 
 const ShortTitle = styled.h1`
-  color: var(--color-primary);
   padding: 0;
   margin: 0;
   text-align: center;
@@ -161,7 +161,7 @@ const TopHeader = styled.div`
 export const NavBar = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: end;
   min-width: 33%;
   @media (max-width: 1000px) {
     margin-left: auto;
@@ -199,7 +199,7 @@ export const Navigation = styled.li<{ $navSelected: boolean }>`
     cursor: pointer;
     background-color: var(--color-background-main);
   }
-  ${(props) => props.$navSelected && 'background-color: black;'}
+  ${(props) => props.$navSelected && 'background-color: var(--color-accent);'}
 `;
 
 export const About = styled(Navigation)`
