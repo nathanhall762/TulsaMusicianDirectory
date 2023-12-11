@@ -22,7 +22,7 @@ const DiscoverPage = () => {
 
   if (
     import.meta.env.MODE === 'production' &&
-    import.meta.env.IS_LIVE === 'true'
+    import.meta.env.VITE_IS_LIVE === 'true'
   ) {
     var REDIRECT_URI = 'https://musicintulsa.com/callback';
   } else if (import.meta.env.MODE === 'production') {
