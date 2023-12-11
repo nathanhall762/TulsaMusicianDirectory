@@ -289,13 +289,14 @@ export const getSpotifyData = functions.https.onRequest((request, response) => {
     console.log('Hardcoded value returned');
     // send hardcoded data back to the client
 
-    const jsonData = JSON.stringify(songMetrics);
     const discoveryUrl = 'https://discoveryapi-7hkc33yowq-uc.a.run.app';
-    const discoveryData = await axios.post(discoveryUrl, jsonData);
+    const discoveryData = await axios.post(discoveryUrl, songMetrics, {
+      headers: { 'Content-Type': 'application/json' },
+    });
 
-    debug('this is the response of the discovery api', discoveryData);
+    debug('this is the response of the discovery api', discoveryData.data);
 
-    response.send(discoveryData);
+    response.send(discoveryData.data);
   });
 });
 
