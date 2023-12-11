@@ -7,10 +7,10 @@ import * as cors from 'cors';
 
 const corsHandler = cors({
   origin: [
-    'http://localhost:5173/*',
+    'http://localhost:5173',
+    'http://localhost:4173',
     'http://musicintulsa.com',
     'http://tulsamusiciandirectory.com',
-    'https://musicintulsa.com/*',
   ],
 });
 
