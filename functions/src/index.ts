@@ -7,9 +7,10 @@ import * as cors from 'cors';
 
 const corsHandler = cors({
   origin: [
-    'http://localhost:5173',
+    'http://localhost:5173/*',
     'http://musicintulsa.com',
     'http://tulsamusiciandirectory.com',
+    'https://musicintulsa.com/*',
   ],
 });
 
@@ -65,6 +66,7 @@ async function getSpotifyToken(): Promise<string> {
 
 export const getSpotifyData = functions.https.onRequest((request, response) => {
   debug('this is the body', request.body);
+  debug('this is the request', request);
   corsHandler(request, response, async () => {
     // recieve the body of the request (json object), and store it to a variable
     const requestBody = JSON.parse(request.body);
