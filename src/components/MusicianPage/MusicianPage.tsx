@@ -11,15 +11,15 @@ import {
   CardImage,
 } from '../MusicianCard/MusicianCard';
 import { AddButton, AddButtonContainer } from '../MusicianCard/AddButtons';
-import { useState } from 'react';
+// import { useState } from 'react';
 
 const MusicianPage = () => {
   const musicians = useBearStore((state) => state.musicians);
   const { musicianId } = useParams();
   const user = useBearStore((state) => state.user);
 
-  const [isAddButtonHovered, setIsAddButtonHovered] = useState(false);
-  const [isApproveButtonHovered, setIsApproveButtonHovered] = useState(false);
+  // const [isAddButtonHovered, setIsAddButtonHovered] = useState(false);
+  // const [isApproveButtonHovered, setIsApproveButtonHovered] = useState(false);
 
   // FIXME: in case of musicians never loading
   if (musicians.length === 0) {
@@ -64,15 +64,15 @@ const MusicianPage = () => {
         // <Link to='/approvemusician' aria-label='approve musician'>
           <AddButton
             $backgroundColor='var(--color-primary)'
-            onMouseEnter={() => setIsApproveButtonHovered(true)}
-            onMouseLeave={() => setIsApproveButtonHovered(false)}
+            // onMouseEnter={() => setIsApproveButtonHovered(true)}
+            // onMouseLeave={() => setIsApproveButtonHovered(false)}
             aria-label='approve musician'
           >
-            {isApproveButtonHovered ? (
+            {/* {isApproveButtonHovered ? (
               'Approve Musician'
             ) : (
               <i className='fa-solid fa-trash' aria-hidden='true' />
-            )}
+            )} */}
           </AddButton>
         // </Link>
       ) : null}
@@ -80,8 +80,8 @@ const MusicianPage = () => {
       <Link to='/addmusician' aria-label='add musician to directory'>
         <AddButton
           $backgroundColor='var(--color-accent)'
-          onMouseEnter={() => setIsAddButtonHovered(true)}
-          onMouseLeave={() => setIsAddButtonHovered(false)}
+          // onMouseEnter={() => setIsAddButtonHovered(true)}
+          // onMouseLeave={() => setIsAddButtonHovered(false)}
           aria-label='suggest edits'
         >
           <i className='fa-solid fa-edit' aria-hidden='true' />

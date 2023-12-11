@@ -23,6 +23,8 @@ steps:
   # build
   - name: 'gcr.io/cloud-builders/npm'
     args: ['run', 'build']
+    env:
+      - 'VITE_IS_LIVE=true'
 
   # deploy
   - name: 'gcr.io/$PROJECT_ID/firebase'
