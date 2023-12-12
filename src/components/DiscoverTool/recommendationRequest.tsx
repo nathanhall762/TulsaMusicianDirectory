@@ -7,9 +7,10 @@
 
 import axios from 'axios';
 
-const recommendationRequest = async (
-  input: { idType: string; objectID: string }[]
-) => {
+const recommendationRequest = async (input: {
+  spotify: { idType: string; objectID: string }[];
+  genres: string[];
+}) => {
   // convert the input string to json
 
   const endpoint = 'https://getspotifydata-7hkc33yowq-uc.a.run.app';
