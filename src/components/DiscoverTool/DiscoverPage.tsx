@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import SpotifyRecs from './SpotifyRecs';
+import ManualMode from './ManualMode';
 import { useState } from 'react';
 
 const DiscoverPage = () => {
@@ -35,7 +36,7 @@ const DiscoverPage = () => {
       {selectedMode === 'Manual' && (
         <ManualInput>
           <ButtonBox>
-            <h2>Coming Soon!</h2>
+            <ManualMode />
           </ButtonBox>
         </ManualInput>
       )}
