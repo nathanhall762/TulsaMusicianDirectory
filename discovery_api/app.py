@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from model import cosine_sim
+import json
 
 app = Flask(__name__)
 CORS(app)
@@ -19,14 +20,18 @@ def api():
 def handle_data(request):
     data = request.json
 
-    song_metrics = data.get('metrics')
-    genres_data = data.get('genres')
+    parsed_data = json.loads(data)
+    metrics = parsed_data.get('metrics')
+    genres = parsed_data.get('genres')
 
-    if len(song_metrics) > 0:
-        recommendations = cosine_sim.cosine_rec(data)
+    # only either metrics or genres should exist at one time
+    # for now at least will probably break if thats not true
+    if len(metrics) > 0:
+        recommendations = cosine_sim.cosine_rec(metrics)
     else:
-        # to be solved soon
-        pass
+        genre_metrics = cosine_sim.get_genre_data(genres)
+        recommendations = cosine_sim.cosine_rec(genre_metrics)
+
     return jsonify(recommendations)
 
 

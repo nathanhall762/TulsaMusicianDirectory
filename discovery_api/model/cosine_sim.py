@@ -8,6 +8,21 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.preprocessing import MinMaxScaler
 
 
+def get_genre_data(genres: list) -> dict:
+    json_data = resource_string(__name__, 'genre_features.json')
+    GenreAverages = json.loads(json_data.decode('utf-8'))
+
+    print(GenreAverages.keys())
+
+    # automatically delete all 'speechiness' keys because they broke aarons code
+    for category in GenreAverages:
+        if "speechiness" in GenreAverages[category]:
+            del GenreAverages[category]["speechiness"]
+
+    average_metrics_by_genre = [GenreAverages[genre] for genre in genres]
+    return average_metrics_by_genre
+
+
 def cosine_rec(dataFromUser: dict) -> list:
     """
     Returns the cosine similarity between two vectors formed from the user's
