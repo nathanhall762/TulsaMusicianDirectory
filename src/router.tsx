@@ -1,7 +1,7 @@
 import { RouteObject } from 'react-router-dom';
 // import { Suspense, lazy } from 'react';
 import App, { musicianDataLoader } from './components/App';
-import DiscoverPage from './components/DiscoverPage';
+import DiscoverPage from './components/DiscoverTool/DiscoverPage';
 import ErrorElement from './components/ErrorElement';
 import MusicianForm from './components/MusicianAddForm';
 import About from './components/About';

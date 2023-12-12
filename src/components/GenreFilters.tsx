@@ -47,7 +47,7 @@ const GenreFilters = () => {
   };
 
   return (
-    <BottomHeader>
+    <BottomHeader className='genreFilter'>
       <GenreList>
         <GenreBase $genreSelected={true}>Tulsa</GenreBase>
         {filters.map((genre) => (

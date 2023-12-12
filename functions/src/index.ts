@@ -66,7 +66,6 @@ async function getSpotifyToken(): Promise<string> {
 
 export const getSpotifyData = functions.https.onRequest((request, response) => {
   debug('this is the body', request.body);
-  debug('this is the request', request);
   corsHandler(request, response, async () => {
     // recieve the body of the request (json object), and store it to a variable
     const requestBody = JSON.parse(request.body);
@@ -95,6 +94,9 @@ export const getSpotifyData = functions.https.onRequest((request, response) => {
       );
     }
 
+    const spotifyData = requestBody.spotify;
+    const genresData = requestBody.genres;
+
     debug('if youre reading this the token stuff worked');
 
     let songIDs: any = []; // array to store the songIDs from the spotify response
@@ -103,20 +105,20 @@ export const getSpotifyData = functions.https.onRequest((request, response) => {
     let albumIDs = [];
     let playlistIDs = [];
 
-    // iterate through all objects in requestBody
-    for (let i = 0; i < requestBody.length; i++) {
-      let idType = requestBody[i].idType;
+    // iterate through all objects in spotifyData
+    for (let i = 0; i < spotifyData.length; i++) {
+      let idType = spotifyData[i].idType;
 
       // switch statement to sort the IDs into their respective arrays
       switch (idType) {
         case 'artist':
-          artistIDs.push(requestBody[i].objectID);
+          artistIDs.push(spotifyData[i].objectID);
           break;
         case 'album':
-          albumIDs.push(requestBody[i].objectID);
+          albumIDs.push(spotifyData[i].objectID);
           break;
         case 'playlist':
-          playlistIDs.push(requestBody[i].objectID);
+          playlistIDs.push(spotifyData[i].objectID);
           break;
         default:
           throw new HttpsError(
@@ -233,7 +235,6 @@ export const getSpotifyData = functions.https.onRequest((request, response) => {
             danceability: song.danceability,
             energy: song.energy,
             loudness: song.loudness,
-            mode: song.mode,
             acousticness: song.acousticness,
             instrumentalness: song.instrumentalness,
             liveness: song.liveness,
@@ -241,56 +242,45 @@ export const getSpotifyData = functions.https.onRequest((request, response) => {
           });
         });
       }
-    } else {
+    } else if (songIDs.length > 0) {
       fullSongMetrics = await axios.get(
         `${spotifyURL}/audio-features?ids=${songIDs}`,
         { headers }
       );
       requestCounter++;
+    } else {
+      fullSongMetrics = null;
     }
 
-    debug('we got metrics');
-
     // only push data we need to songMetrics array
-    fullSongMetrics.data.audio_features.forEach((song: any) => {
-      songMetrics.push({
-        danceability: song.danceability,
-        energy: song.energy,
-        loudness: song.loudness,
-        // mode: song.mode,
-        acousticness: song.acousticness,
-        instrumentalness: song.instrumentalness,
-        liveness: song.liveness,
-        valence: song.valence,
+    if (fullSongMetrics) {
+      debug('we got metrics');
+      fullSongMetrics.data.audio_features.forEach((song: any) => {
+        songMetrics.push({
+          danceability: song.danceability,
+          energy: song.energy,
+          loudness: song.loudness,
+          // mode: song.mode,
+          acousticness: song.acousticness,
+          instrumentalness: song.instrumentalness,
+          liveness: song.liveness,
+          valence: song.valence,
+        });
       });
-    });
+    }
 
-    // send the songMetrics back to the client
     console.log(`List of Song Metrics: ${songMetrics}`);
     debug('my full song metrics', songMetrics);
-    // response.send(songMetrics);
-
-    // hard code some return data for testing purposes
-    // let hardCodedData = [
-    //   '0J7CpIAISgYMRE2U5srb',
-    //   '2mGYEbLOtcSebv2Ufwiz',
-    //   '2pHruAGajA52930AmpFJ',
-    //   '3hYfK9hngUq6ib4MXSBq',
-    //   '3yKi215ZuU1ROWSWe8qc',
-    // ];
 
     // turn responsecounter into a string and log it
     let requestCounterString = requestCounter.toString();
     console.log(`Number of requests made to Spotify: ${requestCounterString}`);
     debug('number of requests', requestCounter);
-
-    // response.send(requestCounterString);
-
-    console.log('Hardcoded value returned');
-    // send hardcoded data back to the client
-
+    debug('me genres', genresData);
+    const discoveryPayload = { metrics: songMetrics, genres: genresData };
+    debug('this here be me payload', discoveryPayload);
     const discoveryUrl = 'https://discoveryapi-7hkc33yowq-uc.a.run.app';
-    const discoveryData = await axios.post(discoveryUrl, songMetrics, {
+    const discoveryData = await axios.post(discoveryUrl, discoveryPayload, {
       headers: { 'Content-Type': 'application/json' },
     });
 
