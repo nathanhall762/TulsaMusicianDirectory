@@ -175,9 +175,6 @@ const SpotifyRecs: React.FC = () => {
       .catch((error) => {
         console.error('Error fetching recommendations', error);
         setLoadingMessage('Error fetching recommendations. Please try again.');
-        setTimeout(() => {
-          setRecommendationLoading(false);
-        }, 5000);
       });
   };
 

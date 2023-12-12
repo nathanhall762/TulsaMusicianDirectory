@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import SpotifyRecs from './SpotifyRecs';
-import ManualMode from './ManualRecs';
+import ManualRecs from './ManualRecs';
 import { useState } from 'react';
 
 const DiscoverPage = () => {
@@ -36,7 +36,7 @@ const DiscoverPage = () => {
       {selectedMode === 'Manual' && (
         <ManualInput>
           <ButtonBox>
-            <ManualMode />
+            <ManualRecs />
           </ButtonBox>
         </ManualInput>
       )}
