@@ -142,16 +142,6 @@ const SpotifyRecs: React.FC = () => {
                       setLoadingMessage(
                         'Select from your Spotify playlists to include in your recommendations.'
                       );
-                      // const initialPlaylistPayload = data.items.map(
-                      //   (playlist: { id: string }) => ({
-                      //     idType: 'playlist',
-                      //     objectID: playlist.id,
-                      //   })
-                      // );
-                      // setSpotifyPayload((currentPayload) => [
-                      //   ...currentPayload,
-                      //   ...initialPlaylistPayload,
-                      // ]);
                     })
                     .catch((error) =>
                       console.error('Error fetching user playlists', error)
