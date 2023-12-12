@@ -1,8 +1,8 @@
 import styled, { keyframes } from 'styled-components';
 import { useState, useEffect } from 'react';
-import recommendationRequest from './DiscoverTool/recommendationRequest';
-import CardContainer from './MusicianCard/CardContainer';
-import useBearStore from '../bearStore';
+import recommendationRequest from '../DiscoverTool/recommendationRequest';
+import CardContainer from '../MusicianCard/CardContainer';
+import useBearStore from '../../bearStore';
 
 const DiscoverPage = () => {
   const musicians = useBearStore((state) => state.musicians);
