@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import recommendationRequest from './DiscoverTool/recommendationRequest';
 import CardContainer from './MusicianCard/CardContainer';
 import useBearStore from '../bearStore';
+import ManualMode from './DiscoverTool/ManualMode';
 
 const DiscoverPage = () => {
   const musicians = useBearStore((state) => state.musicians);
@@ -317,7 +318,7 @@ const DiscoverPage = () => {
       {selectedMode === 'Manual' && (
         <ManualInput>
           <ButtonBox>
-            <h2>Coming Soon!</h2>
+            <ManualMode />
           </ButtonBox>
         </ManualInput>
       )}
