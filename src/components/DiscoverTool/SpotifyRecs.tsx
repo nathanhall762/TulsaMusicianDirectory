@@ -291,6 +291,9 @@ const SpotifyRecs: React.FC = () => {
           <CardContainer musicianIds={musicianIds} />
         )}
       </div>
+      {recommendationReturned && !recommendationLoading && (
+        <CardContainer musicianIds={musicianIds} />
+      )}
     </>
   );
 };
