@@ -12,9 +12,7 @@ def get_genre_data(genres: list) -> dict:
     json_data = resource_string(__name__, 'genre_features.json')
     GenreAverages = json.loads(json_data.decode('utf-8'))
 
-    print(GenreAverages.keys())
-
-    # automatically delete all 'speechiness' keys because they broke aarons code
+    # automatically delete all 'speechiness' keys because they break aarons code
     for category in GenreAverages:
         if "speechiness" in GenreAverages[category]:
             del GenreAverages[category]["speechiness"]
