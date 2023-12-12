@@ -18,14 +18,15 @@ const Header = () => {
           <Logo className='logo' src={logo} alt='TMD logo' />
         </Link>
         <ShortTitleWrapper className='short-title-wrapper'>
-          <ShortTitle className='short-title'>TMD</ShortTitle>
+          <ShortTitle className='short-title'>Music In Tulsa</ShortTitle>
         </ShortTitleWrapper>
         <TopHeader className='top-header'>
           <TitleLink to='/' aria-label='The Tulsa Musician Directory'>
-            <Title className='title'>The Tulsa Musician Directory</Title>
+            <Title className='title'>Music In Tulsa</Title>
+            <h3>The Tulsa Musician Directory</h3>
           </TitleLink>
           <NavBar className='navbar'>
-            {openNav === 'search' &&  <DesktopSearch />}
+            {openNav === 'search' && <DesktopSearch />}
             {location.pathname === '/' && (
               <SearchIcon
                 className='fa-solid fa-magnifying-glass'
@@ -111,15 +112,34 @@ const TitleLink = styled(Link)`
   @media (max-width: 800px) {
     display: none;
   }
+  display: flex;
+  align-items: center;
+  @media (max-width: 1000px) {
+    padding-left: 15vh;
+  }
+  &:hover {
+    h3 {
+      opacity: 100%;
+    }
+  }
+  h3 {
+    display: flex;
+    font-size: 1.3rem;
+    color: var(--color-text-primary);
+    padding: 0;
+    margin: 0 0 0 2rem;
+    opacity: 80%;
+    transition: all var(--animation-speed-medium) ease-in-out;
+    @media (max-width: 1100px) {
+      display: none;
+    }
+  }
 `;
 
 const Title = styled.h1`
   color: var(--color-primary);
-  font-size: 25px;
-  padding: 0 auto;
-  @media (max-width: 1000px) {
-    padding-left: 15vw;
-  }
+  font-size: 2.5rem;
+  padding: 0;
   @media (max-width: 800px) {
     display: none;
   }
@@ -141,20 +161,23 @@ const ShortTitle = styled.h1`
   position: absolute;
   justify-content: center;
   align-items: center;
+  color: var(--color-text-primary);
   @media (max-width: 800px) {
     display: flex;
+  }
+  @media (max-width: 400px) {
+    display: none;
   }
 `;
 
 const TopHeader = styled.div`
   display: flex;
   justify-content: space-between;
-  padding-left: 11vw;
+  padding-left: 15vh;
   margin-right: 0;
   height: 8vh;
   align-items: center;
   @media (max-width: 1000px) {
-    height: 8vh;
     width: 100vw;
     padding: 0;
   }

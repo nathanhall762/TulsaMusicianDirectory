@@ -48,6 +48,8 @@ export const GlobalStyle = createGlobalStyle`
       #fd1d1d,
       #f56040
     );
+    --github-color: #333;
+    --linkedin-color: #0077b5;
 
     color: var(--color-text-primary);
     background-color: var(--color-background-main);
@@ -56,6 +58,10 @@ export const GlobalStyle = createGlobalStyle`
     --animation-speed-medium-slow: 1s;
     --animation-speed-medium: 0.5s;
     --animation-speed-fast: 0.1s;
+
+    --breakpoint-mobile: 600px;
+    --breakpoint-tablet: 900px;
+    
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
