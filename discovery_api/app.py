@@ -20,9 +20,8 @@ def api():
 def handle_data(request):
     data = request.json
 
-    parsed_data = json.loads(data)
-    metrics = parsed_data.get('metrics')
-    genres = parsed_data.get('genres')
+    metrics = data.get('metrics')
+    genres = data.get('genres')
 
     # only either metrics or genres should exist at one time
     # for now at least will probably break if thats not true
