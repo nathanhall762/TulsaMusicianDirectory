@@ -82,24 +82,6 @@ const PlaylistSelector: React.FC<PlaylistSelectorProps> = ({
 
 export default PlaylistSelector;
 
-const SpotifyLogin = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--color-background-alt);
-  border-radius: 25px;
-  margin: 5rem;
-  text-align: center;
-  padding: 2rem;
-  @media (max-width: 1000px) {
-    margin: 3rem 1rem;
-  }
-`;
-
-const SpotifyInstructionMessage = styled.h2`
-  color: var(--color-text-primary);
-`;
-
 const Checkbox = styled.input.attrs({ type: 'checkbox' })`
   display: block;
   position: relative;
@@ -154,39 +136,4 @@ const PlaylistName = styled.p`
     margin: 0 1rem;
   }
   // Add additional styles if needed
-`;
-
-const ProfileImage = styled.img`
-  border-radius: 50%;
-  width: 100px;
-  height: 100px;
-`;
-
-const SubmitButton = styled.button`
-  // Add your styles here
-  padding: 10px;
-  margin: 15px;
-  background-color: #1db954;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  &:hover {
-    background-color: #1ed760;
-  }
-`;
-
-const SpotifyButton = styled.button`
-  background-color: var(--spotify-color) !important;
-  color: var(--color-text-inverse);
-  font-size: 1rem;
-  font-weight: 700;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  border: none;
-  transition: all var(--animation-speed-fast) ease;
-  &:hover {
-    cursor: pointer;
-    background-color: var(--color-background-main) !important;
-  }
 `;
