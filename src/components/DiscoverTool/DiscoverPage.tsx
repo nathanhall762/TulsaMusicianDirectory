@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import SpotifyRecs from './SpotifyRecs';
-import ManualMode from './ManualMode';
+import ManualMode from './ManualRecs';
 import { useState } from 'react';
 
 const DiscoverPage = () => {
