@@ -182,6 +182,10 @@ iframe {
   display: none;
 }
 
+.genreFilter {
+  display: nonez;
+}
+
 .heroWrapper {
   height: 50vh;
   width: 90%;
