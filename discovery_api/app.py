@@ -18,7 +18,15 @@ def api():
 
 def handle_data(request):
     data = request.json
-    recommendations = cosine_sim.cosine_rec(data)
+
+    song_metrics = data.get('metrics')
+    genres_data = data.get('genres')
+
+    if len(song_metrics) > 0:
+        recommendations = cosine_sim.cosine_rec(data)
+    else:
+        # to be solved soon
+        pass
     return jsonify(recommendations)
 
 

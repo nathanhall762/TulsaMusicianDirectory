@@ -66,7 +66,6 @@ async function getSpotifyToken(): Promise<string> {
 
 export const getSpotifyData = functions.https.onRequest((request, response) => {
   debug('this is the body', request.body);
-  debug('this is the request', request);
   corsHandler(request, response, async () => {
     // recieve the body of the request (json object), and store it to a variable
     const requestBody = JSON.parse(request.body);
@@ -95,6 +94,9 @@ export const getSpotifyData = functions.https.onRequest((request, response) => {
       );
     }
 
+    const spotifyData = requestBody.spotify;
+    const genresData = requestBody.genres;
+
     debug('if youre reading this the token stuff worked');
 
     let songIDs: any = []; // array to store the songIDs from the spotify response
@@ -103,20 +105,20 @@ export const getSpotifyData = functions.https.onRequest((request, response) => {
     let albumIDs = [];
     let playlistIDs = [];
 
-    // iterate through all objects in requestBody
-    for (let i = 0; i < requestBody.length; i++) {
-      let idType = requestBody[i].idType;
+    // iterate through all objects in spotifyData
+    for (let i = 0; i < spotifyData.length; i++) {
+      let idType = spotifyData[i].idType;
 
       // switch statement to sort the IDs into their respective arrays
       switch (idType) {
         case 'artist':
-          artistIDs.push(requestBody[i].objectID);
+          artistIDs.push(spotifyData[i].objectID);
           break;
         case 'album':
-          albumIDs.push(requestBody[i].objectID);
+          albumIDs.push(spotifyData[i].objectID);
           break;
         case 'playlist':
-          playlistIDs.push(requestBody[i].objectID);
+          playlistIDs.push(spotifyData[i].objectID);
           break;
         default:
           throw new HttpsError(
@@ -288,8 +290,9 @@ export const getSpotifyData = functions.https.onRequest((request, response) => {
     console.log('Hardcoded value returned');
     // send hardcoded data back to the client
 
+    const discoveryPayload = { metrics: songMetrics, genres: genresData };
     const discoveryUrl = 'https://discoveryapi-7hkc33yowq-uc.a.run.app';
-    const discoveryData = await axios.post(discoveryUrl, songMetrics, {
+    const discoveryData = await axios.post(discoveryUrl, discoveryPayload, {
       headers: { 'Content-Type': 'application/json' },
     });
 

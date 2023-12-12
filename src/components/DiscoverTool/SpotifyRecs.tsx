@@ -152,7 +152,11 @@ const SpotifyRecs: React.FC = () => {
     setRecommendationLoading(true);
     setLoadingMessage('Loading your recommendations...');
     // call the recommendationRequest function
-    recommendationRequest(spotifyPayload)
+
+    // structure for cloud function
+    const data = { spotify: spotifyPayload, genres: [] };
+
+    recommendationRequest(data)
       .then((response) => {
         // this is an array of [spotify IDs, match value]
         console.log(`Response Recs: `, response);
