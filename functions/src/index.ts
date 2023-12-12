@@ -233,7 +233,6 @@ export const getSpotifyData = functions.https.onRequest((request, response) => {
             danceability: song.danceability,
             energy: song.energy,
             loudness: song.loudness,
-            mode: song.mode,
             acousticness: song.acousticness,
             instrumentalness: song.instrumentalness,
             liveness: song.liveness,

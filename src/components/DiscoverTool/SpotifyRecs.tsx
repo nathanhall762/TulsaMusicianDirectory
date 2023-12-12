@@ -1,5 +1,6 @@
 import recommendationRequest from '../DiscoverTool/recommendationRequest';
 import CardContainer from '../MusicianCard/CardContainer';
+import PlaylistSelector from './PlaylistSelector';
 import { useState, useEffect } from 'react';
 import useBearStore from '../../bearStore';
 import styled, { keyframes } from 'styled-components';
@@ -38,24 +39,6 @@ const SpotifyRecs: React.FC = () => {
     )}&scope=${SCOPES.join('%20')}&response_type=code&show_dialog=true`;
     window.location.href = authUrl;
     // alert('Coming Soon!');
-  };
-
-  const handleCheckboxChange = (playlistId: string) => {
-    setSpotifyPayload((prevPayload) => {
-      if (
-        prevPayload.some(
-          (item) => item.objectID === playlistId && item.idType === 'playlist'
-        )
-      ) {
-        // If already selected, remove from payload
-        return prevPayload.filter(
-          (item) => item.objectID !== playlistId || item.idType !== 'playlist'
-        );
-      } else {
-        // If not selected, add to payload
-        return [...prevPayload, { idType: 'playlist', objectID: playlistId }];
-      }
-    });
   };
 
   useEffect(() => {
@@ -160,6 +143,7 @@ const SpotifyRecs: React.FC = () => {
   }, []);
 
   const handleSubmit = () => {
+    console.log('hello hello');
     console.log('Spotify Payload:', spotifyPayload);
     // set loading message
     // set recommendation returned to true
@@ -186,10 +170,7 @@ const SpotifyRecs: React.FC = () => {
 
         // set the musicianIds to the response
         setMusicianIds(musicRecs);
-        // timer to wait for the recommendationRequest function to finish
-        setTimeout(() => {
-          setRecommendationLoading(false);
-        }, 5000);
+        setRecommendationLoading(false);
       })
       .catch((error) => {
         console.error('Error fetching recommendations', error);
@@ -200,87 +181,42 @@ const SpotifyRecs: React.FC = () => {
       });
   };
 
-  useEffect(() => {
-    console.log(spotifyPayload); // This will log the updated state
-  }, [spotifyPayload]); // Dependency array ensures this runs when artistIds changes
-
   return (
     <>
-      <div>
-        {!recommendationReturned && (
-          <SpotifyLogin>
-            <ButtonBox>
-              <SpotifyInstructionMessage>
-                Get recommended Tulsa artists using your Spotify listening
-                history.
-              </SpotifyInstructionMessage>
-              {authCode ? (
-                <div>
-                  <ProfileImage src={profileImageUrl} />
-                  <LoadingMessage>{loadingMessage}</LoadingMessage>
-                  {/* for each object in playlistData display playlist name and image url */}
-                  <SubmitButton onClick={handleSubmit}>Submit</SubmitButton>
-                  <PlaylistSelect>
-                    {playlistData.map((playlist: any) => (
-                      <PlaylistRow
-                        key={playlist.id}
-                        onClick={() => handleCheckboxChange(playlist.id)}
-                        checked={spotifyPayload.some(
-                          (item) =>
-                            item.objectID === playlist.id &&
-                            item.idType === 'playlist'
-                        )}
-                      >
-                        <div
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'space-evenly',
-                            width: '100%',
-                          }}
-                        >
-                          <Checkbox
-                            type='checkbox'
-                            checked={spotifyPayload.some(
-                              (item) =>
-                                item.objectID === playlist.id &&
-                                item.idType === 'playlist'
-                            )}
-                            onClick={(e) => e.stopPropagation()}
-                            readOnly
-                          />
-                          {playlist.images.length > 0 && (
-                            <PlaylistImage
-                              src={playlist.images[0].url}
-                              alt={playlist.name}
-                            />
-                          )}
-                          <PlaylistName>{playlist.name}</PlaylistName>
-                        </div>
-                      </PlaylistRow>
-                    ))}
-                  </PlaylistSelect>
-                </div>
-              ) : (
-                <SpotifyButton onClick={handleSpotifyLogin}>
-                  Login With Spotify
-                </SpotifyButton>
-              )}
-            </ButtonBox>
-          </SpotifyLogin>
-        )}
-
-        {recommendationReturned && recommendationLoading && (
+      {!recommendationReturned && (
+        <SpotifyLogin>
           <ButtonBox>
-            <LoadingMessage>{loadingMessage}</LoadingMessage>
-            <Loader />
+            <SpotifyInstructionMessage>
+              Get recommended Tulsa artists using your Spotify listening
+              history.
+            </SpotifyInstructionMessage>
+            {authCode ? (
+              <div>
+                <ProfileImage src={profileImageUrl} />
+                <LoadingMessage>{loadingMessage}</LoadingMessage>
+                <SubmitButton onClick={handleSubmit}>Submit</SubmitButton>
+                <PlaylistSelector
+                  playlistData={playlistData}
+                  spotifyPayload={spotifyPayload}
+                  setSpotifyPayload={setSpotifyPayload}
+                />
+              </div>
+            ) : (
+              <SpotifyButton onClick={handleSpotifyLogin}>
+                Login With Spotify
+              </SpotifyButton>
+            )}
           </ButtonBox>
-        )}
+        </SpotifyLogin>
+      )}
 
-        {recommendationReturned && !recommendationLoading && (
-          <CardContainer musicianIds={musicianIds} />
-        )}
-      </div>
+      {recommendationReturned && recommendationLoading && (
+        <ButtonBox>
+          <LoadingMessage>{loadingMessage}</LoadingMessage>
+          <Loader />
+        </ButtonBox>
+      )}
+
       {recommendationReturned && !recommendationLoading && (
         <CardContainer musicianIds={musicianIds} />
       )}
