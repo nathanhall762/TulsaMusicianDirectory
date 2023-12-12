@@ -5,10 +5,8 @@ import heroImage from '../assets/heroImage.webp';
 const Hero = () => {
   return (
     <HeroWrapper className='heroWrapper'>
-      <HeroTitle className='heroTitle'>Music In Tulsa</HeroTitle>
-      <HeroSubtitle className='heroSubtitle'>
-        Discover Tulsa's Music Scene
-      </HeroSubtitle>
+      <HeroTitle>Music In Tulsa</HeroTitle>
+      <HeroSubtitle>Discover Tulsa's Music Scene</HeroSubtitle>
       <ActionButton
         className='actionButton'
         onClick={() => {
@@ -45,46 +43,40 @@ const HeroWrapper = styled.div`
 `;
 
 const HeroTitle = styled.h1`
-  font-size: 7rem;
+  /* font-size: 7rem; */
   color: var(--color-text-primary);
   margin: 0;
   text-shadow: 0 2px 20px #000;
   font-family: 'Lobster';
   text-align: center;
 
-  // on mobile, make font-size smaller
   @media (max-width: 600px) {
     font-size: 3rem;
   }
 
   @media (max-height: 1000px) {
-    font-size: 4rem;
+    font-size: 2rem;
     margin-top: 1rem;
   }
 
   @media (max-height: 800px) {
-    font-size: 3rem;
+    font-size: 1.5rem;
   }
 `;
 
 const HeroSubtitle = styled.h2`
-  font-size: 3.5rem;
+  /* font-size: 3.5rem; */
   color: var(--color-text-primary);
   margin: 0;
   margin-top: 10rem;
   text-shadow: 0 2px 20px #000;
-  // shift down a little
   transform: translateY(2rem);
-  font-family: 'Lobster';
-
-  // on mobile, make font-size smaller
-  @media (max-width: 600px) {
-    font-size: 1.5rem;
-  }
-  // on mobile shorter screens, reduce margin-top
   @media (max-height: 1000px) {
     margin-top: 2rem;
-    font-size: 1.5rem;
+    /* font-size: 1rem !important; */
+  }
+  @media (max-width: 360px) {
+    margin-bottom: 2rem;
   }
 `;
 
@@ -105,11 +97,7 @@ const ActionButton = styled.button`
     color: var(--color-text-primary);
     box-shadow: 0 0 20px 5px beige;
     transform: scale(1.05) translateY(2rem);
-    transition:
-      background-color 1s,
-      color 1s,
-      transform 1s,
-      box-shadow 1s;
+    transition: all var(--animation-speed-medium) ease;
   }
 
   transition:
@@ -123,6 +111,9 @@ const ActionButton = styled.button`
     font-size: 1rem;
     padding: 0.5rem 1rem;
     margin-top: 1rem;
+  }
+  @media (max-width: 360px) {
+    display: none;
   }
 `;
 

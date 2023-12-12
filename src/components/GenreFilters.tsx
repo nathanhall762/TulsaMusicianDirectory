@@ -78,8 +78,8 @@ const BottomHeader = styled.div`
   position: sticky;
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
   overflow: auto;
-  padding: 0 0 0 11vw;
-  @media (max-width: 1000px) {
+  padding: 0 0 0 12vh;
+  @media (max-width: 600px) {
     position: sticky;
     padding: 0 0 0 24vw;
   }
