@@ -76,7 +76,7 @@ const MusicianPage = () => {
           </AddButton>
         // </Link>
       ) : null}
-      {/* show add musician button only if logged in */}
+      {/* show add musician button only if logged in
       <Link to='/addmusician' aria-label='add musician to directory'>
         <AddButton
           $backgroundColor='var(--color-accent)'
@@ -87,7 +87,7 @@ const MusicianPage = () => {
           <i className='fa-solid fa-edit' aria-hidden='true' />
           <span>Suggest Edits</span>
         </AddButton>
-      </Link>
+      </Link> */}
     </AddButtonContainer>
     </>
   );
