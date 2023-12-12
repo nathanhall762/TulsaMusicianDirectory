@@ -242,55 +242,43 @@ export const getSpotifyData = functions.https.onRequest((request, response) => {
           });
         });
       }
-    } else {
+    } else if (songIDs.length > 0) {
       fullSongMetrics = await axios.get(
         `${spotifyURL}/audio-features?ids=${songIDs}`,
         { headers }
       );
       requestCounter++;
+    } else {
+      fullSongMetrics = null;
     }
 
-    debug('we got metrics');
-
     // only push data we need to songMetrics array
-    fullSongMetrics.data.audio_features.forEach((song: any) => {
-      songMetrics.push({
-        danceability: song.danceability,
-        energy: song.energy,
-        loudness: song.loudness,
-        // mode: song.mode,
-        acousticness: song.acousticness,
-        instrumentalness: song.instrumentalness,
-        liveness: song.liveness,
-        valence: song.valence,
+    if (fullSongMetrics) {
+      debug('we got metrics');
+      fullSongMetrics.data.audio_features.forEach((song: any) => {
+        songMetrics.push({
+          danceability: song.danceability,
+          energy: song.energy,
+          loudness: song.loudness,
+          // mode: song.mode,
+          acousticness: song.acousticness,
+          instrumentalness: song.instrumentalness,
+          liveness: song.liveness,
+          valence: song.valence,
+        });
       });
-    });
+    }
 
-    // send the songMetrics back to the client
     console.log(`List of Song Metrics: ${songMetrics}`);
     debug('my full song metrics', songMetrics);
-    // response.send(songMetrics);
-
-    // hard code some return data for testing purposes
-    // let hardCodedData = [
-    //   '0J7CpIAISgYMRE2U5srb',
-    //   '2mGYEbLOtcSebv2Ufwiz',
-    //   '2pHruAGajA52930AmpFJ',
-    //   '3hYfK9hngUq6ib4MXSBq',
-    //   '3yKi215ZuU1ROWSWe8qc',
-    // ];
 
     // turn responsecounter into a string and log it
     let requestCounterString = requestCounter.toString();
     console.log(`Number of requests made to Spotify: ${requestCounterString}`);
     debug('number of requests', requestCounter);
-
-    // response.send(requestCounterString);
-
-    console.log('Hardcoded value returned');
-    // send hardcoded data back to the client
-
+    debug('me genres', genresData);
     const discoveryPayload = { metrics: songMetrics, genres: genresData };
+    debug('this here be me payload', discoveryPayload);
     const discoveryUrl = 'https://discoveryapi-7hkc33yowq-uc.a.run.app';
     const discoveryData = await axios.post(discoveryUrl, discoveryPayload, {
       headers: { 'Content-Type': 'application/json' },

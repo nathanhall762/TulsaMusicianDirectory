@@ -1,6 +1,7 @@
 import styled, { keyframes } from 'styled-components';
 import recommendationRequest from './recommendationRequest';
 import CardContainer from '../MusicianCard/CardContainer';
+import useBearStore from '../../bearStore';
 import { useState } from 'react';
 
 export default () => {
@@ -29,6 +30,8 @@ export default () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [recommendations, setRecommendations] = useState<string[] | null>(null);
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
+  const musicians = useBearStore((state) => state.musicians);
+  const [loadingMessage, setLoadingMessage] = useState<string>('');
 
   const toggleGenre = (genre: string) => {
     if (selectedGenres.includes(genre)) {
@@ -41,34 +44,35 @@ export default () => {
   const handleSubmit = async () => {
     setIsLoading(true);
     console.log(selectedGenres);
-    await (() => new Promise((resolve) => setTimeout(resolve, 2000)))();
-    setIsLoading(false);
-    console.log('done');
 
-    // recommendationRequest(selectedGenres)
-    //   .then((response) => {
-    //     // this is an array of [spotify IDs, match value]
-    //     console.log(`Response Recs: `, response);
+    setLoadingMessage('Loading Your Recommendations');
 
-    //     // match spotify IDs to firestore IDs
-    //     // from musicians global state
-    //     // this code is attrocious
-    //     // pls help
-    //     const musicRecs: [string] = response.map((artist: [string, string]) => {
-    //       const correctMusician = musicians.find((musician) =>
-    //         musician.music.spotify.includes(artist[0])
-    //       );
-    //       return correctMusician?.id;
-    //     });
+    const payload = { spotify: [], genres: selectedGenres };
+    recommendationRequest(payload)
+      .then((response) => {
+        // this is an array of [spotify IDs, match value]
+        console.log(`Response Recs: `, response);
 
-    //     // set the musicianIds to the response
-    //     setMusicianIds(musicRecs);
-    //     setRecommendationLoading(false);
-    //   })
-    //   .catch((error) => {
-    //     console.error('Error fetching recommendations', error);
-    //     setLoadingMessage('Error fetching recommendations. Please try again.');
-    //   });
+        // match spotify IDs to firestore IDs
+        // from musicians global state
+        // this code is attrocious
+        // pls help
+        const musicRecs: [string] = response.map((artist: [string, string]) => {
+          const correctMusician = musicians.find((musician) =>
+            musician.music.spotify.includes(artist[0])
+          );
+          return correctMusician?.id;
+        });
+
+        // set the musicianIds to the response
+        setRecommendations(musicRecs);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching recommendations', error);
+        setIsLoading(false);
+        setLoadingMessage('Error fetching recommendations. Please try again.');
+      });
   };
 
   if (recommendations) {
@@ -76,7 +80,7 @@ export default () => {
   } else if (isLoading) {
     return (
       <ButtonBox>
-        <LoadingMessage>Loading Your Recommendations</LoadingMessage>
+        <LoadingMessage>{loadingMessage}</LoadingMessage>
         <Loader />
       </ButtonBox>
     );
