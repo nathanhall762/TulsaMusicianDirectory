@@ -44,11 +44,11 @@ const DiscoverPage: React.FC<DiscoverPageProps> = ({ defaultSelectedMode }) => {
         </ManualInput>
       )}
       {selectedMode === 'Manual' && (
-        <ManualInput>
+        <SpotifyLogin>
           <ButtonBox>
             <ManualRecs />
           </ButtonBox>
-        </ManualInput>
+        </SpotifyLogin>
       )}
     </>
   );
@@ -135,6 +135,20 @@ export const ModeSelectButton = styled.div`
 `;
 
 const ManualInput = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-background-alt);
+  border-radius: 25px;
+  margin: 5rem;
+  text-align: center;
+  padding: 2rem;
+  @media (max-width: 1000px) {
+    margin: 3rem 1rem;
+  }
+`;
+
+const SpotifyLogin = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
