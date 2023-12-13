@@ -1,4 +1,5 @@
 import recommendationRequest from '../DiscoverTool/recommendationRequest';
+import { Link } from 'react-router-dom';
 import CardContainer from '../MusicianCard/CardContainer';
 import PlaylistSelector from './PlaylistSelector';
 import { useState, useEffect } from 'react';
@@ -135,9 +136,10 @@ const SpotifyRecs: React.FC = () => {
                   console.error('Error fetching user top artists', error)
                 );
             })
-            .catch((error) =>
-              console.error('Error fetching user profile', error)
-            );
+            .catch((error) => {
+              setLoadingMessage('Error Fetching User Profile');
+              console.error('Error fetching user profile', error);
+            });
         }
       });
     }
@@ -197,6 +199,14 @@ const SpotifyRecs: React.FC = () => {
                 <ProfileImage src={profileImageUrl} />
                 <LoadingMessage>{loadingMessage}</LoadingMessage>
                 <SubmitButton onClick={handleSubmit}>Submit</SubmitButton>
+                <h2>NOTICE</h2>
+                <SpotifyInstructionMessage>
+                  Currently this feature depends on an application extension
+                  request from Spotify. This means until we pass a review you
+                  must first get in contact with a MusicinTulsa admin to gain
+                  access to this feature. You can Reach us{' '}
+                  <Link to='/about'>Here</Link>
+                </SpotifyInstructionMessage>
                 <PlaylistSelector
                   playlistData={playlistData}
                   spotifyPayload={spotifyPayload}
@@ -204,9 +214,19 @@ const SpotifyRecs: React.FC = () => {
                 />
               </div>
             ) : (
-              <SpotifyButton onClick={handleSpotifyLogin}>
-                Login With Spotify
-              </SpotifyButton>
+              <>
+                <SpotifyButton onClick={handleSpotifyLogin}>
+                  Login With Spotify
+                </SpotifyButton>
+                <h2>NOTICE</h2>
+                <SpotifyInstructionMessage>
+                  Currently this feature depends on an application extension
+                  request from Spotify. This means until we pass a review you
+                  must first get in contact with a MusicinTulsa admin to gain
+                  access to this feature. You can reach us{' '}
+                  <Link to='/about'>Here</Link>
+                </SpotifyInstructionMessage>
+              </>
             )}
           </ButtonBox>
         </SpotifyLogin>
@@ -216,6 +236,13 @@ const SpotifyRecs: React.FC = () => {
         <ButtonBox>
           <LoadingMessage>{loadingMessage}</LoadingMessage>
           <Loader />
+          <h2>NOTICE</h2>
+          <SpotifyInstructionMessage>
+            Currently this feature depends on an application extension request
+            from Spotify. This means until we pass a review you must first get
+            in contact with a MusicinTulsa admin to gain access to this feature.
+            You can Reach us <Link to='/about'>Here</Link>
+          </SpotifyInstructionMessage>
         </ButtonBox>
       )}
 
