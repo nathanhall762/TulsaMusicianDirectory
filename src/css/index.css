@@ -183,7 +183,7 @@ iframe {
 }
 
 .genreFilter {
-  display: nonez;
+  display: none;
 }
 
 .heroWrapper {
@@ -196,10 +196,6 @@ iframe {
   background-size: cover;
   background-position: center;
   border-radius: 2rem;
-  margin-top: 2rem;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 2rem;
 }
 
 .heroTitle {

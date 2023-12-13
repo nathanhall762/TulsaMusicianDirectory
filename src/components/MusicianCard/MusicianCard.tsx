@@ -233,7 +233,7 @@ const MusicianCardBody = styled.div<{ $backgroundImage: string }>`
   &:hover ${NeedleArm} {
     transform: rotate(15deg);
   }
-  @media (max-width: 1000px) {
+  @media (max-width: 600px) {
     padding: 0;
     width: 100%;
     margin: 0.5rem 0;
