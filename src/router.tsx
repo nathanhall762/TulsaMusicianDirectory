@@ -1,7 +1,11 @@
 import { RouteObject } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
 // import { Suspense, lazy } from 'react';
 import App, { musicianDataLoader } from './components/App';
-import DiscoverPage from './components/DiscoverTool/DiscoverPage';
+// import DiscoverPage from './components/DiscoverTool/DiscoverPage';
+const DiscoverPage = lazy(
+  () => import('./components/DiscoverTool/DiscoverPage')
+);
 import ErrorElement from './components/ErrorElement';
 import MusicianForm from './components/MusicianAddForm';
 import About from './components/About';
@@ -27,11 +31,19 @@ const routes: RouteObject[] = [
       },
       {
         path: '/discover',
-        element: <DiscoverPage />,
+        element: (
+          <Suspense>
+            <DiscoverPage />
+          </Suspense>
+        ),
       },
       {
         path: '/callback',
-        element: <DiscoverPage />,
+        element: (
+          <Suspense>
+            <DiscoverPage />
+          </Suspense>
+        ),
       },
       {
         path: '/404',
