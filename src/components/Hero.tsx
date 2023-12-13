@@ -43,25 +43,25 @@ const HeroWrapper = styled.div`
 `;
 
 const HeroTitle = styled.h1`
-  /* font-size: 7rem; */
+  font-size: 7rem;
   color: var(--color-text-primary);
   margin: 0;
   text-shadow: 0 2px 20px #000;
   font-family: 'Lobster';
   text-align: center;
 
-  @media (max-width: 600px) {
+  @media (max-width: 1000px) {
     font-size: 3rem;
   }
 
-  @media (max-height: 1000px) {
+  /* @media (max-height: 1000px) {
     font-size: 2rem;
     margin-top: 1rem;
   }
 
   @media (max-height: 800px) {
     font-size: 1.5rem;
-  }
+  } */
 `;
 
 const HeroSubtitle = styled.h2`
