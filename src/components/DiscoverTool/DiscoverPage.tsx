@@ -1,11 +1,15 @@
 import styled from 'styled-components';
 import SpotifyRecs from './SpotifyRecs';
 import ManualRecs from './ManualRecs';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
-const DiscoverPage = () => {
+interface DiscoverPageProps {
+  defaultSelectedMode: 'Spotify' | 'Manual';
+}
+
+const DiscoverPage: React.FC<DiscoverPageProps> = ({ defaultSelectedMode }) => {
   const [selectedMode, setSelectedMode] = useState<'Spotify' | 'Manual'>(
-    'Spotify'
+    defaultSelectedMode
   );
 
   return (
@@ -32,7 +36,13 @@ const DiscoverPage = () => {
         </PageNavigation>
       </DiscoverPageLanding>
 
-      {selectedMode === 'Spotify' && <SpotifyRecs />}
+      {selectedMode === 'Spotify' && (
+        <ManualInput>
+          <ButtonBox>
+            <SpotifyRecs />
+          </ButtonBox>
+        </ManualInput>
+      )}
       {selectedMode === 'Manual' && (
         <ManualInput>
           <ButtonBox>

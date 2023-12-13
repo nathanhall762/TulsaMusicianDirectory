@@ -33,7 +33,7 @@ const routes: RouteObject[] = [
         path: '/discover',
         element: (
           <Suspense>
-            <DiscoverPage />
+            <DiscoverPage defaultSelectedMode='Manual' />
           </Suspense>
         ),
       },
@@ -41,7 +41,7 @@ const routes: RouteObject[] = [
         path: '/callback',
         element: (
           <Suspense>
-            <DiscoverPage />
+            <DiscoverPage defaultSelectedMode='Spotify' />
           </Suspense>
         ),
       },
