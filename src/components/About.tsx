@@ -255,7 +255,7 @@ const ContributorPill = styled.div`
 
 const Wrapper = styled.div`
   max-width: 1400px;
-  margin: 3rem;
+  margin: 3rem auto;
   padding: 0 1.5rem;
   display: flex;
   flex-direction: column;
