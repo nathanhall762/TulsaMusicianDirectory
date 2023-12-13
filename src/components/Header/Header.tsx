@@ -21,10 +21,14 @@ const Header = () => {
           <ShortTitle className='short-title'>Music In Tulsa</ShortTitle>
         </ShortTitleWrapper>
         <TopHeader className='top-header'>
-          <TitleLink to='/' aria-label='The Tulsa Musician Directory'>
-            <Title className='title'>Music In Tulsa</Title>
-            <h3>The Tulsa Musician Directory</h3>
-          </TitleLink>
+          <TitleWrapper className='title-link'>
+            <Link to='/' aria-label='Music In Tulsa'>
+              <Title className='title'>Music In Tulsa</Title>
+            </Link>
+            <Link to='/' aria-label='The Tulsa Musician Directory'>
+              <h2>The Tulsa Musician Directory</h2>
+            </Link>
+          </TitleWrapper>
           <NavBar className='navbar'>
             {openNav === 'search' && <DesktopSearch />}
             {location.pathname === '/' && (
@@ -47,7 +51,7 @@ const Header = () => {
                   location.pathname !== '/discover'
                 }
               >
-                <StyledLink to='/' aria-label='Hompage'>
+                <StyledLink to='/' aria-label='Directory'>
                   <p>Directory</p>
                 </StyledLink>
               </Navigation>
@@ -105,10 +109,12 @@ const Logo = styled.img`
   @media (max-width: 1000px) {
     box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
     margin-left: 0.5em;
+    height: 8vh;
+    width: 8vh;
   }
 `;
 
-const TitleLink = styled(Link)`
+const TitleWrapper = styled.div`
   @media (max-width: 800px) {
     display: none;
   }
@@ -118,11 +124,11 @@ const TitleLink = styled(Link)`
     padding-left: 15vh;
   }
   &:hover {
-    h3 {
+    h2 {
       opacity: 100%;
     }
   }
-  h3 {
+  h2 {
     display: flex;
     font-size: 1.3rem;
     color: var(--color-text-primary);
@@ -164,9 +170,6 @@ const ShortTitle = styled.h1`
   color: var(--color-text-primary);
   @media (max-width: 800px) {
     display: flex;
-  }
-  @media (max-width: 400px) {
-    display: none;
   }
 `;
 
