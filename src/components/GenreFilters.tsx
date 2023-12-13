@@ -81,7 +81,7 @@ const BottomHeader = styled.div`
   padding: 0 0 0 12vh;
   @media (max-width: 600px) {
     position: sticky;
-    padding: 0 0 0 24vw;
+    padding: 0;
   }
 `;
 
@@ -111,9 +111,6 @@ const GenreBase = styled.li<{ $genreSelected: boolean }>`
   &:hover {
     cursor: pointer;
     transform: scale(0.95);
-  }
-  @media (max-width: 1000px) {
-    display: none;
   }
   ${(props) => props.$genreSelected && 'background-color: var(--color-accent);'}
 `;

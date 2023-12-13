@@ -109,6 +109,8 @@ const Logo = styled.img`
   @media (max-width: 1000px) {
     box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
     margin-left: 0.5em;
+    height: 8vh;
+    width: 8vh;
   }
 `;
 
@@ -168,10 +170,6 @@ const ShortTitle = styled.h1`
   color: var(--color-text-primary);
   @media (max-width: 800px) {
     display: flex;
-  }
-  /* extra special for tiny screens */
-  @media (max-width: 350px) {
-    display: none;
   }
 `;
 
