@@ -9,9 +9,10 @@ import React, { useState, useEffect } from 'react';
 
 interface MusicianCardProps {
   musician: Musician;
+  isPending: boolean;
 }
 
-const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
+const MusicianCard: React.FC<MusicianCardProps> = ({ musician, isPending }) => {
   const { name, genre, profileImage } = musician;
   const navigate = useNavigate();
   const [windowWidth, setWindowWidth] = useState<number>(0);
@@ -62,7 +63,11 @@ const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
       <MusicianCardBody
         className='card-body'
         $backgroundImage={profileImage}
-        onClick={() => navigate(urlName)}
+        onClick={
+          isPending
+            ? () => navigate(`/approvemusician${urlName}`)
+            : () => navigate(urlName)
+        }
       >
         <CardTitle>{name}</CardTitle>
         <ImageContainer>

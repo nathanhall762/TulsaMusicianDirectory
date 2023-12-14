@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { storage } from '../firebase';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { app } from '../firebase';
 import { addMusicianPending } from '../cloudFunctions';
 import { v4 } from 'uuid';
 import styles from '../css/MusicianAddForm.module.css';
@@ -10,7 +9,7 @@ import useBearStore from '../bearStore';
 import Login from './Login';
 import { Link } from 'react-router-dom';
 import { BackButton } from './MusicianPage/MusicianPage';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 type MusicianFormData = {
   name: string;
@@ -35,6 +34,7 @@ const MusicianForm = () => {
   const user = useBearStore((state) => state.user);
   const [imageUpload, setImageUpload] = useState<File>();
   const [submitActive, setSubmitActive] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<MusicianFormData>({
     name: '',
     music: {
@@ -55,6 +55,7 @@ const MusicianForm = () => {
   const navigate = useNavigate();
 
   const handleSubmitToFirestore = async (e: React.FormEvent) => {
+    setIsLoading(true);
     try {
       if (!user?.userCredential) return;
       e.preventDefault();
@@ -68,9 +69,11 @@ const MusicianForm = () => {
       } else {
         alert('error uploading musician profile');
       }
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
       alert('error uploading musician profile');
+      setIsLoading(false);
     }
   };
 
@@ -103,6 +106,12 @@ const MusicianForm = () => {
       alert('invalid file type, must be .jpg, .jpeg, or .png');
       throw new Error('invalid file type');
     }
+    const { ref, uploadBytes, getDownloadURL, getStorage } = await import(
+      'firebase/storage'
+    );
+
+    const storage = getStorage(app);
+
     const storageRef = ref(storage, `images/${formData.name + v4()}`);
     await uploadBytes(storageRef, imageUpload);
     const url = await getDownloadURL(storageRef);
@@ -140,6 +149,15 @@ const MusicianForm = () => {
           <BackButton>Go Back</BackButton>
         </Link>
       </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <LoadingWrapper>
+        <LoadingMessage>Uploading Musician</LoadingMessage>
+        <Loader />
+      </LoadingWrapper>
     );
   }
 
@@ -400,6 +418,35 @@ const FormContainer = styled.div`
       background-color: var(--color-background-main);
     }
   }
+`;
+
+const rotate = keyframes`
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+`;
+
+const Loader = styled.div`
+  border: 5px solid var(--color-background-main); /* Light grey */
+  border-top: 5px solid var(--color-accent); /* Blue */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: ${rotate} 2s linear infinite;
+  margin: 20px auto;
+`;
+
+const LoadingMessage = styled.p`
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 1rem;
+`;
+
+const LoadingWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5rem;
 `;
 
 export default MusicianForm;
