@@ -6,7 +6,9 @@ const About = () => {
     <Wrapper>
       <AboveTheFold>
         <CopyContainer>
-          <Title>About MusicInTulsa<br></br>.com</Title>
+          <Title>
+            About MusicInTulsa<br></br>.com
+          </Title>
           <SmallTitle>The Tulsa Musician Directory:</SmallTitle>
           <Paragraph>
             <span>
@@ -226,11 +228,13 @@ const ContributorPill = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
-  width: 25vw;
+  width: 30vw;
+  max-width: 430px;
   margin: auto;
   border-radius: 10rem;
   background-color: var(--color-secondary);
   margin-bottom: 1rem;
+
   img {
     width: 10rem;
     height: 10rem;
