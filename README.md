@@ -30,9 +30,9 @@ Experience seamless music discovery with our embedded music player. Listen to tr
 
 Follow and connect with musicians on their platforms by easily accessing their online presence through links provided on musician profiles that lead to their websites, social media profiles, and more.
 
-### Upcoming Discovery Page (Coming Soon):
+### Discovery Page :
 
-Our upcoming discovery page is designed to enable local music exploration. Simply search and select your favorite artists, and our platform will curate a personalized directory of local musicians based on your preferences, making it easier than ever to discover new talent.
+Our discovery page is designed to enable local music exploration. Simply search and select your favorite artists, and our platform will curate a personalized directory of local musicians based on your preferences, making it easier than ever to discover new talent.
 
 ## Team
 
