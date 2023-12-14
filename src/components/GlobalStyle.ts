@@ -38,6 +38,7 @@ export const GlobalStyle = createGlobalStyle`
     --tiktok-color: #000000;
     --twitch-color: #9146ff;
     --threads-color: #808080;
+    --instagram-color: #d62976;
     --instagram-gradient: linear-gradient(
       45deg,
       #405de6,
@@ -72,7 +73,7 @@ export const GlobalStyle = createGlobalStyle`
 
 a {
 font-weight: 500;
-color: var(--color-primary);
+color: var(--color-text-secondary);
 text-decoration: inherit;
 }
 
