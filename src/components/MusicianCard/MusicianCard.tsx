@@ -79,7 +79,7 @@ const NeedleArmContainer = styled.div`
   width: 160px;
   height: 250px;
   position: absolute;
-  top: 25%;
+  top: 28%;
   right: -20%;
   transform: translateX(-50%);
   pointer-events: none;
