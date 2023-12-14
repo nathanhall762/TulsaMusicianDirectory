@@ -188,52 +188,47 @@ const SpotifyRecs: React.FC = () => {
   return (
     <>
       {!recommendationReturned && (
-        <SpotifyLogin>
-          <ButtonBox>
-            <SpotifyInstructionMessage>
-              Get recommended Tulsa artists using your Spotify listening
-              history.
-            </SpotifyInstructionMessage>
-            {authCode ? (
-              <div>
-                <ProfileImage src={profileImageUrl} />
-                <LoadingMessage>{loadingMessage}</LoadingMessage>
-                <SubmitButton onClick={handleSubmit}>Submit</SubmitButton>
-                <h2>NOTICE</h2>
-                <SpotifyInstructionMessage>
-                  Currently this feature depends on an application extension
-                  request from Spotify. This means until we pass a review you
-                  must first get in contact with a MusicinTulsa admin to gain
-                  access to this feature. You can Reach us{' '}
-                  <Link to='/about'>Here</Link>
-                </SpotifyInstructionMessage>
-                <PlaylistSelector
-                  playlistData={playlistData}
-                  spotifyPayload={spotifyPayload}
-                  setSpotifyPayload={setSpotifyPayload}
-                />
-              </div>
-            ) : (
-              <>
-                <SpotifyButton onClick={handleSpotifyLogin}>
-                  Login With Spotify
-                </SpotifyButton>
-                <h2>NOTICE</h2>
-                <SpotifyInstructionMessage>
-                  Currently this feature depends on an application extension
-                  request from Spotify. This means until we pass a review you
-                  must first get in contact with a MusicinTulsa admin to gain
-                  access to this feature. You can reach us{' '}
-                  <Link to='/about'>Here</Link>
-                </SpotifyInstructionMessage>
-              </>
-            )}
-          </ButtonBox>
-        </SpotifyLogin>
+        <>
+          <SpotifyInstructionMessage>
+            Get recommended Tulsa artists using your Spotify listening history.
+          </SpotifyInstructionMessage>
+          {authCode ? (
+            <div>
+              <ProfileImage src={profileImageUrl} />
+              <LoadingMessage>{loadingMessage}</LoadingMessage>
+              <SubmitButton onClick={handleSubmit}>Submit</SubmitButton>
+              <h2>NOTICE</h2>
+              <SpotifyInstructionMessage>
+                Currently this feature depends on an application extension
+                request from Spotify. This means until we pass a review you must
+                first get in contact with a MusicinTulsa admin to gain access to
+                this feature. You can Reach us <Link to='/about'>Here</Link>
+              </SpotifyInstructionMessage>
+              <PlaylistSelector
+                playlistData={playlistData}
+                spotifyPayload={spotifyPayload}
+                setSpotifyPayload={setSpotifyPayload}
+              />
+            </div>
+          ) : (
+            <>
+              <SpotifyButton onClick={handleSpotifyLogin}>
+                Login With Spotify
+              </SpotifyButton>
+              <h2>NOTICE</h2>
+              <SpotifyInstructionMessage>
+                Currently this feature depends on an application extension
+                request from Spotify. This means until we pass a review you must
+                first get in contact with a MusicinTulsa admin to gain access to
+                this feature. You can reach us <Link to='/about'>Here</Link>
+              </SpotifyInstructionMessage>
+            </>
+          )}
+        </>
       )}
 
       {recommendationReturned && recommendationLoading && (
-        <ButtonBox>
+        <>
           <LoadingMessage>{loadingMessage}</LoadingMessage>
           <Loader />
           <h2>NOTICE</h2>
@@ -243,7 +238,7 @@ const SpotifyRecs: React.FC = () => {
             in contact with a MusicinTulsa admin to gain access to this feature.
             You can Reach us <Link to='/about'>Here</Link>
           </SpotifyInstructionMessage>
-        </ButtonBox>
+        </>
       )}
 
       {recommendationReturned && !recommendationLoading && (
@@ -254,20 +249,6 @@ const SpotifyRecs: React.FC = () => {
 };
 
 export default SpotifyRecs;
-
-const SpotifyLogin = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--color-background-alt);
-  border-radius: 25px;
-  margin: 5rem;
-  text-align: center;
-  padding: 2rem;
-  @media (max-width: 1000px) {
-    margin: 3rem 1rem;
-  }
-`;
 
 const SpotifyInstructionMessage = styled.h2`
   color: var(--color-text-primary);
@@ -326,27 +307,5 @@ const SpotifyButton = styled.button`
   &:hover {
     cursor: pointer;
     background-color: var(--color-background-main) !important;
-  }
-`;
-
-const ButtonBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  flex-direction: column;
-  button {
-    background-color: var(--color-accent);
-    color: var(--color-text-inverse);
-    font-size: 1rem;
-    font-weight: 700;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    border: none;
-    transition: all var(--animation-speed-fast) ease;
-    &:hover {
-      cursor: pointer;
-      background-color: var(--color-background-main);
-    }
   }
 `;
