@@ -14,6 +14,7 @@ interface MusicianCardProps {
 const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
   const { name, genre, profileImage } = musician;
   const navigate = useNavigate();
+  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
 
   const urlName = '/' + name.replaceAll(' ', '_').toLowerCase();
 
@@ -22,9 +23,20 @@ const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
   const [rotation, setRotation] = useState(0);
 
   useEffect(() => {
+    // Function to update windowWidth when the window is resized
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    // Add event listener for window resize
+    window.addEventListener('resize', handleResize);
+
+    // Initial value setup
+    setWindowWidth(window.innerWidth);
+
     let animationFrameId: any;
 
-    if (isHovered) {
+    if (isHovered && windowWidth >= 1000) {
       const startTime = performance.now();
 
       const animate = (currentTime: any) => {
@@ -41,6 +53,7 @@ const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
 
     return () => {
       cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', handleResize);
     };
   }, [isHovered]);
 
