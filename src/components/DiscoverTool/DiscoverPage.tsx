@@ -160,7 +160,6 @@ const SpotifyLogin = styled.div`
   padding: 2rem;
   @media (max-width: 1000px) {
     margin: 3rem 1rem;
-    padding: 2rem 0;
   }
 `;
 
