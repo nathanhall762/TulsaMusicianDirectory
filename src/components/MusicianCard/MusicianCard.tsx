@@ -89,11 +89,11 @@ const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
 };
 
 const NeedleArmContainer = styled.div`
-  width: 160px;
+  width: 145px;
   height: 250px;
   position: absolute;
-  top: 28%;
-  right: -20%;
+  top: 22%;
+  right: -18%;
   transform: translateX(-50%);
   pointer-events: none;
 
