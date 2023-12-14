@@ -127,6 +127,10 @@ const PlaylistRow = styled.div<{ checked: boolean }>`
 const PlaylistImage = styled.img`
   width: 200px; // Example size, adjust as needed
   height: 200px;
+  @media (max-width: 1000px) {
+    width: 150px;
+    height: 150px;
+  }
 `;
 
 const PlaylistName = styled.p`

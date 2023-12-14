@@ -158,8 +158,13 @@ const SpotifyLogin = styled.div`
   margin: 5rem;
   text-align: center;
   padding: 2rem;
+  min-width: 300px;
   @media (max-width: 1000px) {
     margin: 3rem 1rem;
+  }
+  /* margin breaks on really small screen sizes*/
+  @media (max-width: 450px) {
+    margin: 3rem 0;
   }
 `;
 

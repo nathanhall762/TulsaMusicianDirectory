@@ -197,13 +197,18 @@ const SpotifyRecs: React.FC = () => {
               <ProfileImage src={profileImageUrl} />
               <LoadingMessage>{loadingMessage}</LoadingMessage>
               <SubmitButton onClick={handleSubmit}>Submit</SubmitButton>
-              <h2>NOTICE</h2>
-              <SpotifyInstructionMessage>
-                Currently this feature depends on an application extension
-                request from Spotify. This means until we pass a review you must
-                first get in contact with a MusicinTulsa admin to gain access to
-                this feature. You can Reach us <Link to='/about'>Here</Link>
-              </SpotifyInstructionMessage>
+              {playlistData.length === 0 && (
+                <>
+                  <h2>NOTICE</h2>
+                  <SpotifyInstructionMessage>
+                    Currently this feature depends on an application extension
+                    request from Spotify. This means until we pass a review you
+                    must first get in contact with a MusicinTulsa admin to gain
+                    access to this feature. You can Reach us{' '}
+                    <Link to='/about'>Here</Link>
+                  </SpotifyInstructionMessage>
+                </>
+              )}
               <PlaylistSelector
                 playlistData={playlistData}
                 spotifyPayload={spotifyPayload}
@@ -231,13 +236,6 @@ const SpotifyRecs: React.FC = () => {
         <>
           <LoadingMessage>{loadingMessage}</LoadingMessage>
           <Loader />
-          <h2>NOTICE</h2>
-          <SpotifyInstructionMessage>
-            Currently this feature depends on an application extension request
-            from Spotify. This means until we pass a review you must first get
-            in contact with a MusicinTulsa admin to gain access to this feature.
-            You can Reach us <Link to='/about'>Here</Link>
-          </SpotifyInstructionMessage>
         </>
       )}
 
