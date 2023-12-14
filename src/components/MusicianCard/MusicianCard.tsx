@@ -14,7 +14,7 @@ interface MusicianCardProps {
 const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
   const { name, genre, profileImage } = musician;
   const navigate = useNavigate();
-  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
+  const [windowWidth, setWindowWidth] = useState<number>(0);
 
   const urlName = '/' + name.replaceAll(' ', '_').toLowerCase();
 
