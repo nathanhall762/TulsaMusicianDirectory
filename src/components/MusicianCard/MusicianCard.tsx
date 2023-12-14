@@ -14,6 +14,7 @@ interface MusicianCardProps {
 const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
   const { name, genre, profileImage } = musician;
   const navigate = useNavigate();
+  const [windowWidth, setWindowWidth] = useState<number>(0);
 
   const urlName = '/' + name.replaceAll(' ', '_').toLowerCase();
 
@@ -22,9 +23,20 @@ const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
   const [rotation, setRotation] = useState(0);
 
   useEffect(() => {
+    // Function to update windowWidth when the window is resized
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    // Add event listener for window resize
+    window.addEventListener('resize', handleResize);
+
+    // Initial value setup
+    setWindowWidth(window.innerWidth);
+
     let animationFrameId: any;
 
-    if (isHovered) {
+    if (isHovered && windowWidth >= 1000) {
       const startTime = performance.now();
 
       const animate = (currentTime: any) => {
@@ -41,6 +53,7 @@ const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
 
     return () => {
       cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', handleResize);
     };
   }, [isHovered]);
 
@@ -66,7 +79,7 @@ const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
           />
         </ImageContainer>
         <NeedleArmContainer>
-          <NeedleArm />
+          <NeedleArm $shouldRotate={isHovered} />
         </NeedleArmContainer>
         <Genres>Genre: {genre.length !== 0 ? genre.join(', ') : 'NA'}</Genres>
         <LinkContainer musician={musician} />
@@ -74,6 +87,32 @@ const MusicianCard: React.FC<MusicianCardProps> = ({ musician }) => {
     </>
   );
 };
+
+const NeedleArmContainer = styled.div`
+  width: 160px;
+  height: 250px;
+  position: absolute;
+  top: 28%;
+  right: -20%;
+  transform: translateX(-50%);
+  pointer-events: none;
+
+  @media (max-width: 1000px) {
+    display: none;
+  }
+`;
+
+const NeedleArm = styled.div<{ $shouldRotate: boolean }>`
+  background-image: url(${TurntableArm});
+  background-size: cover;
+  background-position: left;
+  width: 100%;
+  height: 100%;
+  transform-origin: top right;
+  transform: rotate(0deg);
+  transition: transform 1s;
+  ${(props) => (props.$shouldRotate ? 'transform: rotate(15deg);' : null)}
+`;
 
 export const CardImage = styled.img`
   width: 250px;
@@ -112,31 +151,6 @@ export const Genres = styled.p`
   color: var(--color-text-primary);
   transition: all var(--animation-speed-medium-slow) ease;
   margin-top: 10px;
-`;
-
-const NeedleArmContainer = styled.div`
-  width: 75px;
-  height: 250px;
-  position: absolute;
-  top: 25%;
-  right: -3%;
-  transform: translateX(-50%);
-  pointer-events: none;
-
-  @media (max-width: 1000px) {
-    display: none;
-  }
-`;
-
-const NeedleArm = styled.div`
-  background-image: url(${TurntableArm});
-  background-size: cover;
-  background-position: center;
-  width: 100%;
-  height: 100%;
-  transform-origin: top center;
-  transform: rotate(0deg);
-  transition: transform 1s;
 `;
 
 const MusicianCardBody = styled.div<{ $backgroundImage: string }>`
@@ -230,9 +244,6 @@ const MusicianCardBody = styled.div<{ $backgroundImage: string }>`
     margin-top: 10px;
   }
 
-  &:hover ${NeedleArm} {
-    transform: rotate(15deg);
-  }
   @media (max-width: 600px) {
     padding: 0;
     width: 100%;
