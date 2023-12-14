@@ -26,16 +26,18 @@ const CardContainer = ({ musicianIds }: CardContainerProps) => {
     if (musicianIds && musicianIds.length > 0) {
       return musicianIds.includes(musician.id);
     }
-  
+
     // Then check for genre and search filters
-    const genreMatch = genreFilter.length === 0 || genreFilter.includes(musician.genre[0]);
-    const searchMatch = !searchFilter || musician.name.toLowerCase().includes(searchFilter.toLowerCase());
-    
+    const genreMatch =
+      genreFilter.length === 0 || genreFilter.includes(musician.genre[0]);
+    const searchMatch =
+      !searchFilter ||
+      musician.name.toLowerCase().includes(searchFilter.toLowerCase());
+
     return genreMatch && searchMatch;
   };
-  
+
   const filteredMusicians = musicians.filter(filterMusicians);
-  
 
   // const filteredMusicians =
   //   genreFilter.length || searchFilter || musicianIds
@@ -49,7 +51,11 @@ const CardContainer = ({ musicianIds }: CardContainerProps) => {
   return (
     <CardContainerDiv className='card-container'>
       {sortedMusicians.map((musician) => (
-        <MusicianCard key={musician.name} musician={musician} />
+        <MusicianCard
+          key={musician.name}
+          musician={musician}
+          isPending={false}
+        />
       ))}
     </CardContainerDiv>
   );
