@@ -37,18 +37,18 @@ const DiscoverPage: React.FC<DiscoverPageProps> = ({ defaultSelectedMode }) => {
       </DiscoverPageLanding>
 
       {selectedMode === 'Spotify' && (
-        <ManualInput>
+        <SpotifyLogin>
           <ButtonBox>
             <SpotifyRecs />
           </ButtonBox>
-        </ManualInput>
+        </SpotifyLogin>
       )}
       {selectedMode === 'Manual' && (
-        <SpotifyLogin>
+        <ManualInput>
           <ButtonBox>
             <ManualRecs />
           </ButtonBox>
-        </SpotifyLogin>
+        </ManualInput>
       )}
     </>
   );
@@ -145,6 +145,7 @@ const ManualInput = styled.div`
   padding: 2rem;
   @media (max-width: 1000px) {
     margin: 3rem 1rem;
+    padding: 2rem 0;
   }
 `;
 
@@ -159,6 +160,7 @@ const SpotifyLogin = styled.div`
   padding: 2rem;
   @media (max-width: 1000px) {
     margin: 3rem 1rem;
+    padding: 2rem 0;
   }
 `;
 
