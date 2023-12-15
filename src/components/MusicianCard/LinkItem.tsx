@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { logEvent } from 'firebase/analytics';
+import { analytics } from '../../firebase';
 
 const Link = styled.a<{ $linkName: string }>`
   display: flex;
@@ -21,9 +22,9 @@ interface LinkItemProps {
   styleClassName: string;
 }
 
-const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
-  // Call logEvent here
+const handleClick = () => {
   logEvent(analytics, 'connection_made');
+  console.log('connection_made');
 };
 
 const LinkItem: React.FC<LinkItemProps> = ({
