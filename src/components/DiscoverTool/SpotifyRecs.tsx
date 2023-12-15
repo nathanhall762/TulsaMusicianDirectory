@@ -19,7 +19,7 @@ const SpotifyRecs: React.FC = () => {
   const [musicianIds, setMusicianIds] = useState<string[]>([]); // Optional array of musician IDs
   const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
   const CLIENT_ID = '38f1ee602dbe4bffbb05672320a597f1';
-  const SCOPES = ['user-top-read', 'playlist-read-private'];
+  const SCOPES = ['user-top-read', 'playlist-read-private', 'playlist-modify-public'];
   const REACT_APP_CLIENT_SECRET = 'f0341666a7764b2dbe5dee8f8259812f';
 
   if (

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { logEvent } from 'firebase/analytics';
 
 const Link = styled.a<{ $linkName: string }>`
   display: flex;
@@ -20,6 +21,11 @@ interface LinkItemProps {
   styleClassName: string;
 }
 
+const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+  // Call logEvent here
+  logEvent(analytics, 'connection_made');
+};
+
 const LinkItem: React.FC<LinkItemProps> = ({
   url,
   iconClassName,
@@ -30,6 +36,7 @@ const LinkItem: React.FC<LinkItemProps> = ({
   return (
     <Link
       href={url}
+      onClick={handleClick}
       target='_blank'
       rel='noopener noreferrer'
       $linkName={styleClassName}
