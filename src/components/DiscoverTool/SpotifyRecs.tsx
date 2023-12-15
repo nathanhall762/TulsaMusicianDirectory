@@ -1,4 +1,5 @@
 import recommendationRequest from '../DiscoverTool/recommendationRequest';
+import { Link } from 'react-router-dom';
 import CardContainer from '../MusicianCard/CardContainer';
 import PlaylistSelector from './PlaylistSelector';
 import { useState, useEffect } from 'react';
@@ -19,7 +20,7 @@ const SpotifyRecs: React.FC = () => {
   const [musicianIds, setMusicianIds] = useState<string[]>([]); // Optional array of musician IDs
   const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
   const CLIENT_ID = '38f1ee602dbe4bffbb05672320a597f1';
-  const SCOPES = ['user-top-read', 'playlist-read-private', 'playlist-modify-public'];
+  const SCOPES = ['user-top-read', 'playlist-modify-public'];
   const REACT_APP_CLIENT_SECRET = 'f0341666a7764b2dbe5dee8f8259812f';
 
   if (
@@ -134,9 +135,10 @@ const SpotifyRecs: React.FC = () => {
                   console.error('Error fetching user top artists', error)
                 );
             })
-            .catch((error) =>
-              console.error('Error fetching user profile', error)
-            );
+            .catch((error) => {
+              setLoadingMessage('Error Fetching User Profile');
+              console.error('Error fetching user profile', error);
+            });
         }
       });
     }
@@ -185,37 +187,55 @@ const SpotifyRecs: React.FC = () => {
   return (
     <>
       {!recommendationReturned && (
-        <SpotifyLogin>
-          <ButtonBox>
-            <SpotifyInstructionMessage>
-              Get recommended Tulsa artists using your Spotify listening
-              history.
-            </SpotifyInstructionMessage>
-            {authCode ? (
-              <div>
-                <ProfileImage src={profileImageUrl} />
-                <LoadingMessage>{loadingMessage}</LoadingMessage>
-                <SubmitButton onClick={handleSubmit}>Submit</SubmitButton>
-                <PlaylistSelector
-                  playlistData={playlistData}
-                  spotifyPayload={spotifyPayload}
-                  setSpotifyPayload={setSpotifyPayload}
-                />
-              </div>
-            ) : (
+        <>
+          <SpotifyInstructionMessage>
+            Get recommended Tulsa artists using your Spotify listening history.
+          </SpotifyInstructionMessage>
+          {authCode ? (
+            <div>
+              <ProfileImage src={profileImageUrl} />
+              <LoadingMessage>{loadingMessage}</LoadingMessage>
+              <SubmitButton onClick={handleSubmit}>Submit</SubmitButton>
+              {playlistData.length === 0 && (
+                <>
+                  <h2>NOTICE</h2>
+                  <SpotifyInstructionMessage>
+                    Currently this feature depends on an application extension
+                    request from Spotify. This means until we pass a review you
+                    must first get in contact with a MusicinTulsa admin to gain
+                    access to this feature. You can Reach us{' '}
+                    <Link to='/about'>Here</Link>
+                  </SpotifyInstructionMessage>
+                </>
+              )}
+              <PlaylistSelector
+                playlistData={playlistData}
+                spotifyPayload={spotifyPayload}
+                setSpotifyPayload={setSpotifyPayload}
+              />
+            </div>
+          ) : (
+            <>
               <SpotifyButton onClick={handleSpotifyLogin}>
                 Login With Spotify
               </SpotifyButton>
-            )}
-          </ButtonBox>
-        </SpotifyLogin>
+              <h2>NOTICE</h2>
+              <SpotifyInstructionMessage>
+                Currently this feature depends on an application extension
+                request from Spotify. This means until we pass a review you must
+                first get in contact with a MusicinTulsa admin to gain access to
+                this feature. You can reach us <Link to='/about'>Here</Link>
+              </SpotifyInstructionMessage>
+            </>
+          )}
+        </>
       )}
 
       {recommendationReturned && recommendationLoading && (
-        <ButtonBox>
+        <>
           <LoadingMessage>{loadingMessage}</LoadingMessage>
           <Loader />
-        </ButtonBox>
+        </>
       )}
 
       {recommendationReturned && !recommendationLoading && (
@@ -226,20 +246,6 @@ const SpotifyRecs: React.FC = () => {
 };
 
 export default SpotifyRecs;
-
-const SpotifyLogin = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--color-background-alt);
-  border-radius: 25px;
-  margin: 5rem;
-  text-align: center;
-  padding: 2rem;
-  @media (max-width: 1000px) {
-    margin: 3rem 1rem;
-  }
-`;
 
 const SpotifyInstructionMessage = styled.h2`
   color: var(--color-text-primary);
@@ -298,27 +304,5 @@ const SpotifyButton = styled.button`
   &:hover {
     cursor: pointer;
     background-color: var(--color-background-main) !important;
-  }
-`;
-
-const ButtonBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  flex-direction: column;
-  button {
-    background-color: var(--color-accent);
-    color: var(--color-text-inverse);
-    font-size: 1rem;
-    font-weight: 700;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    border: none;
-    transition: all var(--animation-speed-fast) ease;
-    &:hover {
-      cursor: pointer;
-      background-color: var(--color-background-main);
-    }
   }
 `;

@@ -1,6 +1,6 @@
 import { animateScroll as scroll } from 'react-scroll';
 import styled from 'styled-components';
-import heroImage from '../assets/heroImage.webp';
+import heroImage from '../assets/heroImage-small.webp';
 
 const Hero = () => {
   return (

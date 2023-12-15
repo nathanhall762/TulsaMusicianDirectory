@@ -1,11 +1,15 @@
 import styled from 'styled-components';
 import SpotifyRecs from './SpotifyRecs';
 import ManualRecs from './ManualRecs';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
-const DiscoverPage = () => {
+interface DiscoverPageProps {
+  defaultSelectedMode: 'Spotify' | 'Manual';
+}
+
+const DiscoverPage: React.FC<DiscoverPageProps> = ({ defaultSelectedMode }) => {
   const [selectedMode, setSelectedMode] = useState<'Spotify' | 'Manual'>(
-    'Spotify'
+    defaultSelectedMode
   );
 
   return (
@@ -32,7 +36,13 @@ const DiscoverPage = () => {
         </PageNavigation>
       </DiscoverPageLanding>
 
-      {selectedMode === 'Spotify' && <SpotifyRecs />}
+      {selectedMode === 'Spotify' && (
+        <SpotifyLogin>
+          <ButtonBox>
+            <SpotifyRecs />
+          </ButtonBox>
+        </SpotifyLogin>
+      )}
       {selectedMode === 'Manual' && (
         <ManualInput>
           <ButtonBox>
@@ -135,6 +145,26 @@ const ManualInput = styled.div`
   padding: 2rem;
   @media (max-width: 1000px) {
     margin: 3rem 1rem;
+    padding: 2rem 0;
+  }
+`;
+
+const SpotifyLogin = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-background-alt);
+  border-radius: 25px;
+  margin: 5rem;
+  text-align: center;
+  padding: 2rem;
+  min-width: 300px;
+  @media (max-width: 1000px) {
+    margin: 3rem 1rem;
+  }
+  /* margin breaks on really small screen sizes*/
+  @media (max-width: 400px) {
+    margin: 3rem 0rem;
   }
 `;
 

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { storage } from '../firebase';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { app } from '../firebase';
 import { approveMusician } from '../cloudFunctions';
 import { v4 } from 'uuid';
 import { validateURLs } from '../utils';
@@ -119,6 +118,12 @@ const MusicianApproveForm = () => {
   };
 
   const uploadImage = async () => {
+    const { ref, uploadBytes, getDownloadURL, getStorage } = await import(
+      'firebase/storage'
+    );
+
+    const storage = getStorage(app);
+
     if (imageUpload) {
       // New image is uploaded
       const storageRef = ref(storage, `images/${formData.name + v4()}`);

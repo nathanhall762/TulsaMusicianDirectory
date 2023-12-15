@@ -6,7 +6,7 @@ import { Musician } from '../global';
 import useBearStore from '../bearStore';
 
 const MusicianApprovePage = () => {
-  const [musicians, setPendingMusicians] = useState<Musician[]>([]);
+  const [pendingMusicians, setPendingMusicians] = useState<Musician[]>([]);
   const user = useBearStore((state) => state.user);
 
   const getPendingCollection = async () => {
@@ -28,7 +28,7 @@ const MusicianApprovePage = () => {
         <p>Only admins can approve musicians.</p>
       </div>
     );
-  } else if (musicians.length) {
+  } else if (pendingMusicians.length) {
     return (
       <div>
         <Login />
@@ -36,8 +36,12 @@ const MusicianApprovePage = () => {
           click here to update pending musicians
         </button>
         <div className='cardContainer'>
-          {musicians.map((musician) => (
-            <MusicianCard key={musician.name} musician={musician} />
+          {pendingMusicians.map((musician) => (
+            <MusicianCard
+              key={musician.name}
+              musician={musician}
+              isPending={true}
+            />
           ))}
         </div>
       </div>

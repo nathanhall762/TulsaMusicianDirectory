@@ -1,6 +1,5 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
-import { getStorage } from 'firebase/storage';
 import { getAnalytics } from 'firebase/analytics';
 
 const env = import.meta.env;
@@ -27,7 +26,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const storage = getStorage(app);
 const analytics = getAnalytics(app);
 
-export { app, storage, analytics };
+export { app, analytics };
+
