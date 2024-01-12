@@ -11,7 +11,9 @@ import {
   CardImage,
 } from '../MusicianCard/MusicianCard';
 import { AddButton, AddButtonContainer } from '../MusicianCard/AddButtons';
-// import { useState } from 'react';
+import { analyticsPromise } from '../../firebase';
+import { logEvent } from 'firebase/analytics';
+import { useEffect } from 'react';
 
 const MusicianPage = () => {
   const musicians = useBearStore((state) => state.musicians);
@@ -37,6 +39,21 @@ const MusicianPage = () => {
   // destructure matched musician object
   const { name, music, genre, profileImage } = musician;
 
+  const logVisit = async () => {
+    const analytics = await analyticsPromise;
+    if (analytics) {
+      logEvent(analytics, 'musician_page_visit', {
+        musicianName,
+        musicianId: musician.id,
+      });
+    }
+    console.log('page visit ran');
+  };
+
+  useEffect(() => {
+    logVisit();
+  }, []);
+
   return (
     <>
       <MusicianPageBody>
@@ -59,9 +76,9 @@ const MusicianPage = () => {
         </MusicianPageContainerB>
       </MusicianPageBody>
       <AddButtonContainer>
-      {/* show button link to MusicianApprovePage if user is admin */}
-      {user?.isAdmin ? (
-        // <Link to='/approvemusician' aria-label='approve musician'>
+        {/* show button link to MusicianApprovePage if user is admin */}
+        {user?.isAdmin ? (
+          // <Link to='/approvemusician' aria-label='approve musician'>
           <AddButton
             $backgroundColor='var(--color-primary)'
             // onMouseEnter={() => setIsApproveButtonHovered(true)}
@@ -74,9 +91,9 @@ const MusicianPage = () => {
               <i className='fa-solid fa-trash' aria-hidden='true' />
             )} */}
           </AddButton>
-        // </Link>
-      ) : null}
-      {/* show add musician button only if logged in
+        ) : // </Link>
+        null}
+        {/* show add musician button only if logged in
       <Link to='/addmusician' aria-label='add musician to directory'>
         <AddButton
           $backgroundColor='var(--color-accent)'
@@ -88,7 +105,7 @@ const MusicianPage = () => {
           <span>Suggest Edits</span>
         </AddButton>
       </Link> */}
-    </AddButtonContainer>
+      </AddButtonContainer>
     </>
   );
 };
